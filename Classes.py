@@ -2,12 +2,38 @@ import pygame
 import numpy as np
 from math import *
 
+is_free_for_tower = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    ]
 
 class Tower1:
     """Класс первой башни (с дискретными снарядами)"""
     def __init__(self, screen, x, y):
-        self.x = x
-        self.y = y
+        global is_free_for_tower
+        self.x = ((x+25)//50) * 50 + 25
+        self.y = ((y+25)//50) * 50 + 25
+        x_square = (x-25) // 50
+        y_square = (y-25) // 50
+        if is_free_for_tower[y_square][x_square] == 0:
+            print(0)
+            self.x = None
+            self.y = None
+        else:
+            print(1)
+            is_free_for_tower[y_square][x_square] = 0
         self.screen = screen
         self.dmg = 50
         # Урон пушки
@@ -27,6 +53,7 @@ class Tower1:
         # Переменная, хранящая изображение башни
         self.attacked_enemy = None
         # Переменная, хранящая атакованного врага
+        
 
     def shoot(self, enemies, money):
         """ Функция выстрела по врагу
@@ -35,20 +62,19 @@ class Tower1:
             if ((self.attacked_enemy.x - self.x) ** 2 + (self.attacked_enemy.y - self.y) ** 2) > self.radius ** 2 \
                     or self.attacked_enemy.hp <= 0:
                 self.attacked_enemy = None
-                self.shoot(enemies, money)
+                money = self.shoot(enemies, money)
             else:
-                self.attacked_enemy.hit(self.dmg, enemies, money)
+                money = self.attacked_enemy.hit(self.dmg, enemies, money)
         else:
-            min = self.radius
+            min_distance = self.radius
             for enemy in enemies:
                 enemy_distance = np.sqrt((enemy.x - self.x) ** 2 + (enemy.y - self.y) ** 2)
-                if enemy_distance <= min:
-                    min = enemy_distance
+                if enemy_distance <= min_distance:
+                    min_distance = enemy_distance
                     self.attacked_enemy = enemy
             if self.attacked_enemy:
-                self.shoot(enemies, money)
-            else:
-                pass
+                money = self.shoot(enemies, money)
+        return money
 
     def upgrade(self, money, text_font, text_colour):
         """Если уровень не максимальный и достаточно денег, улучшает башню
@@ -73,8 +99,6 @@ class Tower1:
         поэтому рисует круг с дулом)"""
         if self.attacked_enemy:
             self.angle = atan2(self.attacked_enemy.y - self.y, self.attacked_enemy.x - self.x)
-        else:
-            self.angle = 0
         pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), 15)
         pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y),
                          (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
@@ -113,9 +137,8 @@ class Enemy1:
         if self.hp <= 0:
             money += self.reward
             enemies.remove(self)
-            return money
-        else:
-            pass
+        
+        return money
 
     def move(self):
         """Функция, двигающаяя юнита (пока что написана только для движения по прямой, т.к. пока неизвестны координаты точек изгиба дороги)"""
@@ -132,8 +155,8 @@ class Enemy1:
 class Fortress(Enemy1):
     """Класс описывающий главное здание"""
     def __init__(self, screen):
-        super().__init__(screen, 900, 300)
-        self.hp = 1000
+        super().__init__(screen, 1375, 375)
+        self.hp = 10000
         self.is_alive = True
         self.radius = 50
         # Временная (!!!!!)
@@ -142,7 +165,7 @@ class Fortress(Enemy1):
         """Функция, отвечающая за повреждения главного здания"""
         for enemy in enemies:
             enemy_distance = np.sqrt((self.x - enemy.x) ** 2 + (self.y - enemy.y) ** 2)
-            if enemy_distance <= 110:
+            if enemy_distance <= 100:
                 enemy.attack(self)
                 if self.hp <= 0:
                     self.is_alive = False
