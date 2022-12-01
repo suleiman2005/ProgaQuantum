@@ -2,6 +2,8 @@ import pygame
 import numpy as np
 from math import *
 
+SIDE = 40
+
 is_free_for_tower = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -18,22 +20,22 @@ is_free_for_tower = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                     ]
+enemies = []
+towers = []
 
 class Tower1:
     """Класс первой башни (с дискретными снарядами)"""
     def __init__(self, screen, x, y):
         global is_free_for_tower
-        self.x = ((x+25)//50) * 50 + 25
-        self.y = ((y+25)//50) * 50 + 25
-        x_square = (x-25) // 50
-        y_square = (y-25) // 50
-        if is_free_for_tower[y_square][x_square] == 0:
-            print(0)
+        self.x = (x//SIDE) * SIDE + SIDE // 2
+        self.y = (y//SIDE) * SIDE + SIDE // 2
+        x_square = (self.x-SIDE//2) // SIDE
+        y_square = (self.y-SIDE//2) // SIDE
+        if is_free_for_tower[y_square][x_square] != 1:
             self.x = None
             self.y = None
         else:
-            print(1)
-            is_free_for_tower[y_square][x_square] = 0
+            is_free_for_tower[y_square][x_square] = 2 + len(towers)
         self.screen = screen
         self.dmg = 50
         # Урон пушки
@@ -88,7 +90,7 @@ class Tower1:
                 money -= self.upgrade_price[self.level]
                 self.level += 1
                 self.dmg += 10
-                self.speed += 5
+                self.speed += 10
                 self.radius += 20
                 return money
             else:
@@ -109,6 +111,7 @@ class Tower1:
             money += self.upgrade_price[self.level - 1]/2
             self.level -= 1
         towers.remove(self)
+        is_free_for_tower[self.y_square][self.x_square] = 1
         return money
 
 
@@ -155,7 +158,7 @@ class Enemy1:
 class Fortress(Enemy1):
     """Класс описывающий главное здание"""
     def __init__(self, screen):
-        super().__init__(screen, 1375, 375)
+        super().__init__(screen, 1075, 300)
         self.hp = 10000
         self.is_alive = True
         self.radius = 50
