@@ -4,6 +4,14 @@ from Buttons import *
 from Classes import *
 import random as rnd
 
+
+def erase_useless_buttons(buttons):
+    """функция стирающая ненужные в некоторый момент кнопки"""
+    for button in buttons:
+        if button.type == "upgrade_button":
+            buttons.remove(button)
+
+
 FPS = 60
 WIDTH = 1200
 HEIGHT = 800
@@ -34,9 +42,6 @@ while not finished:
     screen.fill((255, 255, 255))
     clock.tick(FPS)
     screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
-    for button in buttons:
-        button.draw()
-    fortress.draw()
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
             for button in buttons:
@@ -44,14 +49,32 @@ while not finished:
                     if button.type == "quit_button":
                         finished = True
             if event.button == 1:
-                x_square_light = event.pos[0] // SIDE
-                y_square_light = event.pos[1] // SIDE
-                if is_free_for_tower[y_square_light][x_square_light] == 0:
-                    text = "You can't build tower there"
-                elif is_free_for_tower[y_square_light][x_square_light] == 1:
-                    text = "You can build tower there"
+                if event.pos[1] < 600:
+                    x_square_light = event.pos[0] // SIDE
+                    y_square_light = event.pos[1] // SIDE
+                    if is_free_for_tower[y_square_light][x_square_light] == 0:
+                        text = "You can't build tower there"
+                        erase_useless_buttons(buttons)
+                    elif is_free_for_tower[y_square_light][x_square_light] == 1:
+                        text = "You can build tower there"
+                        erase_useless_buttons(buttons)
+                    else:
+                        text = "There is tower LVL " + \
+                               str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
+                        buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                 else:
-                    text = "There is tower LVL " + str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
+                    for button in buttons:
+                        if button.is_pressed(event):
+                            if button.type == "upgrade_button":
+                                twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
+                                if money >= twr.upgrade_price[twr.level] and twr.level < 3:
+                                    money -= twr.upgrade_price[twr.level]
+                                    twr.upgrade()
+                                    towers[is_free_for_tower[y_square_light][x_square_light] - 2] = twr
+                                    text = "There is tower LVL " + \
+                                           str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
+                                else:
+                                    text = "Need more money..."
             if event.button == 3:
                 x_square_light = event.pos[0] // SIDE
                 y_square_light = event.pos[1] // SIDE
@@ -61,6 +84,7 @@ while not finished:
                     text = "You can't build tower there"
                 else:
                     text = "There is tower LVL " + str(0)
+                    buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                     tower = Tower1(screen, event.pos[0], event.pos[1])
                     if tower.x != None and money >= 100:
                         towers.append(tower)
@@ -93,6 +117,9 @@ while not finished:
     time += Delta_t
     screen.blit(play_menu_surface, play_menu_rect)
     screen.blit(play_menu_text_surface.render(text, True, BLACK), (100, 675))
+    for button in buttons:
+        button.draw()
+    fortress.draw()
     pygame.display.update()
 
 pygame.quit()

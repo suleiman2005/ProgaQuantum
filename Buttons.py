@@ -1,6 +1,8 @@
 import pygame
 import numpy as np
 
+BLACK = (0, 0, 0)
+
 
 class Button:
     """ Общий класс кнопки (родитель всех кнопок) """
@@ -25,7 +27,7 @@ class Button:
 
     def is_pressed(self, event):
         """ Распознаёт, было ли сделано нажатие по кнопке """
-        if self.x <= event.pos[0] <= self.x + self.width and self.y <= event.pos[1] <= self.x + self.height:
+        if self.x <= event.pos[0] <= self.x + self.width and self.y <= event.pos[1] <= self.y + self.height:
             return True
         else:
             return False
@@ -41,4 +43,17 @@ class QuitButton(Button):
         super().draw()
         self.screen.blit(self.text_font.render('Quit (esc)', True, (0, 0, 0)),
                          (self.x + self.width/5, self.y + self.height/10))
+
+
+class UpgradeButton(Button):
+    """Класс кнопки апгрейда"""
+    def __init__(self, screen, x, y, text_font, width=250, height=50, colour=(255, 0, 0)):
+        super().__init__(screen, x, y, text_font, width, height, colour)
+        self.type = "upgrade_button"
+
+    def draw(self):
+        self.screen.blit(self.text_font.render("Upgrade tower", True, BLACK),
+                         (self.x, self.y + self.height/10))
+
+
 

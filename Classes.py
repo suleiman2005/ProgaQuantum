@@ -29,13 +29,13 @@ class Tower1:
         global is_free_for_tower
         self.x = (x//SIDE) * SIDE + SIDE // 2
         self.y = (y//SIDE) * SIDE + SIDE // 2
-        x_square = (self.x-SIDE//2) // SIDE
-        y_square = (self.y-SIDE//2) // SIDE
-        if is_free_for_tower[y_square][x_square] != 1:
+        self.x_square = (self.x-SIDE//2) // SIDE
+        self.y_square = (self.y-SIDE//2) // SIDE
+        if is_free_for_tower[self.y_square][self.x_square] != 1:
             self.x = None
             self.y = None
         else:
-            is_free_for_tower[y_square][x_square] = 2 + len(towers)
+            is_free_for_tower[self.y_square][self.x_square] = 2 + len(towers)
         self.screen = screen
         self.dmg = 50
         # Урон пушки
@@ -49,13 +49,12 @@ class Tower1:
         # Уровень башни (максимум 3)
         self.price = 1000
         # Стоимость башни в у.е.
-        self.upgrade_price = [250, 500, 2000]
+        self.upgrade_price = [20, 500, 2000]
         # Стоимость улучшения башни (меняется в процессе (локальной) прогрессии)
         self.image = np.array([])
         # Переменная, хранящая изображение башни
         self.attacked_enemy = None
         # Переменная, хранящая атакованного врага
-        
 
     def shoot(self, enemies, money):
         """ Функция выстрела по врагу
@@ -78,23 +77,19 @@ class Tower1:
                 money = self.shoot(enemies, money)
         return money
 
-    def upgrade(self, money, text_font, text_colour):
+    def upgrade(self):
         """Если уровень не максимальный и достаточно денег, улучшает башню
         money - Казна игрока
         text_font - шрифт оповещения
         text_colour - цвет оповещения"""
-        if self.level >= 3:
-            pass
-        else:
-            if money >= self.upgrade_price[self.level]:
-                money -= self.upgrade_price[self.level]
-                self.level += 1
-                self.dmg += 10
-                self.speed += 10
-                self.radius += 20
-                return money
-            else:
-                return text_font.render("Нужно больше золота...", True, text_colour)
+            #if money >= self.upgrade_price[self.level]:
+                #money -= self.upgrade_price[self.level]
+        self.level += 1
+        self.dmg += 10
+        self.speed += 10
+        self.radius += 20
+            #else:
+               # return text_font.render("Нужно больше золота...", True, text_colour)
 
     def draw(self):
         """Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,
