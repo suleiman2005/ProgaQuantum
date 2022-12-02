@@ -1,5 +1,3 @@
-import pygame
-import numpy as np
 from math import *
 from Textures import *
 
@@ -142,7 +140,7 @@ class Enemy1:
         draw_enemy(self, time)
 
 
-class Fortress():
+class Fortress:
     """Класс описывающий главное здание"""
     def __init__(self, screen):
         self.screen = screen

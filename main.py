@@ -1,5 +1,3 @@
-import pygame
-
 from Textures import *
 from Buttons import *
 from Classes import *
@@ -22,7 +20,7 @@ clock = pygame.time.Clock()
 finished = False
 fortress = Fortress(screen)
 buttons = [QuitButton(screen, 1100, 0, text_font)]
-money = 100
+money = 200
 time = 0
 Delta_t = 1
 x_square_light = -1
@@ -37,11 +35,11 @@ while not finished:
     screen.fill(WHITE)
     textures()
 
-
-
     clock.tick(FPS)
     screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
+
     for event in pygame.event.get():
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             erase_useless_buttons(buttons)
             for button in buttons:
@@ -62,25 +60,18 @@ while not finished:
                         text = "There is tower LVL " + \
                                str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
-                        buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
+                        buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
                 else:
                     if is_free_for_tower[y_square_light][x_square_light] == 1:
                         buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
                     elif is_free_for_tower[y_square_light][x_square_light] > 1:
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
-                        buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
+                        buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
                     for button in buttons:
                         if button.is_pressed(event):
                             if button.type == "upgrade_button":
                                 twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
-                                if twr.level >= 3:
-                                    text = "Maximum level"
-                                elif money >= twr.upgrade_price[twr.level - 1]:
-                                    money -= twr.upgrade_price[twr.level - 1]
-                                    twr.upgrade()
-                                    text = "There is tower LVL " + str(twr.level)
-                                elif money < twr.upgrade_price[twr.level - 1]:
-                                    text = "Need more money"
+                                money, text = button.upgrade_initiation(twr, money)
                             if button.type == "sell_button":
                                 twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
                                 money += twr.price / 2
@@ -88,22 +79,44 @@ while not finished:
                                     money += twr.upgrade_price[twr.level - 1] / 2
                                     twr.level -= 1
                                 twr.sell(towers)
+                                text = "You can build tower there"
+                                erase_useless_buttons(buttons)
+                                buttons.remove(button)
+                                buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
                             if button.type == "build_button":
-                                if money < 100:
-                                    text = "Not enough money"
-                                else:
-                                    text = "There is tower LVL " + str(1)
-                                    tower = Tower1(screen, x_square_light, y_square_light)
-                                    towers.append(tower)
-                                    buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
-                                    buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
-                                    buttons.remove(button)
-                                    money -= 100
+                                money, text = button.build_initiation(money, towers, screen, x_square_light,
+                                                                      y_square_light, buttons, button,
+                                                                      play_menu_text_surface)
+
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 finished = True
+            elif event.key == pygame.K_z:
+                for button in buttons:
+                    if button.type == "upgrade_button":
+                        if is_free_for_tower[y_square_light][x_square_light] > 1:
+                            twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
+                            money, text = button.upgrade_initiation(twr, money)
+                    if button.type == "build_button":
+                        money, text = button.build_initiation(money, towers, screen, x_square_light, y_square_light, buttons,
+                                                        button, play_menu_text_surface)
+            elif event.key == pygame.K_x:
+                for button in buttons:
+                    if button.type == "sell_button":
+                        twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
+                        money += twr.price / 2
+                        while twr.level > 1:
+                            money += twr.upgrade_price[twr.level - 1] / 2
+                            twr.level -= 1
+                        twr.sell(towers)
+                        text = "You can build tower there"
+                        erase_useless_buttons(buttons)
+                        buttons.remove(button)
+                        buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
+
         elif event.type == pygame.QUIT:
             finished = True
+
     if x_square_light != -1:
         pygame.draw.polygon(screen, GREEN, ((x_square_light*SIDE, y_square_light*SIDE),
                                             (x_square_light*SIDE + SIDE, y_square_light*SIDE),

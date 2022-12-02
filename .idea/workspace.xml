@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Теперь программа смещает индексы при продаже башен и не случается list index out of range">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_11_35__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_11_35__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_11_35__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_11_35__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_9_21__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_9_21__Changes_.xml" afterDir="false" />
+    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Осуществил постройку башен через кнопку в менюшке">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/Buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes.py" afterDir="false" />
@@ -111,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669972030056</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Осуществил постройку башен через кнопку в менюшке">
+      <created>1669993980324</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669993980324</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -131,6 +135,7 @@
     <MESSAGE value="Реализованна продажа башен" />
     <MESSAGE value="ААААА Я ВСЁЁЁ ПОЧИИНИИИЛ&#10;смена тестовых моделей врагов и башен при апгрейде" />
     <MESSAGE value="Теперь программа смещает индексы при продаже башен и не случается list index out of range" />
-    <option name="LAST_COMMIT_MESSAGE" value="Теперь программа смещает индексы при продаже башен и не случается list index out of range" />
+    <MESSAGE value="Осуществил постройку башен через кнопку в менюшке" />
+    <option name="LAST_COMMIT_MESSAGE" value="Осуществил постройку башен через кнопку в менюшке" />
   </component>
 </project>

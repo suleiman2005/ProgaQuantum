@@ -1,5 +1,4 @@
-import pygame
-import numpy as np
+from Classes import *
 
 BLACK = (0, 0, 0)
 
@@ -54,30 +53,56 @@ class QuitButton(Button):
 
 class UpgradeButton(Button):
     """Класс кнопки апгрейда"""
-    def __init__(self, screen, x, y, text_font, width=250, height=50, colour=(255, 0, 0)):
+    def __init__(self, screen, x, y, text_font, width=270, height=50, colour=(255, 0, 0)):
         super().__init__(screen, x, y, text_font, width, height, colour)
         self.type = "upgrade_button"
 
     def draw(self):
-        self.screen.blit(self.text_font.render("Upgrade tower", True, BLACK), (self.x, self.y + self.height/10))
+        self.screen.blit(self.text_font.render("Upgrade tower (z)", True, BLACK), (self.x, self.y + self.height/10))
+
+    def upgrade_initiation(self, twr, money):
+        """функция, запускпющая процесс улучшения"""
+        if twr.level >= 3:
+            text = "Maximum level"
+        elif money >= twr.upgrade_price[twr.level - 1]:
+            money -= twr.upgrade_price[twr.level - 1]
+            twr.upgrade()
+            text = "There is tower LVL " + str(twr.level)
+        elif money < twr.upgrade_price[twr.level - 1]:
+            text = "Need more money"
+        return money, text
 
 
 class SellButton(Button):
-    def __init__(self, screen, x, y, text_font, width=250, height=50, colour=(255, 0, 0)):
+    def __init__(self, screen, x, y, text_font, width=200, height=50, colour=(255, 0, 0)):
         super().__init__(screen, x, y, text_font, width, height, colour)
         self.type = "sell_button"
 
     def draw(self):
-        self.screen.blit(self.text_font.render("Sell tower", True, BLACK), (self.x, self.y + self.height/10))
+        self.screen.blit(self.text_font.render("Sell tower (x)", True, BLACK), (self.x, self.y + self.height/10))
 
 
 class BuildButton(Button):
-    def __init__(self, screen, x, y, text_font, width=180, height=50, colour=(255, 0, 0)):
+    def __init__(self, screen, x, y, text_font, width=220, height=50, colour=(255, 0, 0)):
         super().__init__(screen, x, y, text_font, width, height, colour)
         self.type = "build_button"
 
     def draw(self):
-        self.screen.blit(self.text_font.render("Build tower", True, BLACK), (self.x, self.y + self.height / 10))
+        self.screen.blit(self.text_font.render("Build tower (z)", True, BLACK), (self.x, self.y + self.height / 10))
+
+    def build_initiation(self, money, towers, screen, x_square_light, y_square_light, buttons, button, play_menu_text_surface):
+        """функция, запускающая процесс постройки"""
+        if money < 100:
+            text = "Not enough money"
+        else:
+            text = "There is tower LVL " + str(1)
+            tower = Tower1(screen, x_square_light, y_square_light)
+            towers.append(tower)
+            buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+            buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
+            buttons.remove(button)
+            money -= 100
+        return money, text
 
 
 
