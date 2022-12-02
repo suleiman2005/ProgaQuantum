@@ -51,13 +51,14 @@ while not finished:
     screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
+            erase_useless_buttons(buttons)
             for button in buttons:
                 if button.is_pressed(event):
                     if button.type == "quit_button":
                         finished = True
             if event.button == 1:
+                erase_useless_buttons(buttons)
                 if event.pos[1] < 600:
-                    erase_useless_buttons(buttons)
                     x_square_light = event.pos[0] // SIDE
                     y_square_light = event.pos[1] // SIDE
                     if is_free_for_tower[y_square_light][x_square_light] == 0:
@@ -70,6 +71,8 @@ while not finished:
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                         buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
                 else:
+                    buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+                    buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
                     for button in buttons:
                         if button.is_pressed(event):
                             twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
@@ -85,7 +88,6 @@ while not finished:
                             if button.type == "sell_button":
                                 money, towers = twr.sell(money, towers)
             if event.button == 3:
-                erase_useless_buttons(buttons)
                 x_square_light = event.pos[0] // SIDE
                 y_square_light = event.pos[1] // SIDE
                 if money < 100:
@@ -94,11 +96,11 @@ while not finished:
                     text = "You can't build tower there"
                 else:
                     text = "There is tower LVL " + str(1)
-                    buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
-                    buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
                     tower = Tower1(screen, event.pos[0], event.pos[1])
                     if tower.x != None and money >= 100:
                         towers.append(tower)
+                        buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+                        buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
                         money -= 100
         elif event.type == pygame.KEYDOWN:
             erase_useless_buttons(buttons)
