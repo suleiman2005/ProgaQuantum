@@ -45,11 +45,11 @@ class Tower1:
         # Угол поворота
         self.radius = 200
         # Дальнобойность
-        self.level = 0
+        self.level = 1
         # Уровень башни (максимум 3)
-        self.price = 1000
+        self.price = 100
         # Стоимость башни в у.е.
-        self.upgrade_price = [20, 500, 2000]
+        self.upgrade_price = [20, 30, 40]
         # Стоимость улучшения башни (меняется в процессе (локальной) прогрессии)
         self.image = np.array([])
         # Переменная, хранящая изображение башни
@@ -78,18 +78,11 @@ class Tower1:
         return money
 
     def upgrade(self):
-        """Если уровень не максимальный и достаточно денег, улучшает башню
-        money - Казна игрока
-        text_font - шрифт оповещения
-        text_colour - цвет оповещения"""
-            #if money >= self.upgrade_price[self.level]:
-                #money -= self.upgrade_price[self.level]
+        """Если уровень не максимальный и достаточно денег, улучшает башню"""
         self.level += 1
         self.dmg += 10
         self.speed += 10
         self.radius += 20
-            #else:
-               # return text_font.render("Нужно больше золота...", True, text_colour)
 
     def draw(self):
         """Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,

@@ -4,6 +4,13 @@ import numpy as np
 BLACK = (0, 0, 0)
 
 
+def erase_useless_buttons(buttons):
+    """функция стирающая ненужные в некоторый момент кнопки"""
+    for button in buttons:
+        if button.type == "upgrade_button":
+            buttons.remove(button)
+
+
 class Button:
     """ Общий класс кнопки (родитель всех кнопок) """
     def __init__(self, screen, x, y, text_font, width=100, height=50, colour=(255, 0, 0)):

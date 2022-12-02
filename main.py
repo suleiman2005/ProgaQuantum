@@ -6,13 +6,6 @@ from Classes import *
 import random as rnd
 
 
-def erase_useless_buttons(buttons):
-    """функция стирающая ненужные в некоторый момент кнопки"""
-    for button in buttons:
-        if button.type == "upgrade_button":
-            buttons.remove(button)
-
-
 FPS = 60
 WIDTH = 1200
 HEIGHT = 800
@@ -64,14 +57,13 @@ while not finished:
                         finished = True
             if event.button == 1:
                 if event.pos[1] < 600:
+                    erase_useless_buttons(buttons)
                     x_square_light = event.pos[0] // SIDE
                     y_square_light = event.pos[1] // SIDE
                     if is_free_for_tower[y_square_light][x_square_light] == 0:
                         text = "You can't build tower there"
-                        erase_useless_buttons(buttons)
                     elif is_free_for_tower[y_square_light][x_square_light] == 1:
                         text = "You can build tower there"
-                        erase_useless_buttons(buttons)
                     else:
                         text = "There is tower LVL " + \
                                str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
@@ -81,15 +73,16 @@ while not finished:
                         if button.is_pressed(event):
                             if button.type == "upgrade_button":
                                 twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
-                                if money >= twr.upgrade_price[twr.level] and twr.level < 3:
-                                    money -= twr.upgrade_price[twr.level]
+                                if twr.level >= 3:
+                                    text = "Maximum level"
+                                elif money >= twr.upgrade_price[twr.level - 1]:
+                                    money -= twr.upgrade_price[twr.level - 1]
                                     twr.upgrade()
-                                    towers[is_free_for_tower[y_square_light][x_square_light] - 2] = twr
-                                    text = "There is tower LVL " + \
-                                           str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
-                                else:
-                                    text = "Need more money..."
+                                    text = "There is tower LVL " + str(twr.level)
+                                elif money < twr.upgrade_price[twr.level - 1]:
+                                    text = "Need more money"
             if event.button == 3:
+                erase_useless_buttons(buttons)
                 x_square_light = event.pos[0] // SIDE
                 y_square_light = event.pos[1] // SIDE
                 if money < 100:
@@ -97,16 +90,17 @@ while not finished:
                 elif is_free_for_tower[y_square_light][x_square_light] != 1:
                     text = "You can't build tower there"
                 else:
-                    text = "There is tower LVL " + str(0)
+                    text = "There is tower LVL " + str(1)
                     buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                     tower = Tower1(screen, event.pos[0], event.pos[1])
                     if tower.x != None and money >= 100:
                         towers.append(tower)
                         money -= 100
         elif event.type == pygame.KEYDOWN:
+            erase_useless_buttons(buttons)
             if event.key == pygame.K_ESCAPE:
                 finished = True
-        if event.type == pygame.QUIT:
+        elif event.type == pygame.QUIT:
             finished = True
     if x_square_light != -1:
         pygame.draw.polygon(screen, GREEN, ((x_square_light*SIDE, y_square_light*SIDE),
