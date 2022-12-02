@@ -1,5 +1,6 @@
 import pygame
 
+from Textures import *
 from Buttons import *
 from Classes import *
 import random as rnd
@@ -35,11 +36,24 @@ Delta_t = 1
 x_square_light = -1
 y_square_light = -1
 
+WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 
+
 while not finished:
-    screen.fill((255, 255, 255))
+    screen.fill(WHITE)
+    for a in range(15):
+        for b in range(30):
+            if abv[a][b] == 1:
+                i = grass_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+                screen.blit(grass_surf, i)
+            elif abv[a][b] == 0:
+                i = road_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+                screen.blit(road_surf, i)
+
+
+
     clock.tick(FPS)
     screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
     for event in pygame.event.get():
@@ -105,7 +119,10 @@ while not finished:
     for enemy in enemies:
         if enemy.x < 1025:
             enemy.move()
-        enemy.draw()
+        if time//6 == time/6:
+            enemy.draw()
+        else:
+            enemy.draw1()
     for tower in towers:
         tower.draw()
         if time % tower.speed == 0:

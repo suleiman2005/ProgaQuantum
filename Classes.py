@@ -148,6 +148,9 @@ class Enemy1:
     def draw(self):
         """Рисует врага (пока нет изображения - просто круг)"""
         pygame.draw.circle(self.screen, (0, 255, 0), (self.x, self.y), self.radius)
+    def draw1(self):
+        """Рисует врага (пока нет изображения - просто круг)"""
+        pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), self.radius)
 
 
 class Fortress(Enemy1):

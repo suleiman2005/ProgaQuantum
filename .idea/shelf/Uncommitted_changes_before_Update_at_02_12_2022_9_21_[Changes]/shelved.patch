@@ -1,0 +1,74 @@
+Index: Classes.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nimport numpy as np\r\nfrom math import *\r\n\r\nSIDE = 40\r\n\r\nis_free_for_tower = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],\r\n                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\r\n                    ]\r\nenemies = []\r\ntowers = []\r\n\r\nclass Tower1:\r\n    \"\"\"Класс первой башни (с дискретными снарядами)\"\"\"\r\n    def __init__(self, screen, x, y):\r\n        global is_free_for_tower\r\n        self.x = (x//SIDE) * SIDE + SIDE // 2\r\n        self.y = (y//SIDE) * SIDE + SIDE // 2\r\n        x_square = (self.x-SIDE//2) // SIDE\r\n        y_square = (self.y-SIDE//2) // SIDE\r\n        if is_free_for_tower[y_square][x_square] != 1:\r\n            self.x = None\r\n            self.y = None\r\n        else:\r\n            is_free_for_tower[y_square][x_square] = 2 + len(towers)\r\n        self.screen = screen\r\n        self.dmg = 50\r\n        # Урон пушки\r\n        self.speed = 30\r\n        # Скорострельность\r\n        self.angle = 0\r\n        # Угол поворота\r\n        self.radius = 200\r\n        # Дальнобойность\r\n        self.level = 0\r\n        # Уровень башни (максимум 3)\r\n        self.price = 1000\r\n        # Стоимость башни в у.е.\r\n        self.upgrade_price = [250, 500, 2000]\r\n        # Стоимость улучшения башни (меняется в процессе (локальной) прогрессии)\r\n        self.image = np.array([])\r\n        # Переменная, хранящая изображение башни\r\n        self.attacked_enemy = None\r\n        # Переменная, хранящая атакованного врага\r\n        \r\n\r\n    def shoot(self, enemies, money):\r\n        \"\"\" Функция выстрела по врагу\r\n        enemies - список активных врагов на карте\"\"\"\r\n        if self.attacked_enemy:\r\n            if ((self.attacked_enemy.x - self.x) ** 2 + (self.attacked_enemy.y - self.y) ** 2) > self.radius ** 2 \\\r\n                    or self.attacked_enemy.hp <= 0:\r\n                self.attacked_enemy = None\r\n                money = self.shoot(enemies, money)\r\n            else:\r\n                money = self.attacked_enemy.hit(self.dmg, enemies, money)\r\n        else:\r\n            min_distance = self.radius\r\n            for enemy in enemies:\r\n                enemy_distance = np.sqrt((enemy.x - self.x) ** 2 + (enemy.y - self.y) ** 2)\r\n                if enemy_distance <= min_distance:\r\n                    min_distance = enemy_distance\r\n                    self.attacked_enemy = enemy\r\n            if self.attacked_enemy:\r\n                money = self.shoot(enemies, money)\r\n        return money\r\n\r\n    def upgrade(self, money, text_font, text_colour):\r\n        \"\"\"Если уровень не максимальный и достаточно денег, улучшает башню\r\n        money - Казна игрока\r\n        text_font - шрифт оповещения\r\n        text_colour - цвет оповещения\"\"\"\r\n        if self.level >= 3:\r\n            pass\r\n        else:\r\n            if money >= self.upgrade_price[self.level]:\r\n                money -= self.upgrade_price[self.level]\r\n                self.level += 1\r\n                self.dmg += 10\r\n                self.speed += 10\r\n                self.radius += 20\r\n                return money\r\n            else:\r\n                return text_font.render(\"Нужно больше золота...\", True, text_colour)\r\n\r\n    def draw(self):\r\n        \"\"\"Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,\r\n        поэтому рисует круг с дулом)\"\"\"\r\n        if self.attacked_enemy:\r\n            self.angle = atan2(self.attacked_enemy.y - self.y, self.attacked_enemy.x - self.x)\r\n        pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), 15)\r\n        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y),\r\n                         (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)\r\n\r\n    def sell(self, money, towers):\r\n        money += self.price/2\r\n        while self.level >= 1:\r\n            money += self.upgrade_price[self.level - 1]/2\r\n            self.level -= 1\r\n        towers.remove(self)\r\n        is_free_for_tower[self.y_square][self.x_square] = 1\r\n        return money\r\n\r\n\r\nclass Enemy1:\r\n    \"\"\"Класс, описывающий превый тип врага\"\"\"\r\n    def __init__(self, screen, x, y):\r\n        self.screen = screen\r\n        self.x = x\r\n        self.y = y\r\n        self.speed = 3\r\n        # Скорость юнита\r\n        self.dmg = 10\r\n        # Урон юнита по главной постройке\r\n        self.hp = 100\r\n        # Здоровье юнита\r\n        self.reward = 30\r\n        # Вознаграждение за убийство юнита\r\n        self.image = np.array([])\r\n        # Изображение юнита\r\n        self.radius = 10\r\n        # Временная (!!!!!) переменная, отвечающая за размер врага\r\n\r\n    def hit(self, tower_damage, enemies, money):\r\n        \"\"\"Функция, отвечающая за боль и страдания юнита\"\"\"\r\n        self.hp -= tower_damage\r\n        if self.hp <= 0:\r\n            money += self.reward\r\n            enemies.remove(self)\r\n        \r\n        return money\r\n\r\n    def move(self):\r\n        \"\"\"Функция, двигающаяя юнита (пока что написана только для движения по прямой, т.к. пока неизвестны координаты точек изгиба дороги)\"\"\"\r\n        self.x += self.speed\r\n\r\n    def attack(self, fortress):\r\n        fortress.hp -= self.dmg\r\n\r\n    def draw(self):\r\n        \"\"\"Рисует врага (пока нет изображения - просто круг)\"\"\"\r\n        pygame.draw.circle(self.screen, (0, 255, 0), (self.x, self.y), self.radius)\r\n\r\n\r\nclass Fortress(Enemy1):\r\n    \"\"\"Класс описывающий главное здание\"\"\"\r\n    def __init__(self, screen):\r\n        super().__init__(screen, 1075, 300)\r\n        self.hp = 10000\r\n        self.is_alive = True\r\n        self.radius = 50\r\n        # Временная (!!!!!)\r\n\r\n    def hit(self, enemies):\r\n        \"\"\"Функция, отвечающая за повреждения главного здания\"\"\"\r\n        for enemy in enemies:\r\n            enemy_distance = np.sqrt((self.x - enemy.x) ** 2 + (self.y - enemy.y) ** 2)\r\n            if enemy_distance <= 100:\r\n                enemy.attack(self)\r\n                if self.hp <= 0:\r\n                    self.is_alive = False\r\n\r\n    def alive_or_not(self):\r\n        \"\"\"Функция, отвечающая на вопрос: \"проиграл ли игрок?\" \"\"\"\r\n        return self.is_alive\r\n\r\n    def draw(self):\r\n        super().draw()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Classes.py b/Classes.py
+--- a/Classes.py	(revision 7a77ed1418d24ba819efe773f8a038a53d1ed543)
++++ b/Classes.py	(date 1669938104572)
+@@ -153,6 +153,9 @@
+     def draw(self):
+         """Рисует врага (пока нет изображения - просто круг)"""
+         pygame.draw.circle(self.screen, (0, 255, 0), (self.x, self.y), self.radius)
++    def draw1(self):
++        """Рисует врага (пока нет изображения - просто круг)"""
++        pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), self.radius)
+ 
+ 
+ class Fortress(Enemy1):
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\n\r\nfrom Buttons import *\r\nfrom Classes import *\r\nimport random as rnd\r\n\r\nFPS = 60\r\nWIDTH = 1200\r\nHEIGHT = 800\r\n\r\npygame.init()\r\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\r\ntext_font = pygame.font.Font(None, 24)\r\nplay_menu_text_surface = pygame.font.SysFont('Comic Sans MS', 30, True)\r\ntext = \"\"\r\nplay_menu_surface = pygame.image.load('img/игровое меню.png').convert()\r\nplay_menu_surface.set_colorkey((255, 255, 255))\r\nplay_menu_surface = pygame.transform.scale(play_menu_surface, (play_menu_surface.get_width() // 1.45, play_menu_surface.get_height() // 1.135))\r\nplay_menu_rect = play_menu_surface.get_rect(center=(WIDTH // 2, 700))\r\nclock = pygame.time.Clock()\r\nfinished = False\r\nfortress = Fortress(screen)\r\nbuttons = [QuitButton(screen, 1100, 0, text_font)]\r\nmoney = 100\r\ntime = 0\r\nDelta_t = 1\r\nx_square_light = -1\r\ny_square_light = -1\r\n\r\nBLACK = (0, 0, 0)\r\nGREEN = (0, 255, 0)\r\n\r\nwhile not finished:\r\n    screen.fill((255, 255, 255))\r\n    clock.tick(FPS)\r\n    screen.blit(text_font.render(\"Money \" + str(int(money)), True, (0, 0, 0)), (10, 10))\r\n    for button in buttons:\r\n        button.draw()\r\n    fortress.draw()\r\n    for event in pygame.event.get():\r\n        if event.type == pygame.MOUSEBUTTONDOWN:\r\n            for button in buttons:\r\n                if button.is_pressed(event):\r\n                    if button.type == \"quit_button\":\r\n                        finished = True\r\n            if event.button == 1:\r\n                x_square_light = event.pos[0] // SIDE\r\n                y_square_light = event.pos[1] // SIDE\r\n                if is_free_for_tower[y_square_light][x_square_light] == 0:\r\n                    text = \"You can't build tower there\"\r\n                elif is_free_for_tower[y_square_light][x_square_light] == 1:\r\n                    text = \"You can build tower there\"\r\n                else:\r\n                    text = \"There is tower LVL \" + str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)\r\n            if event.button == 3:\r\n                x_square_light = event.pos[0] // SIDE\r\n                y_square_light = event.pos[1] // SIDE\r\n                if money < 100:\r\n                    text = \"Not enough money\"\r\n                elif is_free_for_tower[y_square_light][x_square_light] != 1:\r\n                    text = \"You can't build tower there\"\r\n                else:\r\n                    text = \"There is tower LVL \" + str(0)\r\n                    tower = Tower1(screen, event.pos[0], event.pos[1])\r\n                    if tower.x != None and money >= 100:\r\n                        towers.append(tower)\r\n                        money -= 100\r\n        elif event.type == pygame.KEYDOWN:\r\n            if event.key == pygame.K_ESCAPE:\r\n                finished = True\r\n        if event.type == pygame.QUIT:\r\n            finished = True\r\n    if x_square_light != -1:\r\n        pygame.draw.polygon(screen, GREEN, ((x_square_light*SIDE, y_square_light*SIDE),\r\n                                            (x_square_light*SIDE + SIDE, y_square_light*SIDE),\r\n                                            (x_square_light*SIDE + SIDE, y_square_light*SIDE + SIDE),\r\n                                            (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)\r\n    if rnd.randint(1, 30) == 1:\r\n        enemy = Enemy1(screen, 0, 300)\r\n        enemies.append(enemy)\r\n    for enemy in enemies:\r\n        if enemy.x < 1025:\r\n            enemy.move()\r\n        enemy.draw()\r\n    for tower in towers:\r\n        tower.draw()\r\n        if time % tower.speed == 0:\r\n            money = tower.shoot(enemies, money)\r\n    fortress.hit(enemies)\r\n    if not fortress.alive_or_not():\r\n        finished = True\r\n\r\n    time += Delta_t\r\n    screen.blit(play_menu_surface, play_menu_rect)\r\n    screen.blit(play_menu_text_surface.render(text, True, BLACK), (100, 675))\r\n    pygame.display.update()\r\n\r\npygame.quit()\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision 7a77ed1418d24ba819efe773f8a038a53d1ed543)
++++ b/main.py	(date 1669938476604)
+@@ -30,8 +30,29 @@
+ BLACK = (0, 0, 0)
+ GREEN = (0, 255, 0)
+ 
++
++#///
++trava_surf = pygame.image.load("879.png")
++doroga_surf = pygame.image.load("878.png")
++t=0
+ while not finished:
+-    screen.fill((255, 255, 255))
++
++    for i in range(100):
++        for a in range(15):
++            for b in range(30):
++                if is_free_for_tower[a][b] == 1:
++                    i = trava_surf.get_rect(center=(25 + (b * 50), (a * 50) + 25))
++                    screen.blit(trava_surf, i)
++                elif is_free_for_tower[a][b] == 0:
++                    i = doroga_surf.get_rect(center=(25 + (b * 50), (a * 50) + 25))
++                    screen.blit(doroga_surf, i)
++    pygame.display.update()
++
++    pygame.display.update()
++    #///
++
++
++
+     clock.tick(FPS)
+     screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
+     for button in buttons:
+@@ -81,7 +102,11 @@
+     for enemy in enemies:
+         if enemy.x < 1025:
+             enemy.move()
+-        enemy.draw()
++        if t//6 == t/6:
++            enemy.draw()
++        else:
++            enemy.draw1()
++    t += 1
+     for tower in towers:
+         tower.draw()
+         if time % tower.speed == 0:
