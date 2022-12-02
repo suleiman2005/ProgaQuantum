@@ -68,11 +68,12 @@ while not finished:
                         text = "There is tower LVL " + \
                                str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+                        buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
                 else:
                     for button in buttons:
                         if button.is_pressed(event):
+                            twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
                             if button.type == "upgrade_button":
-                                twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
                                 if twr.level >= 3:
                                     text = "Maximum level"
                                 elif money >= twr.upgrade_price[twr.level - 1]:
@@ -81,6 +82,8 @@ while not finished:
                                     text = "There is tower LVL " + str(twr.level)
                                 elif money < twr.upgrade_price[twr.level - 1]:
                                     text = "Need more money"
+                            if button.type == "sell_button":
+                                money, towers = twr.sell(money, towers)
             if event.button == 3:
                 erase_useless_buttons(buttons)
                 x_square_light = event.pos[0] // SIDE
@@ -92,6 +95,7 @@ while not finished:
                 else:
                     text = "There is tower LVL " + str(1)
                     buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+                    buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
                     tower = Tower1(screen, event.pos[0], event.pos[1])
                     if tower.x != None and money >= 100:
                         towers.append(tower)

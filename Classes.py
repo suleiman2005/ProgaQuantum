@@ -95,12 +95,12 @@ class Tower1:
 
     def sell(self, money, towers):
         money += self.price/2
-        while self.level >= 1:
+        while self.level > 1:
             money += self.upgrade_price[self.level - 1]/2
             self.level -= 1
         towers.remove(self)
         is_free_for_tower[self.y_square][self.x_square] = 1
-        return money
+        return money, towers
 
 
 class Enemy1:
