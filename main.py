@@ -7,8 +7,7 @@ import random as rnd
 
 
 FPS = 60
-WIDTH = 1200
-HEIGHT = 800
+
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -36,14 +35,7 @@ GREEN = (0, 255, 0)
 
 while not finished:
     screen.fill(WHITE)
-    for a in range(15):
-        for b in range(30):
-            if abv[a][b] == 1:
-                i = grass_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
-                screen.blit(grass_surf, i)
-            elif abv[a][b] == 0:
-                i = road_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
-                screen.blit(road_surf, i)
+    textures()
 
 
 
@@ -114,15 +106,12 @@ while not finished:
                                             (x_square_light*SIDE + SIDE, y_square_light*SIDE + SIDE),
                                             (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)
     if rnd.randint(1, 30) == 1:
-        enemy = Enemy1(screen, 0, 300)
+        enemy = Enemy1(screen, 0, 300, time)
         enemies.append(enemy)
     for enemy in enemies:
         if enemy.x < 1025:
             enemy.move()
-        if time//6 == time/6:
-            enemy.draw()
-        else:
-            enemy.draw1()
+            enemy.draw(time)
     for tower in towers:
         tower.draw()
         if time % tower.speed == 0:

@@ -1,6 +1,7 @@
 import pygame
 import numpy as np
 from math import *
+from Textures import *
 
 SIDE = 40
 
@@ -89,9 +90,10 @@ class Tower1:
         поэтому рисует круг с дулом)"""
         if self.attacked_enemy:
             self.angle = atan2(self.attacked_enemy.y - self.y, self.attacked_enemy.x - self.x)
-        pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), 15)
         pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y),
                          (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
+
+        draw_tower(self.x, self.y, self.level)
 
     def sell(self, money, towers):
         money += self.price/2
@@ -105,10 +107,12 @@ class Tower1:
 
 class Enemy1:
     """Класс, описывающий превый тип врага"""
-    def __init__(self, screen, x, y):
+    def __init__(self, screen, x, y, time_creation):
+        self.time_creation = time_creation
         self.screen = screen
         self.x = x
         self.y = y
+        self.tik = 1
         self.speed = 3
         # Скорость юнита
         self.dmg = 10
@@ -138,18 +142,16 @@ class Enemy1:
     def attack(self, fortress):
         fortress.hp -= self.dmg
 
-    def draw(self):
-        """Рисует врага (пока нет изображения - просто круг)"""
-        pygame.draw.circle(self.screen, (0, 255, 0), (self.x, self.y), self.radius)
-    def draw1(self):
-        """Рисует врага (пока нет изображения - просто круг)"""
-        pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), self.radius)
+    def draw(self, time):
+        draw_enemy(self, time)
 
 
-class Fortress(Enemy1):
+class Fortress():
     """Класс описывающий главное здание"""
     def __init__(self, screen):
-        super().__init__(screen, 1075, 300)
+        self.screen = screen
+        self.x = 1075
+        self.y = 300
         self.hp = 10000
         self.is_alive = True
         self.radius = 50
@@ -169,4 +171,4 @@ class Fortress(Enemy1):
         return self.is_alive
 
     def draw(self):
-        super().draw()
+        pygame.draw.circle(self.screen, GREEN, (self.x, self.y), self.radius)
