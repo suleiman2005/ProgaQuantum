@@ -1,0 +1,204 @@
+Index: Classes.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Classes.py b/Classes.py
+--- a/Classes.py	
++++ b/Classes.py	
+@@ -1,6 +1,7 @@
+ import pygame
+ import numpy as np
+ from math import *
++from Textures import *
+ 
+ SIDE = 40
+ 
+@@ -96,7 +97,19 @@
+         поэтому рисует круг с дулом)"""
+         if self.attacked_enemy:
+             self.angle = atan2(self.attacked_enemy.y - self.y, self.attacked_enemy.x - self.x)
+-        pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), 15)
++        #pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), 15)
++
++        #if self.level == 1:
++            #draw1_tower(self.x, self.y, self.level)
++        #if self.level == 0:
++            #draw0_tower(self.x, self.y)
++        #if self.level == 2:
++            #draw2_tower(self.x, self.y)
++        #if self.level == 3:
++            #draw3_tower(self.x, self.y)
++
++        draw_tower(self.x, self.y, self.level)
++
+         pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y),
+                          (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
+ 
+@@ -112,10 +125,12 @@
+ 
+ class Enemy1:
+     """Класс, описывающий превый тип врага"""
+-    def __init__(self, screen, x, y):
++    def __init__(self, screen, x, y, time_creation):
++        self.time_creation = time_creation
+         self.screen = screen
+         self.x = x
+         self.y = y
++        self.tik=1
+         self.speed = 3
+         # Скорость юнита
+         self.dmg = 10
+@@ -145,18 +160,22 @@
+     def attack(self, fortress):
+         fortress.hp -= self.dmg
+ 
+-    def draw(self):
+-        """Рисует врага (пока нет изображения - просто круг)"""
+-        pygame.draw.circle(self.screen, (0, 255, 0), (self.x, self.y), self.radius)
+-    def draw1(self):
+-        """Рисует врага (пока нет изображения - просто круг)"""
+-        pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), self.radius)
++    #def draw(self):
++       # """Рисует врага (пока нет изображения - просто круг)"""
++        #pygame.draw.circle(self.screen, (0, 255, 0), (self.x, self.y), self.radius)
++    #def draw1(self):
++        #"""Рисует врага (пока нет изображения - просто круг)"""
++       #pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), self.radius)
+ 
++    def draw(self, time):
++        draw_enemy(self, time)
+ 
+-class Fortress(Enemy1):
++class Fortress():
+     """Класс описывающий главное здание"""
+     def __init__(self, screen):
+-        super().__init__(screen, 1075, 300)
++        self.screen = screen
++        self.x = 1075
++        self.y = 300
+         self.hp = 10000
+         self.is_alive = True
+         self.radius = 50
+@@ -176,4 +195,4 @@
+         return self.is_alive
+ 
+     def draw(self):
+-        super().draw()
++        pygame.draw.circle(self.screen, GREEN, (self.x, self.y), self.radius)
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	
++++ b/main.py	
+@@ -14,11 +14,10 @@
+ 
+ 
+ FPS = 60
+-WIDTH = 1200
+-HEIGHT = 800
++
+ 
+ pygame.init()
+-screen = pygame.display.set_mode((WIDTH, HEIGHT))
++
+ text_font = pygame.font.Font(None, 24)
+ play_menu_text_surface = pygame.font.SysFont('Comic Sans MS', 30, True)
+ text = ""
+@@ -36,22 +35,11 @@
+ x_square_light = -1
+ y_square_light = -1
+ 
+-WHITE = (255, 255, 255)
+-BLACK = (0, 0, 0)
+-GREEN = (0, 255, 0)
+-
++change = 1
+ 
+ while not finished:
+     screen.fill(WHITE)
+-    for a in range(15):
+-        for b in range(30):
+-            if abv[a][b] == 1:
+-                i = grass_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+-                screen.blit(grass_surf, i)
+-            elif abv[a][b] == 0:
+-                i = road_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+-                screen.blit(road_surf, i)
+-
++    textures()
+ 
+ 
+     clock.tick(FPS)
+@@ -114,15 +102,17 @@
+                                             (x_square_light*SIDE + SIDE, y_square_light*SIDE + SIDE),
+                                             (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)
+     if rnd.randint(1, 30) == 1:
+-        enemy = Enemy1(screen, 0, 300)
++        enemy = Enemy1(screen, 0, 300, time)
+         enemies.append(enemy)
+     for enemy in enemies:
+         if enemy.x < 1025:
+             enemy.move()
+-        if time//6 == time/6:
+-            enemy.draw()
+-        else:
+-            enemy.draw1()
++        #if time//20 == time/20:
++        #    change *= -1
++        #if change == -1:
++        #    enemy.draw()
++        #if change == 1:
++            enemy.draw(time)
+     for tower in towers:
+         tower.draw()
+         if time % tower.speed == 0:
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -1,8 +1,10 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="test">
++    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="ТЕКСТУРЫ ПОДЬЕХАЛИ">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Textures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Textures.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -78,7 +80,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1669922452656</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="ТЕКСТУРЫ ПОДЬЕХАЛИ">
++      <created>1669963606203</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1669963606203</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -94,6 +103,7 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="test" />
+-    <option name="LAST_COMMIT_MESSAGE" value="test" />
++    <MESSAGE value="ТЕКСТУРЫ ПОДЬЕХАЛИ" />
++    <option name="LAST_COMMIT_MESSAGE" value="ТЕКСТУРЫ ПОДЬЕХАЛИ" />
+   </component>
+ </project>
+\ No newline at end of file
