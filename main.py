@@ -57,18 +57,22 @@ while not finished:
                         text = "You can't build tower there"
                     elif is_free_for_tower[y_square_light][x_square_light] == 1:
                         text = "You can build tower there"
+                        buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
                     else:
                         text = "There is tower LVL " + \
                                str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                         buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
                 else:
-                    buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
-                    buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
+                    if is_free_for_tower[y_square_light][x_square_light] == 1:
+                        buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
+                    elif is_free_for_tower[y_square_light][x_square_light] > 1:
+                        buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+                        buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
                     for button in buttons:
                         if button.is_pressed(event):
-                            twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
                             if button.type == "upgrade_button":
+                                twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
                                 if twr.level >= 3:
                                     text = "Maximum level"
                                 elif money >= twr.upgrade_price[twr.level - 1]:
@@ -78,26 +82,23 @@ while not finished:
                                 elif money < twr.upgrade_price[twr.level - 1]:
                                     text = "Need more money"
                             if button.type == "sell_button":
+                                twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
                                 money += twr.price / 2
                                 while twr.level > 1:
                                     money += twr.upgrade_price[twr.level - 1] / 2
                                     twr.level -= 1
                                 twr.sell(towers)
-            if event.button == 3:
-                x_square_light = event.pos[0] // SIDE
-                y_square_light = event.pos[1] // SIDE
-                if money < 100:
-                    text = "Not enough money"
-                elif is_free_for_tower[y_square_light][x_square_light] != 1:
-                    text = "You can't build tower there"
-                else:
-                    text = "There is tower LVL " + str(1)
-                    tower = Tower1(screen, event.pos[0], event.pos[1])
-                    if tower.x != None and money >= 100:
-                        towers.append(tower)
-                        buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
-                        buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
-                        money -= 100
+                            if button.type == "build_button":
+                                if money < 100:
+                                    text = "Not enough money"
+                                else:
+                                    text = "There is tower LVL " + str(1)
+                                    tower = Tower1(screen, x_square_light, y_square_light)
+                                    towers.append(tower)
+                                    buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+                                    buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
+                                    buttons.remove(button)
+                                    money -= 100
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 finished = True

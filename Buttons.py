@@ -71,4 +71,13 @@ class SellButton(Button):
         self.screen.blit(self.text_font.render("Sell tower", True, BLACK), (self.x, self.y + self.height/10))
 
 
+class BuildButton(Button):
+    def __init__(self, screen, x, y, text_font, width=180, height=50, colour=(255, 0, 0)):
+        super().__init__(screen, x, y, text_font, width, height, colour)
+        self.type = "build_button"
+
+    def draw(self):
+        self.screen.blit(self.text_font.render("Build tower", True, BLACK), (self.x, self.y + self.height / 10))
+
+
 

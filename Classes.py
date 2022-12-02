@@ -27,17 +27,13 @@ towers = []
 
 class Tower1:
     """Класс первой башни (с дискретными снарядами)"""
-    def __init__(self, screen, x, y):
+    def __init__(self, screen, x_square, y_square):
         global is_free_for_tower
-        self.x = (x//SIDE) * SIDE + SIDE // 2
-        self.y = (y//SIDE) * SIDE + SIDE // 2
-        self.x_square = (self.x-SIDE//2) // SIDE
-        self.y_square = (self.y-SIDE//2) // SIDE
-        if is_free_for_tower[self.y_square][self.x_square] != 1:
-            self.x = None
-            self.y = None
-        else:
-            is_free_for_tower[self.y_square][self.x_square] = 2 + len(towers)
+        self.x_square = x_square
+        self.y_square = y_square
+        self.x = self.x_square * SIDE + SIDE // 2
+        self.y = self.y_square * SIDE + SIDE // 2
+        is_free_for_tower[self.y_square][self.x_square] = 2 + len(towers)
         self.screen = screen
         self.dmg = 50
         # Урон пушки
