@@ -78,7 +78,11 @@ while not finished:
                                 elif money < twr.upgrade_price[twr.level - 1]:
                                     text = "Need more money"
                             if button.type == "sell_button":
-                                money, towers = twr.sell(money, towers)
+                                money += twr.price / 2
+                                while twr.level > 1:
+                                    money += twr.upgrade_price[twr.level - 1] / 2
+                                    twr.level -= 1
+                                twr.sell(towers)
             if event.button == 3:
                 x_square_light = event.pos[0] // SIDE
                 y_square_light = event.pos[1] // SIDE
@@ -95,7 +99,6 @@ while not finished:
                         buttons.append(SellButton(screen, 860, 650, play_menu_text_surface))
                         money -= 100
         elif event.type == pygame.KEYDOWN:
-            erase_useless_buttons(buttons)
             if event.key == pygame.K_ESCAPE:
                 finished = True
         elif event.type == pygame.QUIT:

@@ -24,6 +24,7 @@ is_free_for_tower = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 enemies = []
 towers = []
 
+
 class Tower1:
     """Класс первой башни (с дискретными снарядами)"""
     def __init__(self, screen, x, y):
@@ -95,14 +96,13 @@ class Tower1:
 
         draw_tower(self.x, self.y, self.level)
 
-    def sell(self, money, towers):
-        money += self.price/2
-        while self.level > 1:
-            money += self.upgrade_price[self.level - 1]/2
-            self.level -= 1
-        towers.remove(self)
+    def sell(self, towers):
+        """Функция продажи башни"""
+        for tower_index in range(len(towers)):
+            if tower_index > is_free_for_tower[self.y_square][self.x_square] - 2:
+                is_free_for_tower[towers[tower_index].y_square][towers[tower_index].x_square] -= 1
         is_free_for_tower[self.y_square][self.x_square] = 1
-        return money, towers
+        towers.remove(self)
 
 
 class Enemy1:
