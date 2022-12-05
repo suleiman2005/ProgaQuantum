@@ -45,12 +45,16 @@ while not finished:
     screen.fill(WHITE)
     for a in range(15):
         for b in range(30):
-            if abv[a][b] == 1:
-                i = grass_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+            if abv[stage-1][a][b] == 1:
+                i = grass_surf.get_rect(center=(SIDE//2 + b*SIDE, a*SIDE + SIDE//2))
                 screen.blit(grass_surf, i)
-            elif abv[a][b] == 0:
-                i = road_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+            elif abv[stage-1][a][b] == 0:
+                i = road_surf.get_rect(center=(SIDE//2 + b*SIDE, a*SIDE + SIDE//2))
                 screen.blit(road_surf, i)
+            elif abv[stage-1][a][b] == 2:
+                i = cloud_surf.get_rect(center=(SIDE//2 + b*SIDE, a*SIDE + SIDE//2))
+                screen.blit(cloud_surf, i)
+
 
 
 
@@ -66,36 +70,36 @@ while not finished:
                 if event.pos[1] < 600:
                     x_square_light = event.pos[0] // SIDE
                     y_square_light = event.pos[1] // SIDE
-                    if is_free_for_tower[y_square_light][x_square_light] == 0:
+                    if is_free_for_tower[stage-1][y_square_light][x_square_light] == 0:
                         text = "You can't build tower there"
                         erase_useless_buttons(buttons)
-                    elif is_free_for_tower[y_square_light][x_square_light] == 1:
+                    elif is_free_for_tower[stage-1][y_square_light][x_square_light] == 1:
                         text = "You can build tower there"
                         erase_useless_buttons(buttons)
                     else:
                         text = "There is tower LVL " + \
-                               str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
+                               str(towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2].level)
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                 else:
                     for button in buttons:
                         if button.is_pressed(event):
                             if button.type == "upgrade_button":
-                                twr = towers[is_free_for_tower[y_square_light][x_square_light] - 2]
+                                twr = towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
                                 if money >= twr.upgrade_price[twr.level] and twr.level < 3:
                                     money -= twr.upgrade_price[twr.level]
                                     twr.upgrade()
-                                    towers[is_free_for_tower[y_square_light][x_square_light] - 2] = twr
+                                    towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2] = twr
                                     text = "There is tower LVL " + \
-                                           str(towers[is_free_for_tower[y_square_light][x_square_light] - 2].level)
+                                           str(towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2].level)
                                 else:
                                     text = "Need more money..."
             if event.button == 3:
                 x_square_light = event.pos[0] // SIDE
                 y_square_light = event.pos[1] // SIDE
-                if money < 100:
-                    text = "Not enough money"
-                elif is_free_for_tower[y_square_light][x_square_light] != 1:
+                if is_free_for_tower[stage-1][y_square_light][x_square_light] != 1:
                     text = "You can't build tower there"
+                elif money < 100:
+                    text = "Not enough money"
                 else:
                     text = "There is tower LVL " + str(0)
                     buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
@@ -113,12 +117,15 @@ while not finished:
                                             (x_square_light*SIDE + SIDE, y_square_light*SIDE),
                                             (x_square_light*SIDE + SIDE, y_square_light*SIDE + SIDE),
                                             (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)
-    if rnd.randint(1, 30) == 1:
-        enemy = Enemy1(screen, 0, 300)
+    random_number = rnd.randint(1, 100)
+    if random_number == 1:
+        enemy = Enemy1(screen, 0, 220)
+        enemies.append(enemy)
+    elif random_number == 100:
+        enemy = Enemy1(screen, 0, 380)
         enemies.append(enemy)
     for enemy in enemies:
-        if enemy.x < 1025:
-            enemy.move()
+        enemy.move()
         if time//6 == time/6:
             enemy.draw()
         else:
