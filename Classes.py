@@ -1,5 +1,3 @@
-import pygame
-import numpy as np
 from math import *
 from Textures import *
 
@@ -57,14 +55,15 @@ is_free_for_tower = [[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 enemies = []
 towers = []
 
+
 class Tower1:
     """Класс первой башни (с дискретными снарядами)"""
-    def __init__(self, screen, x, y):
+    def __init__(self, screen, x_square, y_square):
         global is_free_for_tower
-        self.x = (x//SIDE) * SIDE + SIDE // 2
-        self.y = (y//SIDE) * SIDE + SIDE // 2
-        self.x_square = (self.x-SIDE//2) // SIDE
-        self.y_square = (self.y-SIDE//2) // SIDE
+        self.x_square = x_square
+        self.y_square = y_square
+        self.x = self.x_square * SIDE + SIDE // 2
+        self.y = self.y_square * SIDE + SIDE // 2
         if is_free_for_tower[stage-1][self.y_square][self.x_square] != 1:
             self.x = None
             self.y = None
@@ -79,11 +78,11 @@ class Tower1:
         # Угол поворота
         self.radius = 200
         # Дальнобойность
-        self.level = 0
+        self.level = 1
         # Уровень башни (максимум 3)
-        self.price = 1000
+        self.price = 100
         # Стоимость башни в у.е.
-        self.upgrade_price = [20, 500, 2000]
+        self.upgrade_price = [20, 30, 40]
         # Стоимость улучшения башни (меняется в процессе (локальной) прогрессии)
         self.image = np.array([])
         # Переменная, хранящая изображение башни
@@ -112,44 +111,38 @@ class Tower1:
         return money
 
     def upgrade(self):
-        """Если уровень не максимальный и достаточно денег, улучшает башню
-        money - Казна игрока
-        text_font - шрифт оповещения
-        text_colour - цвет оповещения"""
-            #if money >= self.upgrade_price[self.level]:
-                #money -= self.upgrade_price[self.level]
+        """Если уровень не максимальный и достаточно денег, улучшает башню"""
         self.level += 1
         self.dmg += 10
         self.speed += 10
         self.radius += 20
-            #else:
-               # return text_font.render("Нужно больше золота...", True, text_colour)
 
     def draw(self):
         """Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,
         поэтому рисует круг с дулом)"""
         if self.attacked_enemy:
             self.angle = atan2(self.attacked_enemy.y - self.y, self.attacked_enemy.x - self.x)
-        pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), 15)
         pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y),
                          (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
+        draw_tower(self.x, self.y, self.level)
 
-    def sell(self, money, towers):
-        money += self.price/2
-        while self.level >= 1:
-            money += self.upgrade_price[self.level - 1]/2
-            self.level -= 1
-        towers.remove(self)
+    def sell(self, towers):
+        """Функция продажи башни"""
+        for tower_index in range(len(towers)):
+            if tower_index > is_free_for_tower[stage-1][self.y_square][self.x_square] - 2:
+                is_free_for_tower[stage-1][towers[tower_index].y_square][towers[tower_index].x_square] -= 1
         is_free_for_tower[stage-1][self.y_square][self.x_square] = 1
-        return money
+        towers.remove(self)
 
 
 class Enemy1:
     """Класс, описывающий превый тип врага"""
-    def __init__(self, screen, x, y):
+    def __init__(self, screen, x, y, time_creation):
+        self.time_creation = time_creation
         self.screen = screen
         self.x = x
         self.y = y
+        self.tik = 1
         self.speed = 1
         # Скорость юнита
         self.axis = 'x'
@@ -171,7 +164,6 @@ class Enemy1:
         if self.hp <= 0:
             money += self.reward
             enemies.remove(self)
-        
         return money
 
     def move(self):
@@ -196,18 +188,16 @@ class Enemy1:
     def attack(self, fortress):
         fortress.hp -= self.dmg
 
-    def draw(self):
-        """Рисует врага (пока нет изображения - просто круг)"""
-        pygame.draw.circle(self.screen, (0, 255, 0), (self.x, self.y), self.radius)
-    def draw1(self):
-        """Рисует врага (пока нет изображения - просто круг)"""
-        pygame.draw.circle(self.screen, (255, 0, 0), (self.x, self.y), self.radius)
+    def draw(self, time):
+        draw_enemy(self, time)
 
 
-class Fortress(Enemy1):
+class Fortress:
     """Класс описывающий главное здание"""
     def __init__(self, screen):
-        super().__init__(screen, 860, 300)
+        self.screen = screen
+        self.x = 860
+        self.y = 300
         self.hp = 10000
         self.is_alive = True
         self.radius = 20
@@ -227,4 +217,4 @@ class Fortress(Enemy1):
         return self.is_alive
 
     def draw(self):
-        super().draw()
+        pygame.draw.circle(self.screen, GREEN, (self.x, self.y), self.radius)

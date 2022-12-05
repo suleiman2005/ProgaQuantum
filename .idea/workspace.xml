@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="test">
+    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Осуществил постройку башен через кнопку в менюшке">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/Buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -31,14 +33,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/areme/ProgaQuantum",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/areme/ProgaQuantum&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.project&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="ProgaQuantum" />
@@ -47,7 +49,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\areme\ProgaQuantum\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\mihko\AppData\Local\Microsoft\WindowsApps\python3.10.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -78,7 +80,42 @@
       <option name="project" value="LOCAL" />
       <updated>1669922452656</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Починил кнопку улучшения">
+      <created>1669966502588</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1669966502588</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Реализованна продажа башен">
+      <created>1669967463344</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1669967463344</updated>
+    </task>
+    <task id="LOCAL-00004" summary="ААААА Я ВСЁЁЁ ПОЧИИНИИИЛ&#10;смена тестовых моделей врагов и башен при апгрейде">
+      <created>1669971606735</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669971606735</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Теперь программа смещает индексы при продаже башен и не случается list index out of range">
+      <created>1669972030056</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669972030056</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Осуществил постройку башен через кнопку в менюшке">
+      <created>1669993980324</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669993980324</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -94,6 +131,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="Починил кнопку улучшения" />
+    <MESSAGE value="Реализованна продажа башен" />
+    <MESSAGE value="ААААА Я ВСЁЁЁ ПОЧИИНИИИЛ&#10;смена тестовых моделей врагов и башен при апгрейде" />
+    <MESSAGE value="Теперь программа смещает индексы при продаже башен и не случается list index out of range" />
+    <MESSAGE value="Осуществил постройку башен через кнопку в менюшке" />
+    <option name="LAST_COMMIT_MESSAGE" value="Осуществил постройку башен через кнопку в менюшке" />
   </component>
 </project>
