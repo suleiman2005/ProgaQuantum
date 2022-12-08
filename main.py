@@ -30,12 +30,11 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 
-
 while not finished:
     screen.fill(WHITE)
     textures()
     clock.tick(FPS)
-    screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
+    screen.blit(text_font.render("Money " + str(money), True, (0, 0, 0)), (10, 10))
 
     for event in pygame.event.get():
 
@@ -134,7 +133,10 @@ while not finished:
     for tower in towers:
         tower.draw()
         if time % tower.speed == 0:
-            money = tower.shoot(enemies, money)
+            tower.shoot(enemies)
+    for bullet in bullets:
+        bullet.draw_and_move()
+        money = bullet.hit_enemies(money)
     fortress.hit(enemies)
     if not fortress.alive_or_not():
         finished = True

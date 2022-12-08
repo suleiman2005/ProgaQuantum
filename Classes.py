@@ -54,7 +54,31 @@ is_free_for_tower = [[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
                     ]
 enemies = []
 towers = []
+bullets = []
 
+class Bullet:
+    def __init__(self, x, y, vx, vy, dmg):
+        self.x = x
+        self.y = y
+        self.vx = vx
+        self.vy = vy
+        self.dmg = dmg
+        self.live = 1
+	
+    def draw_and_move(self):
+        draw_bullet(self.x, self.y)
+        self.x += self.vx
+        self.y += self.vy
+        
+    def hit_enemies(self, money):
+        for enemy in enemies:
+            if (enemy.x-self.x)**2 + (enemy.y-self.y)**2 <= enemy.radius**2:
+                money = enemy.hit(self.dmg, money)
+                bullets.remove(self)
+                break
+        return money
+                
+	
 
 class Tower1:
     """Класс первой башни (с дискретными снарядами)"""
@@ -89,16 +113,24 @@ class Tower1:
         self.attacked_enemy = None
         # Переменная, хранящая атакованного врага
 
-    def shoot(self, enemies, money):
+    def shoot(self, enemies):
         """ Функция выстрела по врагу
         enemies - список активных врагов на карте"""
         if self.attacked_enemy:
             if ((self.attacked_enemy.x - self.x) ** 2 + (self.attacked_enemy.y - self.y) ** 2) > self.radius ** 2 \
                     or self.attacked_enemy.hp <= 0:
                 self.attacked_enemy = None
-                money = self.shoot(enemies, money)
+                self.shoot(enemies)
             else:
-                money = self.attacked_enemy.hit(self.dmg, enemies, money)
+                self.angle = atan2(self.attacked_enemy.y - self.y, self.attacked_enemy.x - self.x)
+                vx = BULLET_SPEED * cos(self.angle)
+                vy = BULLET_SPEED * sin(self.angle)
+                if self.attacked_enemy.axis == 'x':
+                    vx += self.attacked_enemy.speed
+                else:
+                    vy += self.attacked_enemy.speed
+                bullet = Bullet(self.x, self.y, vx, vy, self.dmg)
+                bullets.append(bullet)
         else:
             min_distance = self.radius
             for enemy in enemies:
@@ -107,8 +139,7 @@ class Tower1:
                     min_distance = enemy_distance
                     self.attacked_enemy = enemy
             if self.attacked_enemy:
-                money = self.shoot(enemies, money)
-        return money
+                self.shoot(enemies)
 
     def upgrade(self):
         """Если уровень не максимальный и достаточно денег, улучшает башню"""
@@ -120,8 +151,6 @@ class Tower1:
     def draw(self):
         """Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,
         поэтому рисует круг с дулом)"""
-        if self.attacked_enemy:
-            self.angle = atan2(self.attacked_enemy.y - self.y, self.attacked_enemy.x - self.x)
         pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y),
                          (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
         draw_tower(self.x, self.y, self.level)
@@ -149,7 +178,7 @@ class Enemy1:
         #Ось движения юнита
         self.dmg = 10
         # Урон юнита по главной постройке
-        self.hp = 100
+        self.hp = 800
         # Здоровье юнита
         self.reward = 30
         # Вознаграждение за убийство юнита
@@ -158,7 +187,7 @@ class Enemy1:
         self.radius = 10
         # Временная (!!!!!) переменная, отвечающая за размер врага
 
-    def hit(self, tower_damage, enemies, money):
+    def hit(self, tower_damage, money):
         """Функция, отвечающая за боль и страдания юнита"""
         self.hp -= tower_damage
         if self.hp <= 0:
@@ -167,7 +196,7 @@ class Enemy1:
         return money
 
     def move(self):
-        """Функция, двигающаяя юнита (пока что написана только для движения по прямой, т.к. пока неизвестны координаты точек изгиба дороги)"""
+        """Функция, двигающаяя юнита"""
         if self.axis == 'x' and abv[stage-1][self.y // SIDE][(self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE] != 0:
             self.axis = 'y'
             self.x = (self.x//SIDE) * SIDE + SIDE // 2

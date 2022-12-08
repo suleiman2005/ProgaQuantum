@@ -1,6 +1,5 @@
 from Classes import *
-
-BLACK = (0, 0, 0)
+from Textures import *
 
 
 def erase_useless_buttons(buttons):

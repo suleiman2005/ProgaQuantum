@@ -58,6 +58,7 @@ road_surf = pygame.image.load("img/road.png")
 cloud_surf = pygame.image.load("img/cloud.png")
 WIDTH = 1200
 HEIGHT = 800
+BULLET_SPEED = 10
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 WHITE = (255, 255, 255)
@@ -73,6 +74,9 @@ def textures():
             elif abv[stage-1][a][b] == 0:
                 i = road_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(road_surf, i)
+
+def draw_bullet(x, y):
+	pygame.draw.circle(screen, BLACK, (x, y), 1)
 
 def draw_tower(x, y, z):
     if z == 0:
