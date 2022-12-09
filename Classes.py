@@ -246,4 +246,5 @@ class Fortress:
         return self.is_alive
 
     def draw(self):
-        pygame.draw.circle(self.screen, GREEN, (self.x, self.y), self.radius)
+        #pygame.draw.circle(self.screen, GREEN, (self.x, self.y), self.radius)
+        draw_fort(self)
