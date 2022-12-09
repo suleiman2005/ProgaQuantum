@@ -1,6 +1,7 @@
 import pygame
 from random import randint
 import numpy as np
+
 m = randint(3, 5)
 n = randint(3, 5)
 l = randint(3, 6)
@@ -178,4 +179,5 @@ def draw_enemy3(enemy, time):
 def draw_fort(fort):
     i = fort_surf.get_rect(center=((860), (290)))
     screen.blit(fort_surf, i)
+    pygame.draw.line(screen, (255, 0, 0), (810, 250), (810 + fort.hp//100, 250), 7)
 

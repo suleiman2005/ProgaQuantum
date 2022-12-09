@@ -27,6 +27,7 @@ time = 0
 Delta_t = 1
 x_square_light = -1
 y_square_light = -1
+active_tower = None
 flag_build = False
 flag_tower = False
 
@@ -53,6 +54,7 @@ while not finished:
             if event.button == 1 or event.button == 3:
                 erase_useless_buttons(buttons)
                 if event.pos[1] < 600:
+                    active_tower = None
                     x_square_light = event.pos[0] // SIDE
                     y_square_light = event.pos[1] // SIDE
                     if is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or abv[stage-1][y_square_light][x_square_light] == 3 or\
@@ -71,8 +73,9 @@ while not finished:
                     else:
                         flag_build = False
                         flag_tower = True
+                        active_tower = towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
                         text = "There is tower LVL " + \
-                               str(towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2].level)
+                               str(active_tower.level)
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                         buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
                 else:
@@ -101,6 +104,7 @@ while not finished:
                                 money, text = button.build_initiation(money, towers, screen, x_square_light,
                                                                       y_square_light, buttons, button,
                                                                       play_menu_text_surface, stage)
+                                active_tower = towers[is_free_for_tower[stage - 1][y_square_light][x_square_light] - 2]
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -114,6 +118,7 @@ while not finished:
                     if button.type == "build_button":
                         money, text = button.build_initiation(money, towers, screen, x_square_light, y_square_light, buttons,
                                                         button, play_menu_text_surface, stage)
+                        active_tower = towers[is_free_for_tower[stage - 1][y_square_light][x_square_light] - 2]
             elif event.key == pygame.K_x:
                 for button in buttons:
                     if button.type == "sell_button":
@@ -141,7 +146,7 @@ while not finished:
         enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
         enemies.append(enemy)
     elif random_number == 100:
-        enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
+        enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
         enemies.append(enemy)
 
 
@@ -158,6 +163,8 @@ while not finished:
 
     for tower in towers:
         tower.draw()
+        if active_tower:
+            pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
         if time % tower.speed == 0:
             tower.shoot(enemies)
     for bullet in bullets:
@@ -178,8 +185,6 @@ while not finished:
 
 if loose:
     game_over(text_font, clock, FPS)
-
-main_menu(text_font, clock, FPS)
 
 pygame.quit()
 

@@ -64,7 +64,7 @@ def game_over(text_font, clock, FPS):
     while game_over_parameter:
         game_over_screen.fill(BLACK)
         clock.tick(FPS)
-        game_over_screen.blit(game_over_font.render("YOU DEAD", True, RED), (400, 200))
+        game_over_screen.blit(game_over_font.render("YOU'RE DEAD", True, RED), (400, 200))
         for button in buttons:
             button.draw(WHITE)
         for event in pygame.event.get():

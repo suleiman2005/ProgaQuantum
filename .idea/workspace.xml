@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Теперь меню не отображает кнопку запуска игры, если игрок не выбрал уровень, выбранный игроком уровень подсвечивается красным">
+    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Теперь при нажатии на кнопку quit игрока выбрасывает в главное меню, сделан экран &quot;game over&quot; с возможностью выйти в главное меню или выйти из игры после поражения">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/Buttons.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Textures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Textures.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -151,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670604528605</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Теперь при нажатии на кнопку quit игрока выбрасывает в главное меню, сделан экран &quot;game over&quot; с возможностью выйти в главное меню или выйти из игры после поражения">
+      <created>1670606245445</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1670606245445</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -177,6 +183,7 @@
     <MESSAGE value="Сделал второй тип врагов через наследование" />
     <MESSAGE value="Одно малюсенькое исправление по классам, еоторое забыл в предыдущем коммите (буквально две строчки)" />
     <MESSAGE value="Теперь меню не отображает кнопку запуска игры, если игрок не выбрал уровень, выбранный игроком уровень подсвечивается красным" />
-    <option name="LAST_COMMIT_MESSAGE" value="Теперь меню не отображает кнопку запуска игры, если игрок не выбрал уровень, выбранный игроком уровень подсвечивается красным" />
+    <MESSAGE value="Теперь при нажатии на кнопку quit игрока выбрасывает в главное меню, сделан экран &quot;game over&quot; с возможностью выйти в главное меню или выйти из игры после поражения" />
+    <option name="LAST_COMMIT_MESSAGE" value="Теперь при нажатии на кнопку quit игрока выбрасывает в главное меню, сделан экран &quot;game over&quot; с возможностью выйти в главное меню или выйти из игры после поражения" />
   </component>
 </project>
