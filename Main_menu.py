@@ -4,6 +4,7 @@ import pygame
 
 RED = (255, 0, 0)
 BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 
 
 def main_menu(text_font, clock, FPS):
@@ -52,3 +53,30 @@ def main_menu(text_font, clock, FPS):
                 pygame.quit()
         pygame.display.update()
     return game_level
+
+
+def game_over(text_font, clock, FPS):
+    game_over_screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    game_over_font = pygame.font.Font(None, 75)
+    buttons = [ExitToMainMenuButton(game_over_screen, 500, 500, text_font), ExitButton(game_over_screen, 500, 600, text_font)]
+    game_over_parameter = True
+
+    while game_over_parameter:
+        game_over_screen.fill(BLACK)
+        clock.tick(FPS)
+        game_over_screen.blit(game_over_font.render("YOU DEAD", True, RED), (400, 200))
+        for button in buttons:
+            button.draw(WHITE)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    for button in buttons:
+                        if button.is_pressed(event):
+                            if button.type == "exit_button":
+                                pygame.quit()
+                            if button.type == "start_button":
+                                game_over_parameter = False
+
+        pygame.display.update()

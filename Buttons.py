@@ -147,4 +147,9 @@ class SelectButton3(SelectButton1):
         self.type = "level3_button"
 
 
+class ExitToMainMenuButton(StartButton):
+    def draw(self, COLOUR):
+        self.screen.blit(self.text_font.render("Exit to main menu", True, COLOUR), (self.x, self.y))
+
+
 

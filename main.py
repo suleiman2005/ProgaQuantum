@@ -19,6 +19,7 @@ play_menu_surface = pygame.transform.scale(play_menu_surface, (play_menu_surface
 play_menu_rect = play_menu_surface.get_rect(center=(WIDTH // 2, 700))
 clock = pygame.time.Clock()
 finished = False
+loose = False
 fortress = Fortress(screen)
 buttons = [QuitButton(screen, 1100, 0, text_font)]
 money = 200
@@ -128,7 +129,7 @@ while not finished:
                         buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
 
         elif event.type == pygame.QUIT:
-            finished = True
+            pygame.quit()
 
     if x_square_light != -1:
         pygame.draw.polygon(screen, GREEN, ((x_square_light*SIDE, y_square_light*SIDE),
@@ -165,6 +166,7 @@ while not finished:
     fortress.hit(enemies)
     if not fortress.alive_or_not():
         finished = True
+        loose = True
 
     time += Delta_t
     screen.blit(play_menu_surface, play_menu_rect)
@@ -173,6 +175,11 @@ while not finished:
         button.draw()
     fortress.draw()
     pygame.display.update()
+
+if loose:
+    game_over(text_font, clock, FPS)
+
+main_menu(text_font, clock, FPS)
 
 pygame.quit()
 
