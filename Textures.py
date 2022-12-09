@@ -3,10 +3,13 @@ from random import randint
 import numpy as np
 m = randint(3, 5)
 n = randint(3, 5)
-l = randint(3, 5)
-k = randint(3, 5)
-o = randint(5, 6)
-p = randint(5, 7)
+l = randint(3, 6)
+k = randint(3, 6)
+o = randint(5, 7)
+p = randint(5, 8)
+r = randint(3, 6)
+s = randint(3, 6)
+t = randint(3, 5)
 
 
 abv = [[[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
@@ -41,21 +44,21 @@ abv = [[[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
         [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
         [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
        ],
-       [[1,1,1,1,1,m,1,1,1,1,1,1,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+       [[1,1,1,1,1,m,1,1,1,1,1,1,9,1,1,1,1,m,1,1,1,1,t,1,l,1,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,1,1,1,1,1,1,1,1,9,9,1,1,1,1,1,9,9,9,1,1,1,k,1,1,1,1,0,1],
-        [1,0,9,1,1,1,1,n,1,1,1,1,1,9,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,1,1,m,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [0,0,1,1,1,1,1,1,9,0,0,0,0,0,0,0,9,1,1,6,1,1,1,1,m,n,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,0,l,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,9,1,1,1,l,1,1],
-        [1,1,1,1,1,m,1,1,1,0,9,1,1,1,1,1,1,1,1,1,1,1,l,1,1,1,1,1,1,1],
+        [1,0,1,s,1,1,1,1,1,m,9,9,1,1,1,r,1,9,9,9,1,1,1,k,1,1,k,1,0,1],
+        [1,0,9,1,s,1,1,n,1,1,1,1,1,9,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,1,1,m,1,1,1,1,1,r,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,l],
+        [0,0,1,1,1,1,1,1,9,0,0,0,0,0,0,0,9,1,1,k,1,1,1,8,m,n,1,1,1,1],
+        [1,1,1,1,1,1,1,k,1,0,l,9,1,1,1,1,k,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,o,1,p,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,9,1,1,n,l,1,1],
+        [1,1,1,1,1,m,1,1,1,0,9,1,1,m,1,1,1,1,1,k,1,1,l,1,1,1,1,1,1,1],
         [0,0,9,1,k,1,1,1,9,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,o,9,1,1,1,1],
-        [1,0,1,9,1,1,1,1,1,1,1,1,1,1,1,0,1,1,9,1,1,1,1,1,9,1,1,1,1,1],
-        [1,0,1,1,1,1,1,1,p,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,1,9,1,1,1,1,1,1,1,1,1,1,1,9,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+        [t,0,1,9,1,n,1,1,1,1,l,1,r,1,1,0,1,1,9,1,1,1,1,1,9,1,1,1,1,1],
+        [1,0,1,1,1,1,1,1,p,1,1,1,s,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,t,9,1,s,1,1,1,1,1,1,1,p,1,9,1,m,1,1,n,1,1,1,1,1,1,1,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-        [1,1,1,1,1,1,1,n,1,1,1,1,1,1,1,1,1,1,1,1,1,1,n,1,1,1,1,1,1,1]
+        [1,1,t,s,1,1,1,n,1,1,1,1,1,n,1,r,1,1,1,l,1,1,n,1,1,1,1,1,1,1]
        ]
       ]
 
@@ -68,11 +71,15 @@ cloud_surf = pygame.image.load("img/cloud.png")
 ss1_surf = pygame.image.load("img/ss1.png")
 ss2_surf = pygame.image.load("img/ss2.png")
 ss3_surf = pygame.image.load("img/ss3.png")
+ss4_surf = pygame.image.load("img/ss4.png")
 stone_surf = pygame.image.load("img/stone.png")
 lake_surf = pygame.image.load("img/lake.png")
-enemy1_surf = pygame.image.load("img/enemy1-t.png")
-enemy2_surf = pygame.image.load("img/enemy2-t.png")
+enemy1_surf = pygame.image.load("img/11.png")
+enemy2_surf = pygame.image.load("img/12.png")
+enemy3_surf = pygame.image.load("img/13.png")
+enemy4_surf = pygame.image.load("img/14.png")
 fort_surf = pygame.image.load("img/mom-tower-t.png")
+dmg_surf = pygame.image.load("img/dmg.png")
 WIDTH = 1200
 HEIGHT = 800
 BULLET_SPEED = 10
@@ -104,9 +111,12 @@ def textures():
                 i = ss3_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(ss3_surf, i)
             elif abv[stage - 1][a][b] == 6:
+                i = ss4_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+                screen.blit(ss4_surf, i)
+            elif abv[stage - 1][a][b] == 7:
                 i = stone_surf.get_rect(center=(0 + (b * 40), (a * 40) + 0))
                 screen.blit(stone_surf, i)
-            elif abv[stage - 1][a][b] == 7:
+            elif abv[stage - 1][a][b] == 8:
                 i = lake_surf.get_rect(center=(0 + (b * 40), (a * 40) + 0))
                 screen.blit(lake_surf, i)
 
@@ -115,37 +125,40 @@ def draw_bullet(x, y):
 	pygame.draw.circle(screen, BLACK, (x, y), 1)
 
 def draw_tower(x, y, z):
-    if z == 0:
-        tower_surf = pygame.image.load("img/test_bashnya.png")
-        i = tower_surf.get_rect(center=(x, y))
-        screen.blit(tower_surf, i)
     if z == 1:
-        tower_surf = pygame.image.load("img/test_bashnya1.png")
+        tower_surf = pygame.image.load("img/tt1.png")
         i = tower_surf.get_rect(center=(x, y))
         screen.blit(tower_surf, i)
     if z == 2:
-        tower_surf = pygame.image.load("img/test_bashnya2.png")
+        tower_surf = pygame.image.load("img/tt2.png")
         i = tower_surf.get_rect(center=(x, y))
         screen.blit(tower_surf, i)
     if z == 3:
-        tower_surf = pygame.image.load("img/test_bashnya3.png")
+        tower_surf = pygame.image.load("img/tt3.png")
         i = tower_surf.get_rect(center=(x, y))
         screen.blit(tower_surf, i)
 
 def draw_enemy(enemy, time):
-    #if float((time - time_creation)//100) == float((time - time_creation)/100):
-    #       pygame.draw.circle(screen, (255, 0, 0), (x, y), 10)
     change = time - enemy.time_creation
+    if enemy.tik == 0:
+        enemy.tik = 4
     if change//40 == change/40:
-        enemy.tik *= -1
-    if enemy.tik == 1:
-        #pygame.draw.circle(enemy.screen, (255, 0, 0), (enemy.x, enemy.y), 10)
+        enemy.tik -= 1
+    if enemy.tik == 4:
         i = enemy1_surf.get_rect(center=( (enemy.x), (enemy.y) ))
         screen.blit(enemy1_surf, i)
-    if enemy.tik == -1:
-        #pygame.draw.circle(enemy.screen, (0, 255, 0), (enemy.x, enemy.y), 10)
+    if enemy.tik == 3:
         i = enemy2_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
         screen.blit(enemy2_surf, i)
+    if enemy.tik == 2:
+        i = enemy3_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        screen.blit(enemy3_surf, i)
+    if enemy.tik == 1:
+        i = enemy4_surf.get_rect(center=((enemy.x), (enemy.y)))
+        screen.blit(enemy4_surf, i)
+    if enemy.hp < 50:
+        i = dmg_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        screen.blit(dmg_surf, i)
 def draw_fort(fort):
     i = fort_surf.get_rect(center=((860), (290)))
     screen.blit(fort_surf, i)

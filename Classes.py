@@ -171,14 +171,14 @@ class Enemy1:
         self.screen = screen
         self.x = x
         self.y = y
-        self.tik = 1
+        self.tik = 4
         self.speed = 1
         # Скорость юнита
         self.axis = 'x'
         #Ось движения юнита
         self.dmg = 10
         # Урон юнита по главной постройке
-        self.hp = 800
+        self.hp = 110
         # Здоровье юнита
         self.reward = 30
         # Вознаграждение за убийство юнита
@@ -186,6 +186,7 @@ class Enemy1:
         # Изображение юнита
         self.radius = 10
         # Временная (!!!!!) переменная, отвечающая за размер врага
+
 
     def hit(self, tower_damage, money):
         """Функция, отвечающая за боль и страдания юнита"""
@@ -229,8 +230,6 @@ class Fortress:
         self.y = 300
         self.hp = 10000
         self.is_alive = True
-        self.radius = 20
-        # Временная (!!!!!)
 
     def hit(self, enemies):
         """Функция, отвечающая за повреждения главного здания"""
@@ -246,5 +245,4 @@ class Fortress:
         return self.is_alive
 
     def draw(self):
-        #pygame.draw.circle(self.screen, GREEN, (self.x, self.y), self.radius)
         draw_fort(self)
