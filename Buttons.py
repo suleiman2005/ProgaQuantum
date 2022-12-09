@@ -110,8 +110,8 @@ class StartButton(Button):
         super().__init__(screen, x, y, text_font, width, height, colour)
         self.type = "start_button"
 
-    def draw(self):
-        self.screen.blit(self.text_font.render("Start Game", True, BLACK), (self.x, self.y))
+    def draw(self, COLOUR):
+        self.screen.blit(self.text_font.render("Start Game", True, COLOUR), (self.x, self.y))
 
 
 class ExitButton(Button):
@@ -119,8 +119,8 @@ class ExitButton(Button):
         super().__init__(screen, x, y, text_font, width=200, height=50, colour=(255, 0, 0))
         self.type = "exit_button"
 
-    def draw(self):
-        self.screen.blit(self.text_font.render("Exit", True, BLACK), (self.x, self.y))
+    def draw(self, COLOUR):
+        self.screen.blit(self.text_font.render("Exit", True, COLOUR), (self.x, self.y))
 
 
 class SelectButton1(Button):
@@ -129,8 +129,8 @@ class SelectButton1(Button):
         self.name = "level 1"
         self.type = "level1_button"
 
-    def draw(self):
-        self.screen.blit(self.text_font.render(self.name, True, BLACK), (self.x, self.y))
+    def draw(self, COLOUR):
+        self.screen.blit(self.text_font.render(self.name, True, COLOUR), (self.x, self.y))
 
 
 class SelectButton2(SelectButton1):

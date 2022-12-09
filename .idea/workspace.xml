@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Сделал второй тип врагов через наследование">
-      <change beforePath="$PROJECT_DIR$/Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Одно малюсенькое исправление по классам, еоторое забыл в предыдущем коммите (буквально две строчки)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/Buttons.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_menu.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670603128191</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Одно малюсенькое исправление по классам, еоторое забыл в предыдущем коммите (буквально две строчки)">
+      <created>1670603507511</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1670603507511</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,6 +166,7 @@
     <MESSAGE value="некоторые test модели и случайный ландшафт" />
     <MESSAGE value="Теперь выбор уровня в меню действительно на что-то влияет" />
     <MESSAGE value="Сделал второй тип врагов через наследование" />
-    <option name="LAST_COMMIT_MESSAGE" value="Сделал второй тип врагов через наследование" />
+    <MESSAGE value="Одно малюсенькое исправление по классам, еоторое забыл в предыдущем коммите (буквально две строчки)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Одно малюсенькое исправление по классам, еоторое забыл в предыдущем коммите (буквально две строчки)" />
   </component>
 </project>
