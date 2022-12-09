@@ -62,8 +62,6 @@ abv = [[[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
        ]
       ]
 
-stage = 3      
-
 grass_surf = pygame.image.load("img/t1gr.png")
 grass1_surf = pygame.image.load("img/t2gr.png")
 road_surf = pygame.image.load("img/t1ro.png")
@@ -90,12 +88,15 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 
-def textures():
+def textures(stage):
     for a in range(15):
         for b in range(30):
             if abv[stage-1][a][b] == 1:
                 i = grass_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(grass_surf, i)
+            elif abv[stage-1][a][b] == 2:
+                i = cloud_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+                screen.blit(cloud_surf, i)
             elif abv[stage-1][a][b] == 9:
                 i = grass1_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(grass1_surf, i)

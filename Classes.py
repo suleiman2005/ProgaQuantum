@@ -52,6 +52,8 @@ is_free_for_tower = [[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
                       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
                      ]
                     ]
+
+start_positions = [[180, 420, 620], [140, 460, 1060], [220, 380, 0]]
 enemies = []
 enemies1 = []
 towers = []
@@ -83,7 +85,7 @@ class Bullet:
 
 class Tower1:
     """Класс первой башни (с дискретными снарядами)"""
-    def __init__(self, screen, x_square, y_square):
+    def __init__(self, screen, stage, x_square, y_square):
         global is_free_for_tower
         self.x_square = x_square
         self.y_square = y_square
@@ -157,7 +159,7 @@ class Tower1:
                          (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
         draw_tower(self.x, self.y, self.level)
 
-    def sell(self, towers):
+    def sell(self, stage, towers):
         """Функция продажи башни"""
         for tower_index in range(len(towers)):
             if tower_index > is_free_for_tower[stage-1][self.y_square][self.x_square] - 2:
@@ -199,7 +201,7 @@ class Enemy1:
             enemies.remove(self)
         return money
 
-    def move(self):
+    def move(self, stage):
         """Функция, двигающаяя юнита"""
         if self.axis == 'x' and abv[stage-1][self.y // SIDE][(self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE] != 0:
             self.axis = 'y'
@@ -258,7 +260,7 @@ class Enemy2:
             enemies.remove(self)
         return money
 
-    def move(self):
+    def move(self, stage):
         """Функция, двигающаяя юнита"""
         if self.axis == 'x' and abv[stage-1][self.y // SIDE][(self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE] != 0:
             self.axis = 'y'

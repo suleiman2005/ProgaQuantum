@@ -96,7 +96,7 @@ class BuildButton(Button):
         else:
             abv[stage-1][y_square_light][x_square_light] = 1
             text = "There is tower LVL " + str(1)
-            tower = Tower1(screen, x_square_light, y_square_light)
+            tower = Tower1(screen, stage, x_square_light, y_square_light)
             towers.append(tower)
             buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
             buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))

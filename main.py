@@ -24,7 +24,7 @@ buttons = [QuitButton(screen, 1100, 0, text_font)]
 money = 200
 time = 0
 Delta_t = 1
-game_level = 0
+#game_level = 0
 x_square_light = -1
 y_square_light = -1
 flag_build = False
@@ -34,11 +34,12 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 
-main_menu(game_level, text_font, clock, FPS)
+stage = main_menu(text_font, clock, FPS)
 
 while not finished:
     screen.fill(WHITE)
-    textures()
+    #stage = game_level
+    textures(stage)
     clock.tick(FPS)
     screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
 
@@ -92,7 +93,7 @@ while not finished:
                                 while twr.level > 1:
                                     money += twr.upgrade_price[twr.level - 1] / 2
                                     twr.level -= 1
-                                twr.sell(towers)
+                                twr.sell(stage, towers)
                                 text = "You can build tower there"
                                 erase_useless_buttons(buttons)
                                 buttons.remove(button)
@@ -122,7 +123,7 @@ while not finished:
                         while twr.level > 1:
                             money += twr.upgrade_price[twr.level - 1] / 2
                             twr.level -= 1
-                        twr.sell(towers)
+                        twr.sell(stage, towers)
                         text = "You can build tower there"
                         erase_useless_buttons(buttons)
                         buttons.remove(button)
@@ -138,22 +139,22 @@ while not finished:
                                             (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)
     random_number = rnd.randint(1, 100)
     if random_number == 1:
-        enemy = Enemy1(screen, 0, 220, time)
+        enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
         enemies.append(enemy)
     elif random_number == 100:
-        enemy = Enemy1(screen, 0, 380, time)
+        enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
         enemies.append(enemy)
 
 
     random_number = rnd.randint(1, 1000)
     if random_number == 1:
-        enemy = Enemy2(screen, 0, 220, time)
+        enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
         enemies.append(enemy)
     elif random_number == 100:
-        enemy = Enemy2(screen, 0, 380, time)
+        enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
         enemies.append(enemy)
     for enemy in enemies:
-        enemy.move()
+        enemy.move(stage)
         enemy.draw(time)
 
     for tower in towers:

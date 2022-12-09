@@ -3,7 +3,8 @@ from Buttons import *
 import pygame
 
 
-def main_menu(game_level, text_font, clock, FPS):
+def main_menu(text_font, clock, FPS):
+    game_level = 0
     main_menu_screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
     buttons = [StartButton(main_menu_screen, 500, 200, text_font), ExitButton(main_menu_screen, 500, 700, text_font),
@@ -36,3 +37,4 @@ def main_menu(game_level, text_font, clock, FPS):
                             elif button.type == "level3_button":
                                 game_level = 3
         pygame.display.update()
+    return game_level
