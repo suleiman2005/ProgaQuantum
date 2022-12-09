@@ -24,7 +24,6 @@ buttons = [QuitButton(screen, 1100, 0, text_font)]
 money = 200
 time = 0
 Delta_t = 1
-#game_level = 0
 x_square_light = -1
 y_square_light = -1
 flag_build = False
@@ -38,7 +37,6 @@ stage = main_menu(text_font, clock, FPS)
 
 while not finished:
     screen.fill(WHITE)
-    #stage = game_level
     textures(stage)
     clock.tick(FPS)
     screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Теперь выбор уровня в меню действительно на что-то влияет">
+    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Сделал второй тип врагов через наследование">
       <change beforePath="$PROJECT_DIR$/Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670602731136</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Сделал второй тип врагов через наследование">
+      <created>1670603128191</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1670603128191</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -149,6 +157,7 @@
     <MESSAGE value="Осуществил постройку башен через кнопку в менюшке" />
     <MESSAGE value="некоторые test модели и случайный ландшафт" />
     <MESSAGE value="Теперь выбор уровня в меню действительно на что-то влияет" />
-    <option name="LAST_COMMIT_MESSAGE" value="Теперь выбор уровня в меню действительно на что-то влияет" />
+    <MESSAGE value="Сделал второй тип врагов через наследование" />
+    <option name="LAST_COMMIT_MESSAGE" value="Сделал второй тип врагов через наследование" />
   </component>
 </project>

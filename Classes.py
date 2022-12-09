@@ -229,6 +229,11 @@ class Enemy1:
 
 class Enemy2(Enemy1):
     """Класс, описывающий 2 тип врага"""
+    def __init__(self, screen, x, y, time_creation):
+        super().__init__(screen, x, y, time_creation)
+        self.hp = 2800
+        self.reward = 50
+
     def draw(self, time):
         draw_enemy1(self, time)
 
