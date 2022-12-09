@@ -44,7 +44,7 @@ abv = [[[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
         [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
         [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
        ],
-       [[1,1,1,1,1,m,1,1,1,1,1,1,9,1,1,1,1,m,1,1,1,1,t,1,l,1,1,1,1,1],
+       [[1,1,1,1,1,m,1,3,4,5,6,1,9,1,1,1,1,m,1,1,1,1,t,1,l,1,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
         [1,0,1,s,1,1,1,1,1,m,9,9,1,1,1,r,1,9,9,9,1,1,1,k,1,1,k,1,0,1],
         [1,0,9,1,s,1,1,n,1,1,1,1,1,9,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -80,6 +80,7 @@ enemy3_surf = pygame.image.load("img/13.png")
 enemy4_surf = pygame.image.load("img/14.png")
 fort_surf = pygame.image.load("img/mom-tower-t.png")
 dmg_surf = pygame.image.load("img/dmg.png")
+prb_surf = pygame.image.load("img/prb.png")
 WIDTH = 1200
 HEIGHT = 800
 BULLET_SPEED = 10
@@ -137,6 +138,10 @@ def draw_tower(x, y, z):
         tower_surf = pygame.image.load("img/tt3.png")
         i = tower_surf.get_rect(center=(x, y))
         screen.blit(tower_surf, i)
+def draw_tower1(x, y, z):
+    tower_surf = pygame.image.load("img/tt1.png")
+    i = tower_surf.get_rect(center=(x, y))
+    screen.blit(tower_surf, i)
 
 def draw_enemy(enemy, time):
     change = time - enemy.time_creation
@@ -159,6 +164,16 @@ def draw_enemy(enemy, time):
     if enemy.hp < 50:
         i = dmg_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
         screen.blit(dmg_surf, i)
+def draw_enemy1(enemy, time):
+    change = time - enemy.time_creation
+    i = prb_surf.get_rect(center=((enemy.x), (enemy.y)))
+    screen.blit(prb_surf, i)
+def draw_enemy3(enemy, time):
+    change = time - enemy.time_creation
+    i = cloud_surf.get_rect(center=((enemy.x), (enemy.y)))
+    screen.blit(cloud_surf, i)
+
+
 def draw_fort(fort):
     i = fort_surf.get_rect(center=((860), (290)))
     screen.blit(fort_surf, i)

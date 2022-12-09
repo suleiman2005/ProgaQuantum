@@ -143,9 +143,19 @@ while not finished:
     elif random_number == 100:
         enemy = Enemy1(screen, 0, 380, time)
         enemies.append(enemy)
+
+
+    random_number = rnd.randint(1, 1000)
+    if random_number == 1:
+        enemy = Enemy2(screen, 0, 220, time)
+        enemies.append(enemy)
+    elif random_number == 100:
+        enemy = Enemy2(screen, 0, 380, time)
+        enemies.append(enemy)
     for enemy in enemies:
         enemy.move()
         enemy.draw(time)
+
     for tower in towers:
         tower.draw()
         if time % tower.speed == 0:

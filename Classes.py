@@ -53,6 +53,7 @@ is_free_for_tower = [[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
                      ]
                     ]
 enemies = []
+enemies1 = []
 towers = []
 bullets = []
 
@@ -141,6 +142,7 @@ class Tower1:
             if self.attacked_enemy:
                 self.shoot(enemies)
 
+
     def upgrade(self):
         """Если уровень не максимальный и достаточно денег, улучшает башню"""
         self.level += 1
@@ -171,14 +173,15 @@ class Enemy1:
         self.screen = screen
         self.x = x
         self.y = y
+        self.type = 1
         self.tik = 4
-        self.speed = 1
+        self.speed = 2
         # Скорость юнита
         self.axis = 'x'
         #Ось движения юнита
         self.dmg = 10
         # Урон юнита по главной постройке
-        self.hp = 110
+        self.hp = 200
         # Здоровье юнита
         self.reward = 30
         # Вознаграждение за убийство юнита
@@ -221,6 +224,64 @@ class Enemy1:
     def draw(self, time):
         draw_enemy(self, time)
 
+
+class Enemy2:
+    """Класс, описывающий 2 тип врага"""
+    def __init__(self, screen, x, y, time_creation):
+        self.time_creation = time_creation
+        self.screen = screen
+        self.x = x
+        self.y = y
+        self.type = 2
+        self.tik = 4
+        self.speed = 1
+        # Скорость юнита
+        self.axis = 'x'
+        #Ось движения юнита
+        self.dmg = 10
+        # Урон юнита по главной постройке
+        self.hp = 2800
+        # Здоровье юнита
+        self.reward = 30
+        # Вознаграждение за убийство юнита
+        self.image = np.array([])
+        # Изображение юнита
+        self.radius = 10
+        # Временная (!!!!!) переменная, отвечающая за размер врага
+
+
+    def hit(self, tower_damage, money):
+        """Функция, отвечающая за боль и страдания юнита"""
+        self.hp -= tower_damage
+        if self.hp <= 0:
+            money += self.reward
+            enemies.remove(self)
+        return money
+
+    def move(self):
+        """Функция, двигающаяя юнита"""
+        if self.axis == 'x' and abv[stage-1][self.y // SIDE][(self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE] != 0:
+            self.axis = 'y'
+            self.x = (self.x//SIDE) * SIDE + SIDE // 2
+            if abv[stage-1][(self.y+np.sign(self.speed)*(SIDE//2+1)) // SIDE][self.x // SIDE] != 0:
+                self.speed = -self.speed
+        elif self.axis == 'y' and (abv[stage-1][(self.y+np.sign(self.speed)*(SIDE//2+1)) // SIDE][self.x // SIDE] != 0 or abs(self.y - 300) <= abs(self.speed) / 2):
+            self.axis = 'x'
+            self.y = (self.y//SIDE) * SIDE + SIDE // 2
+            if abv[stage-1][self.y // SIDE][(self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE] != 0:
+                self.speed = -self.speed
+        if self.axis == 'x':
+            self.x += self.speed
+        else:
+            self.y += self.speed
+        if self.y == 300 and self.x >= 840:
+            self.x = 840
+
+    def attack(self, fortress):
+        fortress.hp -= self.dmg
+
+    def draw(self, time):
+        draw_enemy1(self, time)
 
 class Fortress:
     """Класс описывающий главное здание"""
