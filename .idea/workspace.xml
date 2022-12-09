@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="некоторые test модели и случайный ландшафт">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_11_35_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_11_35__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_11_35__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_12_2022_11_35__Changes_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09_12_2022_12_06__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09_12_2022_12_06__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/Buttons.py" afterDir="false" />
+    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Теперь выбор уровня в меню действительно на что-то влияет">
       <change beforePath="$PROJECT_DIR$/Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Textures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Textures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670566121921</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Теперь выбор уровня в меню действительно на что-то влияет">
+      <created>1670602731136</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670602731136</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -150,6 +148,7 @@
     <MESSAGE value="Теперь программа смещает индексы при продаже башен и не случается list index out of range" />
     <MESSAGE value="Осуществил постройку башен через кнопку в менюшке" />
     <MESSAGE value="некоторые test модели и случайный ландшафт" />
-    <option name="LAST_COMMIT_MESSAGE" value="некоторые test модели и случайный ландшафт" />
+    <MESSAGE value="Теперь выбор уровня в меню действительно на что-то влияет" />
+    <option name="LAST_COMMIT_MESSAGE" value="Теперь выбор уровня в меню действительно на что-то влияет" />
   </component>
 </project>
