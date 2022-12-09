@@ -1,6 +1,7 @@
 from Textures import *
 from Buttons import *
 from Classes import *
+from Main_menu import *
 import random as rnd
 
 
@@ -23,6 +24,7 @@ buttons = [QuitButton(screen, 1100, 0, text_font)]
 money = 200
 time = 0
 Delta_t = 1
+game_level = 0
 x_square_light = -1
 y_square_light = -1
 flag_build = False
@@ -31,6 +33,8 @@ flag_tower = False
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
+
+main_menu(game_level, text_font, clock, FPS)
 
 while not finished:
     screen.fill(WHITE)
