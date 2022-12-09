@@ -89,11 +89,12 @@ class BuildButton(Button):
     def draw(self):
         self.screen.blit(self.text_font.render("Build tower (z)", True, BLACK), (self.x, self.y + self.height / 10))
 
-    def build_initiation(self, money, towers, screen, x_square_light, y_square_light, buttons, button, play_menu_text_surface):
+    def build_initiation(self, money, towers, screen, x_square_light, y_square_light, buttons, button, play_menu_text_surface, stage):
         """функция, запускающая процесс постройки"""
         if money < 100:
             text = "Not enough money"
         else:
+            abv[stage-1][y_square_light][x_square_light] = 1
             text = "There is tower LVL " + str(1)
             tower = Tower1(screen, x_square_light, y_square_light)
             towers.append(tower)

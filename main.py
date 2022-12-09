@@ -25,6 +25,8 @@ time = 0
 Delta_t = 1
 x_square_light = -1
 y_square_light = -1
+flag_build = False
+flag_tower = False
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -34,7 +36,7 @@ while not finished:
     screen.fill(WHITE)
     textures()
     clock.tick(FPS)
-    screen.blit(text_font.render("Money " + str(money), True, (0, 0, 0)), (10, 10))
+    screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
 
     for event in pygame.event.get():
 
@@ -44,25 +46,35 @@ while not finished:
                 if button.is_pressed(event):
                     if button.type == "quit_button":
                         finished = True
-            if event.button == 1:
+            if event.button == 1 or event.button == 3:
                 erase_useless_buttons(buttons)
                 if event.pos[1] < 600:
                     x_square_light = event.pos[0] // SIDE
                     y_square_light = event.pos[1] // SIDE
-                    if is_free_for_tower[stage-1][y_square_light][x_square_light] == 0:
+                    if is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or abv[stage-1][y_square_light][x_square_light] == 3 or\
+                       {abv[stage-1][y_square_light][x_square_light],\
+                        abv[stage-1][min(15, y_square_light+1)][x_square_light],\
+                        abv[stage-1][min(15, y_square_light+1)][min(30, x_square_light+1)],\
+                        abv[stage-1][y_square_light][min(30, x_square_light+1)]}.intersection({7,8}) != set():
+                        flag_build = False
+                        flag_tower = False
                         text = "You can't build tower there"
                     elif is_free_for_tower[stage-1][y_square_light][x_square_light] == 1:
+                        flag_build = True
+                        flag_tower = False
                         text = "You can build tower there"
                         buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
                     else:
+                        flag_build = False
+                        flag_tower = True
                         text = "There is tower LVL " + \
                                str(towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2].level)
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                         buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
                 else:
-                    if is_free_for_tower[stage-1][y_square_light][x_square_light] == 1:
+                    if flag_build:
                         buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
-                    elif is_free_for_tower[stage-1][y_square_light][x_square_light] > 1:
+                    elif flag_tower:
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                         buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
                     for button in buttons:
@@ -84,7 +96,7 @@ while not finished:
                             if button.type == "build_button":
                                 money, text = button.build_initiation(money, towers, screen, x_square_light,
                                                                       y_square_light, buttons, button,
-                                                                      play_menu_text_surface)
+                                                                      play_menu_text_surface, stage)
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -97,7 +109,7 @@ while not finished:
                             money, text = button.upgrade_initiation(twr, money)
                     if button.type == "build_button":
                         money, text = button.build_initiation(money, towers, screen, x_square_light, y_square_light, buttons,
-                                                        button, play_menu_text_surface)
+                                                        button, play_menu_text_surface, stage)
             elif event.key == pygame.K_x:
                 for button in buttons:
                     if button.type == "sell_button":
