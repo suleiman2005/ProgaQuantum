@@ -19,14 +19,15 @@ play_menu_surface = pygame.transform.scale(play_menu_surface, (play_menu_surface
 play_menu_rect = play_menu_surface.get_rect(center=(WIDTH // 2, 700))
 clock = pygame.time.Clock()
 finished = False
+loose = False
 fortress = Fortress(screen)
 buttons = [QuitButton(screen, 1100, 0, text_font)]
 money = 200
 time = 0
 Delta_t = 1
-game_level = 0
 x_square_light = -1
 y_square_light = -1
+active_tower = None
 flag_build = False
 flag_tower = False
 
@@ -34,11 +35,11 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 
-main_menu(game_level, text_font, clock, FPS)
+stage = main_menu(text_font, clock, FPS)
 
 while not finished:
     screen.fill(WHITE)
-    textures()
+    textures(stage)
     clock.tick(FPS)
     screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
     screen.blit(text_font.render("FPS: " + str(int(clock.get_fps())), True, (0, 0, 0)), (500, 10))
@@ -54,6 +55,7 @@ while not finished:
             if event.button == 1 or event.button == 3:
                 erase_useless_buttons(buttons)
                 if event.pos[1] < 600:
+                    active_tower = None
                     x_square_light = event.pos[0] // SIDE
                     y_square_light = event.pos[1] // SIDE
                     if is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or abv[stage-1][y_square_light][x_square_light] == 3 or\
@@ -72,8 +74,9 @@ while not finished:
                     else:
                         flag_build = False
                         flag_tower = True
+                        active_tower = towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
                         text = "There is tower LVL " + \
-                               str(towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2].level)
+                               str(active_tower.level)
                         buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                         buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
                 else:
@@ -93,7 +96,7 @@ while not finished:
                                 while twr.level > 1:
                                     money += twr.upgrade_price[twr.level - 1] / 2
                                     twr.level -= 1
-                                twr.sell(towers)
+                                twr.sell(stage, towers)
                                 text = "You can build tower there"
                                 erase_useless_buttons(buttons)
                                 buttons.remove(button)
@@ -102,6 +105,7 @@ while not finished:
                                 money, text = button.build_initiation(money, towers, screen, x_square_light,
                                                                       y_square_light, buttons, button,
                                                                       play_menu_text_surface, stage)
+                                active_tower = towers[is_free_for_tower[stage - 1][y_square_light][x_square_light] - 2]
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -115,6 +119,7 @@ while not finished:
                     if button.type == "build_button":
                         money, text = button.build_initiation(money, towers, screen, x_square_light, y_square_light, buttons,
                                                         button, play_menu_text_surface, stage)
+                        active_tower = towers[is_free_for_tower[stage - 1][y_square_light][x_square_light] - 2]
             elif event.key == pygame.K_x:
                 for button in buttons:
                     if button.type == "sell_button":
@@ -123,14 +128,14 @@ while not finished:
                         while twr.level > 1:
                             money += twr.upgrade_price[twr.level - 1] / 2
                             twr.level -= 1
-                        twr.sell(towers)
+                        twr.sell(stage, towers)
                         text = "You can build tower there"
                         erase_useless_buttons(buttons)
                         buttons.remove(button)
                         buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
 
         elif event.type == pygame.QUIT:
-            finished = True
+            pygame.quit()
 
     if x_square_light != -1:
         pygame.draw.polygon(screen, GREEN, ((x_square_light*SIDE, y_square_light*SIDE),
@@ -139,26 +144,28 @@ while not finished:
                                             (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)
     random_number = rnd.randint(1, 100)
     if random_number == 1:
-        enemy = Enemy1(screen, 0, 220, time)
+        enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
         enemies.append(enemy)
     elif random_number == 100:
-        enemy = Enemy1(screen, 0, 380, time)
+        enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
         enemies.append(enemy)
 
 
     random_number = rnd.randint(1, 1000)
     if random_number == 1:
-        enemy = Enemy2(screen, 0, 220, time)
+        enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
         enemies.append(enemy)
     elif random_number == 100:
-        enemy = Enemy2(screen, 0, 380, time)
+        enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
         enemies.append(enemy)
     for enemy in enemies:
-        enemy.move()
+        enemy.move(stage)
         enemy.draw(time)
 
     for tower in towers:
         tower.draw()
+        if active_tower:
+            pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
         if time % tower.speed == 0:
             tower.shoot(enemies)
     for bullet in bullets:
@@ -167,6 +174,7 @@ while not finished:
     fortress.hit(enemies)
     if not fortress.alive_or_not():
         finished = True
+        loose = True
 
     time += Delta_t
     screen.blit(play_menu_surface, play_menu_rect)
@@ -175,6 +183,9 @@ while not finished:
         button.draw()
     fortress.draw()
     pygame.display.update()
+
+if loose:
+    game_over(text_font, clock, FPS)
 
 pygame.quit()
 

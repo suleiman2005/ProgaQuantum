@@ -1,6 +1,7 @@
 import pygame
 from random import randint
 import numpy as np
+
 m = randint(3, 5)
 n = randint(3, 5)
 l = randint(3, 6)
@@ -62,8 +63,6 @@ abv = [[[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
        ]
       ]
 
-stage = 3      
-
 grass_surf = pygame.image.load("img/t1gr.png")
 grass1_surf = pygame.image.load("img/t2gr.png")
 road_surf = pygame.image.load("img/t1ro.png")
@@ -90,12 +89,15 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 
-def textures():
+def textures(stage):
     for a in range(15):
         for b in range(30):
             if abv[stage-1][a][b] == 1:
                 i = grass_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(grass_surf, i)
+            elif abv[stage-1][a][b] == 2:
+                i = cloud_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+                screen.blit(cloud_surf, i)
             elif abv[stage-1][a][b] == 9:
                 i = grass1_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(grass1_surf, i)
@@ -177,4 +179,5 @@ def draw_enemy3(enemy, time):
 def draw_fort(fort):
     i = fort_surf.get_rect(center=((860), (290)))
     screen.blit(fort_surf, i)
+    pygame.draw.line(screen, (255, 0, 0), (810, 250), (810 + fort.hp//100, 250), 7)
 

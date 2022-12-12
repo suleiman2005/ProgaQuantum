@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="еще модели, ландшафт и анимации">
+    <list default="true" id="b335f9ad-e810-4b10-9557-e0b214f25eda" name="Changes" comment="Теперь при нажатии на кнопку quit игрока выбрасывает в главное меню, сделан экран &quot;game over&quot; с возможностью выйти в главное меню или выйти из игры после поражения">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Textures.py" beforeDir="false" afterPath="$PROJECT_DIR$/Textures.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -33,14 +33,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/areme/ProgaQuantum&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/mihko/PycharmProjects/ProgaQuantum",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="ProgaQuantum" />
@@ -49,9 +49,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\mihko\PycharmProjects\pythonProject\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
@@ -122,14 +122,42 @@
       <option name="project" value="LOCAL" />
       <updated>1670566121921</updated>
     </task>
-    <task id="LOCAL-00008" summary="еще модели, ландшафт и анимации">
-      <created>1670572686648</created>
+    <task id="LOCAL-00008" summary="Теперь выбор уровня в меню действительно на что-то влияет">
+      <created>1670602731136</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1670572686648</updated>
+      <updated>1670602731136</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Сделал второй тип врагов через наследование">
+      <created>1670603128191</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1670603128191</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Одно малюсенькое исправление по классам, еоторое забыл в предыдущем коммите (буквально две строчки)">
+      <created>1670603507511</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1670603507511</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Теперь меню не отображает кнопку запуска игры, если игрок не выбрал уровень, выбранный игроком уровень подсвечивается красным">
+      <created>1670604528605</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1670604528605</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Теперь при нажатии на кнопку quit игрока выбрасывает в главное меню, сделан экран &quot;game over&quot; с возможностью выйти в главное меню или выйти из игры после поражения">
+      <created>1670606245445</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1670606245445</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -151,7 +179,11 @@
     <MESSAGE value="Теперь программа смещает индексы при продаже башен и не случается list index out of range" />
     <MESSAGE value="Осуществил постройку башен через кнопку в менюшке" />
     <MESSAGE value="некоторые test модели и случайный ландшафт" />
-    <MESSAGE value="еще модели, ландшафт и анимации" />
-    <option name="LAST_COMMIT_MESSAGE" value="еще модели, ландшафт и анимации" />
+    <MESSAGE value="Теперь выбор уровня в меню действительно на что-то влияет" />
+    <MESSAGE value="Сделал второй тип врагов через наследование" />
+    <MESSAGE value="Одно малюсенькое исправление по классам, еоторое забыл в предыдущем коммите (буквально две строчки)" />
+    <MESSAGE value="Теперь меню не отображает кнопку запуска игры, если игрок не выбрал уровень, выбранный игроком уровень подсвечивается красным" />
+    <MESSAGE value="Теперь при нажатии на кнопку quit игрока выбрасывает в главное меню, сделан экран &quot;game over&quot; с возможностью выйти в главное меню или выйти из игры после поражения" />
+    <option name="LAST_COMMIT_MESSAGE" value="Теперь при нажатии на кнопку quit игрока выбрасывает в главное меню, сделан экран &quot;game over&quot; с возможностью выйти в главное меню или выйти из игры после поражения" />
   </component>
 </project>
