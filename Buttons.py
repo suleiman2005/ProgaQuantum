@@ -1,12 +1,13 @@
 from Classes import *
 from Textures import *
+from Common_list import *
 
 
-def erase_useless_buttons(buttons):
+def erase_useless_buttons():
     """функция стирающая ненужные в некоторый момент кнопки"""
-    for button in buttons:
+    for button in Common_list.buttons:
         if button.type != "quit_button":
-            buttons.remove(button)
+            Common_list.buttons.remove(button)
 
 
 class Button:
@@ -89,18 +90,18 @@ class BuildButton(Button):
     def draw(self):
         self.screen.blit(self.text_font.render("Build tower (z)", True, BLACK), (self.x, self.y + self.height / 10))
 
-    def build_initiation(self, money, towers, screen, x_square_light, y_square_light, buttons, button, play_menu_text_surface, stage, active_tower):
+    def build_initiation(self, money, screen, x_square_light, y_square_light, button, play_menu_text_surface, stage, active_tower):
         """функция, запускающая процесс постройки"""
         if money < 100:
             text = "Not enough money"
         else:
-            abv[stage-1][y_square_light][x_square_light] = 1
+            Common_list.abv[stage-1][y_square_light][x_square_light] = 1
             text = "There is tower LVL " + str(1)
             active_tower = Tower1(screen, stage, x_square_light, y_square_light)
-            towers.append(active_tower)
-            buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
-            buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
-            buttons.remove(button)
+            Common_list.towers.append(active_tower)
+            Common_list.buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+            Common_list.buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
+            Common_list.buttons.remove(button)
             money -= 100
         return money, text, active_tower
 

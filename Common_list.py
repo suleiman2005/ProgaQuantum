@@ -1,0 +1,6 @@
+abv = []
+is_free_for_tower = []
+enemies = []
+towers = []
+bullets = []
+buttons = []
