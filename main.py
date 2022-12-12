@@ -41,6 +41,7 @@ while not finished:
     textures()
     clock.tick(FPS)
     screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
+    screen.blit(text_font.render("FPS: " + str(int(clock.get_fps())), True, (0, 0, 0)), (500, 10))
 
     for event in pygame.event.get():
 
@@ -57,9 +58,9 @@ while not finished:
                     y_square_light = event.pos[1] // SIDE
                     if is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or abv[stage-1][y_square_light][x_square_light] == 3 or\
                        {abv[stage-1][y_square_light][x_square_light],\
-                        abv[stage-1][min(15, y_square_light+1)][x_square_light],\
-                        abv[stage-1][min(15, y_square_light+1)][min(30, x_square_light+1)],\
-                        abv[stage-1][y_square_light][min(30, x_square_light+1)]}.intersection({7,8}) != set():
+                        abv[stage-1][min(14, y_square_light+1)][x_square_light],\
+                        abv[stage-1][min(14, y_square_light+1)][min(29, x_square_light+1)],\
+                        abv[stage-1][y_square_light][min(29, x_square_light+1)]}.intersection({7,8}) != set():
                         flag_build = False
                         flag_tower = False
                         text = "You can't build tower there"

@@ -53,7 +53,6 @@ is_free_for_tower = [[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
                      ]
                     ]
 enemies = []
-enemies1 = []
 towers = []
 bullets = []
 
@@ -70,6 +69,8 @@ class Bullet:
         draw_bullet(self.x, self.y)
         self.x += self.vx
         self.y += self.vy
+        if self.x < 0 or self.x > WIDTH or self.y < 0 or self.y > HEIGHT:
+            bullets.remove(self)
         
     def hit_enemies(self, money):
         for enemy in enemies:
