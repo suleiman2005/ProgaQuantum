@@ -116,6 +116,7 @@ class Tower1:
         # Переменная, хранящая изображение башни
         self.attacked_enemy = None
         # Переменная, хранящая атакованного врага
+        self.t = self.speed
 
     def shoot(self, enemies):
         """ Функция выстрела по врагу
@@ -145,12 +146,12 @@ class Tower1:
             if self.attacked_enemy:
                 self.shoot(enemies)
 
-
     def upgrade(self):
         """Если уровень не максимальный и достаточно денег, улучшает башню"""
         self.level += 1
         self.dmg += 10
-        self.speed += 10
+        self.speed -= 10
+        self.t = self.speed
         self.radius += 20
 
     def draw(self):
@@ -168,6 +169,90 @@ class Tower1:
         is_free_for_tower[stage-1][self.y_square][self.x_square] = 1
         towers.remove(self)
 
+class Tower2:
+    """Класс первой башни (с дискретными снарядами)"""
+    def __init__(self, screen, stage, x_square, y_square):
+        global is_free_for_tower
+        self.x_square = x_square
+        self.y_square = y_square
+        self.x = self.x_square * SIDE + SIDE // 2
+        self.y = self.y_square * SIDE + SIDE // 2
+        if is_free_for_tower[stage-1][self.y_square][self.x_square] != 1:
+            self.x = None
+            self.y = None
+        else:
+            is_free_for_tower[stage-1][self.y_square][self.x_square] = 2 + len(towers)
+        self.screen = screen
+        self.dmg = 50
+        # Урон пушки
+        self.speed = 30
+        # Скорострельность
+        self.angle = 0
+        # Угол поворота
+        self.radius = 200
+        # Дальнобойность
+        self.level = 1
+        # Уровень башни (максимум 3)
+        self.price = 100
+        # Стоимость башни в у.е.
+        self.upgrade_price = [20, 30, 40]
+        # Стоимость улучшения башни (меняется в процессе (локальной) прогрессии)
+        self.image = np.array([])
+        # Переменная, хранящая изображение башни
+        self.attacked_enemy = None
+        # Переменная, хранящая атакованного врага
+        self.t = self.speed
+
+    def shoot(self, enemies):
+        """ Функция выстрела по врагу
+        enemies - список активных врагов на карте"""
+        if self.attacked_enemy:
+            if ((self.attacked_enemy.x - self.x) ** 2 + (self.attacked_enemy.y - self.y) ** 2) > self.radius ** 2 \
+                    or self.attacked_enemy.hp <= 0:
+                self.attacked_enemy = None
+                self.shoot(enemies)
+            else:
+                self.angle = atan2(self.attacked_enemy.y - self.y, self.attacked_enemy.x - self.x)
+                vx = BULLET_SPEED * cos(self.angle)
+                vy = BULLET_SPEED * sin(self.angle)
+                if self.attacked_enemy.axis == 'x':
+                    vx += self.attacked_enemy.speed
+                else:
+                    vy += self.attacked_enemy.speed
+                bullet = Bullet(self.x, self.y, vx, vy, self.dmg)
+                bullets.append(bullet)
+        else:
+            min_distance = self.radius
+            for enemy in enemies:
+                enemy_distance = np.sqrt((enemy.x - self.x) ** 2 + (enemy.y - self.y) ** 2)
+                if enemy_distance <= min_distance:
+                    min_distance = enemy_distance
+                    self.attacked_enemy = enemy
+            if self.attacked_enemy:
+                self.shoot(enemies)
+
+    def upgrade(self):
+        """Если уровень не максимальный и достаточно денег, улучшает башню"""
+        self.level += 1
+        self.dmg += 10
+        self.speed -= 10
+        self.t = self.speed
+        self.radius += 20
+
+    def draw(self):
+        """Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,
+        поэтому рисует круг с дулом)"""
+        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y),
+                         (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
+        draw_tower(self.x, self.y, self.level)
+
+    def sell(self, stage, towers):
+        """Функция продажи башни"""
+        for tower_index in range(len(towers)):
+            if tower_index > is_free_for_tower[stage-1][self.y_square][self.x_square] - 2:
+                is_free_for_tower[stage-1][towers[tower_index].y_square][towers[tower_index].x_square] -= 1
+        is_free_for_tower[stage-1][self.y_square][self.x_square] = 1
+        towers.remove(self)
 
 class Enemy1:
     """Класс, описывающий превый тип врага"""
@@ -262,3 +347,14 @@ class Fortress:
 
     def draw(self):
         draw_fort(self)
+        
+class MainBack:
+    def __init__(self):
+        self.angle = 0
+        self.main_back_surface = pygame.transform.scale(main_back_surface, (main_back_surface.get_width() // 0.5,\
+                                                     main_back_surface.get_height() // 0.5))
+
+    def draw(self):
+        screen.fill(WHITE)
+        screen.blit(self.main_back_surface, (-250 + 200*cos(self.angle), -150 + 100*sin(self.angle)))
+        self.angle += 0.007 + 0.002 * cos(self.angle/pi)

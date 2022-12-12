@@ -9,14 +9,9 @@ FPS = 60
 
 
 pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-text_font = pygame.font.Font(None, 24)
+text_font = pygame.font.SysFont('Comic Sans MS', 24, True)
 play_menu_text_surface = pygame.font.SysFont('Comic Sans MS', 30, True)
 text = ""
-play_menu_surface = pygame.image.load('img/игровое меню.png').convert()
-play_menu_surface.set_colorkey((255, 255, 255))
-play_menu_surface = pygame.transform.scale(play_menu_surface, (play_menu_surface.get_width() // 1.45, play_menu_surface.get_height() // 1.135))
-play_menu_rect = play_menu_surface.get_rect(center=(WIDTH // 2, 700))
 clock = pygame.time.Clock()
 finished = False
 loose = False
@@ -102,10 +97,9 @@ while not finished:
                                 buttons.remove(button)
                                 buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
                             if button.type == "build_button":
-                                money, text = button.build_initiation(money, towers, screen, x_square_light,
+                                money, text, active_tower = button.build_initiation(money, towers, screen, x_square_light,
                                                                       y_square_light, buttons, button,
-                                                                      play_menu_text_surface, stage)
-                                active_tower = towers[is_free_for_tower[stage - 1][y_square_light][x_square_light] - 2]
+                                                                      play_menu_text_surface, stage, active_tower)
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -117,9 +111,8 @@ while not finished:
                             twr = towers[is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
                             money, text = button.upgrade_initiation(twr, money)
                     if button.type == "build_button":
-                        money, text = button.build_initiation(money, towers, screen, x_square_light, y_square_light, buttons,
-                                                        button, play_menu_text_surface, stage)
-                        active_tower = towers[is_free_for_tower[stage - 1][y_square_light][x_square_light] - 2]
+                        money, text, active_tower = button.build_initiation(money, towers, screen, x_square_light, y_square_light, buttons,
+                                                        button, play_menu_text_surface, stage, active_tower)
             elif event.key == pygame.K_x:
                 for button in buttons:
                     if button.type == "sell_button":
@@ -164,10 +157,13 @@ while not finished:
 
     for tower in towers:
         tower.draw()
-        if active_tower:
-            pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
-        if time % tower.speed == 0:
+        if tower.t <= 0:
             tower.shoot(enemies)
+            if tower.attacked_enemy:
+                tower.t = tower.speed
+        tower.t -= 1
+    if active_tower:
+        pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
     for bullet in bullets:
         bullet.draw_and_move()
         money = bullet.hit_enemies(money)

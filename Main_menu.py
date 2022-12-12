@@ -6,6 +6,8 @@ RED = (255, 0, 0)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
+main_back = MainBack()
+
 
 def main_menu(text_font, clock, FPS):
     game_level = 0
@@ -18,7 +20,7 @@ def main_menu(text_font, clock, FPS):
 
     intro = True
     while intro:
-        main_menu_screen.fill((255, 255, 0))
+        main_back.draw()
         clock.tick(FPS)
         main_menu_screen.blit(text_font.render("TOWER DEFENCE", True, BLACK), (300, 100))
         main_menu_screen.blit(text_font.render("Select Level", True, BLACK), (500, 300))

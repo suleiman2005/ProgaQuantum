@@ -27,7 +27,7 @@ class Button:
         # Иконка(в идеале)
 
     def draw(self):
-        """ Ричует кнопку """
+        """ Рисует кнопку """
         pygame.draw.rect(self.screen, self.colour, (self.x, self.y, self.width, self.height))
 
     def is_pressed(self, event):
@@ -46,7 +46,7 @@ class QuitButton(Button):
 
     def draw(self):
         super().draw()
-        self.screen.blit(self.text_font.render('Quit (esc)', True, (0, 0, 0)),
+        self.screen.blit(self.text_font.render('Quit', True, (0, 0, 0)),
                          (self.x + self.width/5, self.y + self.height/10))
 
 
@@ -89,20 +89,20 @@ class BuildButton(Button):
     def draw(self):
         self.screen.blit(self.text_font.render("Build tower (z)", True, BLACK), (self.x, self.y + self.height / 10))
 
-    def build_initiation(self, money, towers, screen, x_square_light, y_square_light, buttons, button, play_menu_text_surface, stage):
+    def build_initiation(self, money, towers, screen, x_square_light, y_square_light, buttons, button, play_menu_text_surface, stage, active_tower):
         """функция, запускающая процесс постройки"""
         if money < 100:
             text = "Not enough money"
         else:
             abv[stage-1][y_square_light][x_square_light] = 1
             text = "There is tower LVL " + str(1)
-            tower = Tower1(screen, stage, x_square_light, y_square_light)
-            towers.append(tower)
+            active_tower = Tower1(screen, stage, x_square_light, y_square_light)
+            towers.append(active_tower)
             buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
             buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
             buttons.remove(button)
             money -= 100
-        return money, text
+        return money, text, active_tower
 
 
 class StartButton(Button):
