@@ -9,6 +9,7 @@ e2r_surf = pygame.image.load("img/en2r.png")
 e2l_surf = pygame.image.load("img/en2l.png")
 e2u_surf = pygame.image.load("img/en2u.png")
 wastower_surf = pygame.image.load("img/wastower.png")
+waspalkaebalka_surf = pygame.image.load("img/waspalkaebalka.png")
 
 bee_surf = pygame.image.load("img/bee.png")
 bee1_surf = pygame.image.load("img/bee1.png")
@@ -47,16 +48,16 @@ fort_surf = pygame.image.load("img/mom-tower-t.png")
 dmg_surf = pygame.image.load("img/dmg.png")
 prb_surf = pygame.image.load("img/prb.png")
 main_back_surface = pygame.image.load('img/main_back.png')
-play_menu_surface = pygame.image.load('img/игровое меню.png')
+#play_menu_surface = pygame.image.load('img/игровое меню.png')
+play_menu_surface = pygame.image.load('img/testmenu.png')
 
 WIDTH = 1200
 HEIGHT = 800
 BULLET_SPEED = 10
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-play_menu_surface.set_colorkey((255, 255, 255))
-main_back_surface.set_colorkey((255, 255, 255))
-play_menu_surface = pygame.transform.scale(play_menu_surface, (play_menu_surface.get_width() // 1.45, play_menu_surface.get_height() // 1.135))
+play_menu_surface = pygame.transform.scale(play_menu_surface, (play_menu_surface.get_width() // 1, play_menu_surface.get_height() // 1))
 play_menu_rect = play_menu_surface.get_rect(center=(WIDTH // 2, 700))
+play_menu_surface.set_colorkey((255, 255, 255))
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -158,6 +159,9 @@ def textures(stage):
             elif Common_list.abv[stage - 1][a][b] == 11:
                 i = wastower_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(wastower_surf, i)
+            elif Common_list.abv[stage - 1][a][b] == 12:
+                i = waspalkaebalka_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
+                screen.blit(waspalkaebalka_surf, i)
 
 def draw_clouds(stage):
     for a in range(15):
@@ -183,13 +187,13 @@ def draw_tower1(x, y, level):
         
 def draw_tower2(x, y, level):
     if level == 1:
-        i = tower2_surf_1.get_rect(center=(x, y))
+        i = tower2_surf_1.get_rect(center=(x, y-10))
         screen.blit(tower2_surf_1, i)
     elif level == 2:
-        i = tower2_surf_2.get_rect(center=(x, y))
+        i = tower2_surf_2.get_rect(center=(x, y-10))
         screen.blit(tower2_surf_2, i)
     elif level == 3:
-        i = tower2_surf_3.get_rect(center=(x, y))
+        i = tower2_surf_3.get_rect(center=(x, y-10))
         screen.blit(tower2_surf_3, i)
 
 def draw_enemy(enemy, time):
@@ -270,8 +274,8 @@ def draw_enemy1(enemy, time):
             screen.blit(beedown1_surf, i)
 def draw_enemy3(enemy, time):
     change = time - enemy.time_creation
-    i = cloud_surf.get_rect(center=((enemy.x), (enemy.y)))
-    screen.blit(cloud_surf, i)
+    i = prb_surf.get_rect(center=((enemy.x), (enemy.y)))
+    screen.blit(prb_surf, i)
 
 
 def draw_fort(fort):

@@ -13,6 +13,8 @@ main_back = MainBack()
 def main_menu(text_font, clock, FPS, loose):
     game_level = 0
     main_menu_screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.mixer.music.load("music/main_menu_music.mp3")
+    pygame.mixer.music.play(-1)
 
     Common_list.buttons = [StartButton(main_menu_screen, 520, 200, text_font), ExitButton(main_menu_screen, 520, 700, text_font),
                SelectButton1(main_menu_screen, 520, 400, text_font),
@@ -67,6 +69,9 @@ def main_menu(text_font, clock, FPS, loose):
 def game_over(text_font, clock, FPS, loose):
     game_over_screen = pygame.display.set_mode((WIDTH, HEIGHT))
     game_over_font = pygame.font.Font(None, 75)
+    pygame.mixer.music.pause()
+    sound = pygame.mixer.Sound("music/game_over_sound.mp3")
+    sound.play()
     Common_list.buttons = [ExitToMainMenuButton(game_over_screen, 500, 500, text_font), ExitButton(game_over_screen, 500, 600, text_font)]
     game_over_parameter = True
     stop_cycle = False
@@ -99,6 +104,8 @@ def game_over(text_font, clock, FPS, loose):
 def winning(text_font, clock, FPS):
     winning_screen = pygame.display.set_mode((WIDTH, HEIGHT))
     winning_font = pygame.font.Font(None, 75)
+    pygame.mixer.music.load("music/win_music.mp3")
+    pygame.mixer.music.play(-1)
     Common_list.buttons = [ExitToMainMenuButton(winning_screen, 500, 500, text_font),
                            ExitButton(winning_screen, 500, 600, text_font)]
     winning_parameter = True
