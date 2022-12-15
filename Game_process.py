@@ -3,7 +3,7 @@ from Textures import *
 from Buttons import *
 from Classes import *
 from Main_menu import *
-from Common_list import *
+import Common_list
 
 def game_process(text_font, stage, clock, FPS):
     finished = False
@@ -16,13 +16,13 @@ def game_process(text_font, stage, clock, FPS):
     money = 200
     time = 0
     Delta_t = 1
-    x_square_light = -1
-    y_square_light = -1
+    x_square_light = 21
+    y_square_light = 7
     active_tower = None
     flag_build = False
     flag_tower = False
     play_menu_text_surface = pygame.font.SysFont('Comic Sans MS', 30, True)
-    text = ""
+    text = "You can't build tower there"
     generate_textures()
     generate_road()
 
@@ -33,17 +33,17 @@ def game_process(text_font, stage, clock, FPS):
     
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                erase_useless_buttons()
                 for button in Common_list.buttons:
                     if button.is_pressed(event):
                         if button.type == "quit_button":
                             finished = True
                 if event.button == 1 or event.button == 3:
-                    erase_useless_buttons()
                     if event.pos[1] < 600:
                         active_tower = None
-                        x_square_light = event.pos[0] // SIDE
-                        y_square_light = event.pos[1] // SIDE
+                        if (Common_list.boards[stage-1][0][0] <= event.pos[0] // SIDE <= Common_list.boards[stage-1][0][1]) and\
+                           (Common_list.boards[stage-1][1][0] <= event.pos[1] // SIDE <= Common_list.boards[stage-1][1][1]):
+                            x_square_light = event.pos[0] // SIDE
+                            y_square_light = event.pos[1] // SIDE
                         if Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or Common_list.abv[stage-1][y_square_light][x_square_light] == 3 or\
                            {Common_list.abv[stage-1][y_square_light][x_square_light],\
                             Common_list.abv[stage-1][min(14, y_square_light+1)][x_square_light],\
@@ -56,16 +56,13 @@ def game_process(text_font, stage, clock, FPS):
                             flag_build = True
                             flag_tower = False
                             text = "You can build tower there"
-                            Common_list.buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
                         else:
                             flag_build = False
                             flag_tower = True
                             active_tower = Common_list.towers[Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
-                            text = "There is tower LVL " + \
-                                   str(active_tower.level)
-                            Common_list.buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
-                            Common_list.buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
+                            text = "There is tower LVL " + str(active_tower.level)
                     else:
+                        erase_useless_buttons(text_font)
                         if flag_build:
                             Common_list.buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
                         elif flag_tower:
@@ -84,10 +81,11 @@ def game_process(text_font, stage, clock, FPS):
                                         twr.level -= 1
                                     twr.sell(stage)
                                     text = "You can build tower there"
-                                    erase_useless_buttons()
-                                    Common_list.buttons.remove(button)
-                                    Common_list.buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
+                                    flag_build = True
+                                    flag_tower = False
                                 if button.type == "build_button":
+                                    flag_build = False
+                                    flag_tower = True
                                     money, text, active_tower = button.build_initiation(money, screen, x_square_light,
                                                                           y_square_light, button,
                                                                           play_menu_text_surface, stage, active_tower)
@@ -95,13 +93,47 @@ def game_process(text_font, stage, clock, FPS):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     finished = True
-                elif event.key == pygame.K_z:
+                elif event.key == pygame.K_UP:
+                    y_square_light = max(y_square_light-1, Common_list.boards[stage-1][1][0])
+                elif event.key == pygame.K_DOWN:
+                    y_square_light = min(y_square_light+1, Common_list.boards[stage-1][1][1])
+                elif event.key == pygame.K_LEFT:
+                    x_square_light = max(x_square_light-1, Common_list.boards[stage-1][0][0])
+                elif event.key == pygame.K_RIGHT:
+                    x_square_light = min(x_square_light+1, Common_list.boards[stage-1][0][1])
+                active_tower = None
+                if Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or Common_list.abv[stage-1][y_square_light][x_square_light] == 3 or\
+                   {Common_list.abv[stage-1][y_square_light][x_square_light],\
+                    Common_list.abv[stage-1][min(14, y_square_light+1)][x_square_light],\
+                    Common_list.abv[stage-1][min(14, y_square_light+1)][min(29, x_square_light+1)],\
+                    Common_list.abv[stage-1][y_square_light][min(29, x_square_light+1)]}.intersection({7,8}) != set():
+                    flag_build = False
+                    flag_tower = False
+                    text = "You can't build tower there"
+                elif Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 1:
+                    flag_build = True
+                    flag_tower = False
+                    text = "You can build tower there"
+                else:
+                    flag_build = False
+                    flag_tower = True
+                    active_tower = Common_list.towers[Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
+                    text = "There is tower LVL " + str(active_tower.level)
+                erase_useless_buttons(text_font)
+                if flag_build:
+                    Common_list.buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
+                elif flag_tower:
+                    Common_list.buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+                    Common_list.buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
+                if event.key == pygame.K_z:
                     for button in Common_list.buttons:
                         if button.type == "upgrade_button":
                             if Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] > 1:
                                 twr = Common_list.towers[Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
                                 money, text = button.upgrade_initiation(twr, money)
                         if button.type == "build_button":
+                            flag_build = False
+                            flag_tower = True
                             money, text, active_tower = button.build_initiation(money, screen, x_square_light, y_square_light,
                                                             button, play_menu_text_surface, stage, active_tower)
                 elif event.key == pygame.K_x:
@@ -114,18 +146,23 @@ def game_process(text_font, stage, clock, FPS):
                                 twr.level -= 1
                             twr.sell(stage)
                             text = "You can build tower there"
-                            erase_useless_buttons()
-                            Common_list.buttons.remove(button)
-                            Common_list.buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
-
+                            flag_build = True
+                            flag_tower = False
+            
             elif event.type == pygame.QUIT:
                 finished = True
+        
+        erase_useless_buttons(text_font)
+        if flag_build:
+            Common_list.buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
+        elif flag_tower:
+            Common_list.buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
+            Common_list.buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
 
-        if x_square_light != -1:
-            pygame.draw.polygon(screen, GREEN, ((x_square_light*SIDE, y_square_light*SIDE),
-                                                (x_square_light*SIDE + SIDE, y_square_light*SIDE),
-                                                (x_square_light*SIDE + SIDE, y_square_light*SIDE + SIDE),
-                                                (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)
+        pygame.draw.polygon(screen, GREEN, ((x_square_light*SIDE, y_square_light*SIDE),
+                                            (x_square_light*SIDE + SIDE, y_square_light*SIDE),
+                                            (x_square_light*SIDE + SIDE, y_square_light*SIDE + SIDE),
+                                            (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)
         random_number = rnd.randint(1, 100)
         if random_number == 1:
             enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
@@ -145,6 +182,10 @@ def game_process(text_font, stage, clock, FPS):
             enemy.move(stage)
             enemy.draw(time)
 
+        for bullet in Common_list.bullets:
+            bullet.draw_and_move()
+            money = bullet.hit_enemies(money)
+
         for tower in Common_list.towers:
             tower.draw()
             if tower.t <= 0:
@@ -154,9 +195,6 @@ def game_process(text_font, stage, clock, FPS):
             tower.t -= 1
         if active_tower:
             pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
-        for bullet in Common_list.bullets:
-            bullet.draw_and_move()
-            money = bullet.hit_enemies(money)
         fortress.hit()
         if not fortress.alive_or_not():
             finished = True

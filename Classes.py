@@ -1,6 +1,6 @@
 from math import *
 from Textures import *
-from Common_list import *
+import Common_list
 
 SIDE = 40
 start_positions = [[180, 420, 620], [140, 460, 1060], [220, 380, 0]]
@@ -89,11 +89,7 @@ class Tower1:
         self.y_square = y_square
         self.x = self.x_square * SIDE + SIDE // 2
         self.y = self.y_square * SIDE + SIDE // 2
-        if Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] != 1:
-            self.x = None
-            self.y = None
-        else:
-            Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
+        Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
         self.screen = screen
         self.dmg = 50
         # Урон пушки
@@ -173,11 +169,7 @@ class Tower2:
         self.y_square = y_square
         self.x = self.x_square * SIDE + SIDE // 2
         self.y = self.y_square * SIDE + SIDE // 2
-        if Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] != 1:
-            self.x = None
-            self.y = None
-        else:
-            Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
+        Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
         self.screen = screen
         self.dmg = 50
         # Урон пушки

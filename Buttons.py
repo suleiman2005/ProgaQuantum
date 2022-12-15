@@ -1,13 +1,11 @@
 from Classes import *
 from Textures import *
-from Common_list import *
+import Common_list
 
 
-def erase_useless_buttons():
+def erase_useless_buttons(text_font):
     """функция стирающая ненужные в некоторый момент кнопки"""
-    for button in Common_list.buttons:
-        if button.type != "quit_button":
-            Common_list.buttons.remove(button)
+    Common_list.buttons = [QuitButton(screen, 1100, 0, text_font)]
 
 
 class Button:
@@ -99,9 +97,6 @@ class BuildButton(Button):
             text = "There is tower LVL " + str(1)
             active_tower = Tower1(screen, stage, x_square_light, y_square_light)
             Common_list.towers.append(active_tower)
-            Common_list.buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
-            Common_list.buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
-            Common_list.buttons.remove(button)
             money -= 100
         return money, text, active_tower
 

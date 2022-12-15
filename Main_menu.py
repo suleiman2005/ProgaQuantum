@@ -1,6 +1,6 @@
 from Classes import *
 from Buttons import *
-from Common_list import *
+import Common_list
 import pygame
 
 RED = (255, 0, 0)
