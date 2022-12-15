@@ -216,17 +216,18 @@ class Tower2:
     def upgrade(self):
         """Если уровень не максимальный и достаточно денег, улучшает башню"""
         self.level += 1
-        self.dmg += 10
-        self.speed -= 10
-        self.t = self.speed
+        self.dmg += 1
         self.radius += 20
 
     def draw(self):
         """Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,
         поэтому рисует круг с дулом)"""
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y),
-                         (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
         draw_tower(self.x, self.y, self.level)
+        if self.attacked_enemy:
+            LASER_COLOUR = tuple(max(0, min(255, col1 + col2)) for col1, col2 in zip(LASER_1, (randint(-30,30), randint(-30, 30), randint(-30, 30))))
+            distance = sqrt((self.x - self.attacked_enemy.x)**2 + (self.y - self.attacked_enemy.y)**2)
+            pygame.draw.line(self.screen, LASER_COLOUR, (self.x, self.y), (self.x + distance * cos(self.angle), self.y + distance * sin(self.angle)), 3)
+            pygame.draw.circle(self.screen, LASER_COLOUR, (self.attacked_enemy.x, self.attacked_enemy.y), 5)
 
     def sell(self, stage):
         """Функция продажи башни"""

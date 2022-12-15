@@ -58,6 +58,7 @@ play_menu_rect = play_menu_surface.get_rect(center=(WIDTH // 2, 700))
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
+LASER_1 = (186, 213, 247)
 
 def generate_textures():
     m = randint(3, 5)

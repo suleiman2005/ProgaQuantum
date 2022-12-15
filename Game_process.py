@@ -268,9 +268,11 @@ def game_process(text_font, stage, clock, FPS):
         elif random_number == 100:
             enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
             Common_list.enemies.append(enemy)
-        for enemy in Common_list.enemies:
-            enemy.move(stage)
-            enemy.draw(time)
+
+        if active_tower:
+            pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
+
+        fortress.draw()
 
         for bullet in Common_list.bullets:
             money = bullet.hit_enemies(money)
@@ -287,8 +289,11 @@ def game_process(text_font, stage, clock, FPS):
             if tower.type == 2:
                 money = tower.shoot(money)
             tower.draw()
-        if active_tower:
-            pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
+            
+        for enemy in Common_list.enemies:
+            enemy.move(stage)
+            enemy.draw(time)
+        
         fortress.hit()
         if not fortress.alive_or_not():
             finished = True
@@ -296,10 +301,8 @@ def game_process(text_font, stage, clock, FPS):
         time += Delta_t
         screen.blit(play_menu_surface, play_menu_rect)
         screen.blit(play_menu_text_surface.render(text, True, BLACK), (100, 675))
-        draw_clouds(stage)
         for button in Common_list.buttons:
             button.draw()
-        fortress.draw()
         screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
         screen.blit(text_font.render("FPS: " + str(int(clock.get_fps())), True, (0, 0, 0)), (500, 10))
         pygame.display.update()
