@@ -318,7 +318,7 @@ class Enemy4(Enemy1):
         self.hp = 200
         self.reward = 50
         self.tik = 4
-        self.speed = 1
+        self.speed = 2
 
     def draw(self, time):
         draw_enemy4(self, time)
