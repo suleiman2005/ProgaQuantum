@@ -8,10 +8,10 @@ finished = False
 loose = False
 
 while not finished and not loose:
-    stage = main_menu(text_font, clock, FPS)
+    stage = main_menu(text_font, clock, FPS, loose)
     finished, loose = game_process(text_font, stage, clock, FPS)
     if loose:
-        loose = game_over(text_font, clock, FPS)
+        loose = game_over(text_font, clock, FPS, loose)
         if not loose:
             finished = False
 pygame.quit()

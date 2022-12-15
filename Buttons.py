@@ -124,42 +124,46 @@ class BuildButton2(Button):
 
 
 class StartButton(Button):
-    def __init__(self, screen, x, y, text_font, width=200, height=50, colour=(255, 0, 0)):
+    def __init__(self, screen, x, y, text_font, width=150, height=50, colour=(164,116,73)):
         super().__init__(screen, x, y, text_font, width, height, colour)
         self.type = "start_button"
 
     def draw(self, COLOUR):
+        super().draw()
         self.screen.blit(self.text_font.render("Start Game", True, COLOUR), (self.x, self.y))
 
 
 class ExitButton(Button):
-    def __init__(self, screen, x, y, text_font, width=200, height=50, colour=(255, 0, 0)):
-        super().__init__(screen, x, y, text_font, width=200, height=50, colour=(255, 0, 0))
+    def __init__(self, screen, x, y, text_font, width=150, height=50, colour=(164,116,73)):
+        super().__init__(screen, x, y, text_font, width, height, colour)
         self.type = "exit_button"
 
-    def draw(self, COLOUR):
-        self.screen.blit(self.text_font.render("Exit", True, COLOUR), (self.x, self.y))
+    def draw(self, COLOUR, loose):
+        if not loose:
+            super().draw()
+        self.screen.blit(self.text_font.render("Exit", True, COLOUR), (self.x + 50, self.y))
 
 
 class SelectButton1(Button):
-    def __init__(self, screen, x, y, text_font, width=200, height=50, colour=(255, 0, 0)):
+    def __init__(self, screen, x, y, text_font, width=150, height=50, colour=(164,116,73)):
         super().__init__(screen, x, y, text_font, width, height, colour)
         self.name = "level 1"
         self.type = "level1_button"
 
     def draw(self, COLOUR):
-        self.screen.blit(self.text_font.render(self.name, True, COLOUR), (self.x, self.y))
+        super().draw()
+        self.screen.blit(self.text_font.render(self.name, True, COLOUR), (self.x + 40, self.y))
 
 
 class SelectButton2(SelectButton1):
-    def __init__(self, screen, x, y, text_font, width=200, height=50, colour=(255, 0, 0)):
+    def __init__(self, screen, x, y, text_font, width=150, height=50, colour=(164,116,73)):
         super().__init__(screen, x, y, text_font, width, height, colour)
         self.name = "level 2"
         self.type = "level2_button"
 
 
 class SelectButton3(SelectButton1):
-    def __init__(self, screen, x, y, text_font, width=200, height=50, colour=(255, 0, 0)):
+    def __init__(self, screen, x, y, text_font, width=150, height=50, colour=(164,116,73)):
         super().__init__(screen, x, y, text_font, width, height, colour)
         self.name = "level 3"
         self.type = "level3_button"
