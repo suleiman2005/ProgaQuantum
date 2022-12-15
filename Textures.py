@@ -8,6 +8,16 @@ e1l_surf = pygame.image.load("img/en1l.png")
 e2r_surf = pygame.image.load("img/en2r.png")
 e2l_surf = pygame.image.load("img/en2l.png")
 e2u_surf = pygame.image.load("img/en2u.png")
+
+bee_surf = pygame.image.load("img/bee.png")
+bee1_surf = pygame.image.load("img/bee1.png")
+beeleft_surf = pygame.image.load("img/beeleft.png")
+beeleft1_surf = pygame.image.load("img/beeleft1.png")
+beeup_surf = pygame.image.load("img/beeup.png")
+beeup1_surf = pygame.image.load("img/beeup1.png")
+beedown_surf = pygame.image.load("img/beedown.png")
+beedown1_surf = pygame.image.load("img/beedown1.png")
+
 grass_surf = pygame.image.load("img/t1gr.png")
 grass1_surf = pygame.image.load("img/t2gr.png")
 road_surf = pygame.image.load("img/t1ro.png")
@@ -75,7 +85,7 @@ def generate_textures():
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
            ],
-           [[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+           [[1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
             [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
             [2,2,2,2,1,1,1,1,1,m,9,9,1,1,1,r,1,9,9,9,1,1,1,k,1,1,k,2,2,2],
             [2,2,2,2,s,1,1,n,1,1,1,1,1,9,1,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2],
@@ -208,30 +218,36 @@ def draw_enemy1(enemy, time):
     change = time - enemy.time_creation
     if enemy.tik == 0:
         enemy.tik = 2
-    if change//40 == change/40:
+    if change//30 == change/30:
         enemy.tik -= 1
     #i = prb_surf.get_rect(center=((enemy.x), (enemy.y)))
     #screen.blit(prb_surf, i)
     if enemy.tik == 2:
         if enemy.axis == 'x' and enemy.speed < 0:
-            i = e1l_surf.get_rect(center=((enemy.x), (enemy.y)))
-            screen.blit(e1l_surf, i)
+            i = beeleft_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(beeleft_surf, i)
         if enemy.axis == 'x' and enemy.speed > 0:
-            i = e1r_surf.get_rect(center=((enemy.x), (enemy.y)))
-            screen.blit(e1r_surf, i)
-        if enemy.axis == 'y':
-            i = e1u_surf.get_rect(center=((enemy.x), (enemy.y)))
-            screen.blit(e1u_surf, i)
+            i = bee_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(bee_surf, i)
+        if enemy.axis == 'y' and enemy.speed < 0:
+            i = beeup_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(beeup_surf, i)
+        if enemy.axis == 'y' and enemy.speed > 0:
+            i = beedown_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(beedown_surf, i)
     if enemy.tik == 1:
         if enemy.axis == 'x' and enemy.speed < 0:
-            i = e2l_surf.get_rect(center=((enemy.x), (enemy.y)))
-            screen.blit(e2l_surf, i)
+            i = beeleft1_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(beeleft1_surf, i)
         if enemy.axis == 'x' and enemy.speed > 0:
-            i = e2r_surf.get_rect(center=((enemy.x), (enemy.y)))
-            screen.blit(e2r_surf, i)
-        if enemy.axis == 'y':
-            i = e2u_surf.get_rect(center=((enemy.x), (enemy.y)))
-            screen.blit(e2u_surf, i)
+            i = bee1_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(bee1_surf, i)
+        if enemy.axis == 'y' and enemy.speed < 0:
+            i = beeup1_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(beeup1_surf, i)
+        if enemy.axis == 'y' and enemy.speed > 0:
+            i = beedown1_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(beedown1_surf, i)
 def draw_enemy3(enemy, time):
     change = time - enemy.time_creation
     i = cloud_surf.get_rect(center=((enemy.x), (enemy.y)))
