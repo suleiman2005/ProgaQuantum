@@ -92,12 +92,14 @@ class BuildButton1(Button):
         """функция, запускающая процесс постройки"""
         if money < 100:
             text = "Not enough money"
+        elif len(Common_list.towers) == Common_list.max_number_towers[stage-1]:
+            text = "Too many towers"
         else:
             Common_list.abv[stage-1][y_square_light][x_square_light] = 11
             text = "There is tower LVL " + str(1)
             active_tower = Tower1(screen, stage, x_square_light, y_square_light)
             Common_list.towers.append(active_tower)
-            money -= 100
+            money -= active_tower.price
         return money, text, active_tower
 
 
@@ -112,14 +114,16 @@ class BuildButton2(Button):
     def build_initiation(self, money, screen, x_square_light, y_square_light, button, play_menu_text_surface, stage,
                          active_tower):
         """функция, запускающая процесс постройки"""
-        if money < 150:
+        if money < 100:
             text = "Not enough money"
+        elif len(Common_list.towers) == Common_list.max_number_towers[stage-1]:
+            text = "Too many towers"
         else:
             Common_list.abv[stage - 1][y_square_light][x_square_light] = 1
             text = "There is tower LVL " + str(1)
             active_tower = Tower2(screen, stage, x_square_light, y_square_light)
             Common_list.towers.append(active_tower)
-            money -= 150
+            money -= active_tower.price
         return money, text, active_tower
 
 

@@ -15,10 +15,12 @@ def arrow_check(x_square_light, y_square_light, stage, active_tower):
              Common_list.abv[stage - 1][y_square_light][min(29, x_square_light + 1)]}.intersection({7, 8}) != set():
         flag_build = False
         flag_tower = False
+        active_tower = None
         text = "You can't build tower there"
     elif Common_list.is_free_for_tower[stage - 1][y_square_light][x_square_light] == 1:
         flag_build = True
         flag_tower = False
+        active_tower = None
         text = "You can build tower there"
     else:
         flag_build = False
@@ -73,23 +75,7 @@ def game_process(text_font, stage, clock, FPS):
                            (Common_list.boards[stage-1][1][0] <= event.pos[1] // SIDE <= Common_list.boards[stage-1][1][1]):
                             x_square_light = event.pos[0] // SIDE
                             y_square_light = event.pos[1] // SIDE
-                        if Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or Common_list.abv[stage-1][y_square_light][x_square_light] == 3 or\
-                           {Common_list.abv[stage-1][y_square_light][x_square_light],\
-                            Common_list.abv[stage-1][min(14, y_square_light+1)][x_square_light],\
-                            Common_list.abv[stage-1][min(14, y_square_light+1)][min(29, x_square_light+1)],\
-                            Common_list.abv[stage-1][y_square_light][min(29, x_square_light+1)]}.intersection({7,8}) != set():
-                            flag_build = False
-                            flag_tower = False
-                            text = "You can't build tower there"
-                        elif Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 1:
-                            flag_build = True
-                            flag_tower = False
-                            text = "You can build tower there"
-                        else:
-                            flag_build = False
-                            flag_tower = True
-                            active_tower = Common_list.towers[Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
-                            text = "There is tower LVL " + str(active_tower.level)
+                        flag_build, flag_tower, text, active_tower = arrow_check(x_square_light, y_square_light, stage, active_tower)
                     else:
                         erase_useless_buttons(text_font)
                         if flag_build:
@@ -144,23 +130,7 @@ def game_process(text_font, stage, clock, FPS):
                     flag_move = True
                     x_square_light = min(x_square_light+1, Common_list.boards[stage-1][0][1])
                 active_tower = None
-                if Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or Common_list.abv[stage-1][y_square_light][x_square_light] == 3 or\
-                   {Common_list.abv[stage-1][y_square_light][x_square_light],\
-                    Common_list.abv[stage-1][min(14, y_square_light+1)][x_square_light],\
-                    Common_list.abv[stage-1][min(14, y_square_light+1)][min(29, x_square_light+1)],\
-                    Common_list.abv[stage-1][y_square_light][min(29, x_square_light+1)]}.intersection({7,8}) != set():
-                    flag_build = False
-                    flag_tower = False
-                    text = "You can't build tower there"
-                elif Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 1:
-                    flag_build = True
-                    flag_tower = False
-                    text = "You can build tower there"
-                else:
-                    flag_build = False
-                    flag_tower = True
-                    active_tower = Common_list.towers[Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
-                    text = "There is tower LVL " + str(active_tower.level)
+                flag_build, flag_tower, text, active_tower = arrow_check(x_square_light, y_square_light, stage, active_tower)
                 erase_useless_buttons(text_font)
                 if flag_build:
                     Common_list.buttons.append(BuildButton1(screen, 600, 650, play_menu_text_surface))
@@ -185,8 +155,10 @@ def game_process(text_font, stage, clock, FPS):
                             twr = Common_list.towers[Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
                             money += twr.price / 2
                             while twr.level > 1:
-                                money += twr.upgrade_price[twr.level - 1] / 2
+                                money += twr.upgrade_price[twr.level - 2] / 2
                                 twr.level -= 1
+                            money += 50
+                            twr.level -= 1
                             twr.sell(stage)
                             text = "You can build tower there"
                             flag_build = True
@@ -261,35 +233,52 @@ def game_process(text_font, stage, clock, FPS):
                                             (x_square_light*SIDE + SIDE, y_square_light*SIDE),
                                             (x_square_light*SIDE + SIDE, y_square_light*SIDE + SIDE),
                                             (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)
-        random_number = rnd.randint(1, 100)
-        if random_number == 1 and number_of_enemies < maximum_of_enemies[stage - 1]:
-            enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
+        
+        random_number = rnd.randint(0, 10000)
+        p = e**(-4 + 1 / (0.8 * maximum_of_enemies[stage - 1]) * number_of_enemies)
+        if random_number < p * 10000 / 2.5 and number_of_enemies < 0.8 * maximum_of_enemies[stage - 1]:
+            if random_number < p * 10000 / 5:
+                enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time, stage)
+            else:
+                enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time, stage)
             Common_list.enemies.append(enemy)
             number_of_enemies += 1
-        elif random_number == 100 and number_of_enemies < maximum_of_enemies[stage - 1]:
-            enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
+        elif random_number < p * 20000 / 2.5 and number_of_enemies < 0.8 * maximum_of_enemies[stage - 1]:
+            if random_number < p * 10000 * 3 / 5:
+                enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time, stage)
+            else:
+                enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time, stage)
             Common_list.enemies.append(enemy)
             number_of_enemies += 1
-
-        random_number = rnd.randint(1, 200)
-        if random_number == 1 and number_of_enemies < maximum_of_enemies[stage - 1]:
-            enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
+        elif random_number < p * 10000 and number_of_enemies < 0.8 * maximum_of_enemies[stage - 1]:
+            if random_number < p * 10000 * 9 / 10:
+                enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time, stage)
+            else:
+                enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time, stage)
             Common_list.enemies.append(enemy)
             number_of_enemies += 1
-        elif random_number == 200 and number_of_enemies < maximum_of_enemies[stage - 1]:
-            enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
-            Common_list.enemies.append(enemy)
-            number_of_enemies += 1
-
-        random_number = rnd.randint(1, 1000)
-        if random_number == 1 and number_of_enemies < maximum_of_enemies[stage - 1]:
-            enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
-            Common_list.enemies.append(enemy)
-            number_of_enemies += 1
-        elif random_number == 100 and number_of_enemies < maximum_of_enemies[stage - 1]:
-            enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
-            Common_list.enemies.append(enemy)
-            number_of_enemies += 1
+        elif random_number < 1000 and 0.8 * maximum_of_enemies[stage - 1] <= number_of_enemies < maximum_of_enemies[stage - 1]:
+            if random_number < 1000 / 3:
+                if random_number < p * 1000 / 6:
+                    enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time, stage)
+                else:
+                    enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time, stage)
+                Common_list.enemies.append(enemy)
+                number_of_enemies += 1
+            elif random_number < 1000 * 2 / 3:
+                if random_number < p * 1000 / 2:
+                    enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time, stage)
+                else:
+                    enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time, stage)
+                Common_list.enemies.append(enemy)
+                number_of_enemies += 1
+            else:
+                if random_number < p * 1000 * 5 / 6:
+                    enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time, stage)
+                else:
+                    enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time, stage)
+                Common_list.enemies.append(enemy)
+                number_of_enemies += 1
 
         if active_tower:
             pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
@@ -300,7 +289,7 @@ def game_process(text_font, stage, clock, FPS):
             enemy.move(stage)
             enemy.draw(time)
 
-        for tower in Common_list.towers:
+        for tower in sorted(Common_list.towers, key = lambda x: x.y):
             if tower.type == 1:
                 if tower.t <= 0:
                     tower.shoot()
@@ -320,7 +309,7 @@ def game_process(text_font, stage, clock, FPS):
         if not fortress.alive_or_not():
             finished = True
             loose = True
-        if len(Common_list.enemies) == 0  and number_of_enemies >= maximum_of_enemies[stage -1 ]:
+        if len(Common_list.enemies) == 0  and number_of_enemies >= maximum_of_enemies[stage - 1]:
             finished = True
             win = True
         time += Delta_t
@@ -328,7 +317,7 @@ def game_process(text_font, stage, clock, FPS):
         screen.blit(play_menu_text_surface.render(text, True, BLACK), (100, 675))
         for button in Common_list.buttons:
             button.draw()
-        screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
-        screen.blit(text_font.render("FPS: " + str(int(clock.get_fps())), True, (0, 0, 0)), (500, 10))
+        screen.blit(text_font.render("Money: " + str(int(money)) + ", Enemies: " + str(number_of_enemies), True, (0, 0, 0)), (10, 10))
+        #screen.blit(text_font.render("FPS: " + str(int(clock.get_fps())), True, (0, 0, 0)), (500, 10))
         pygame.display.update()
     return finished, loose, win

@@ -4,7 +4,7 @@ import Common_list
 
 SIDE = 40
 start_positions = [[0, 599, 620], [140, 460, 1199], [220, 380, 0]]
-maximum_of_enemies = [10, 100, 1000]
+maximum_of_enemies = [100, 500, 1000]
 
 def generate_road():
     Common_list.is_free_for_tower = [[[1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -93,19 +93,19 @@ class Tower1:
         self.y = self.y_square * SIDE + SIDE // 2
         Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
         self.screen = screen
-        self.dmg = 50
+        self.dmg = 100
         # Урон пушки
-        self.speed = 30
+        self.speed = 60
         # Скорострельность
         self.angle = 0
         # Угол поворота
-        self.radius = 200
+        self.radius = 150
         # Дальнобойность
         self.level = 1
         # Уровень башни (максимум 3)
-        self.price = 100
+        self.price = 1
         # Стоимость башни в у.е.
-        self.upgrade_price = [20, 30, 40]
+        self.upgrade_price = [300, 800]
         # Стоимость улучшения башни (меняется в процессе (локальной) прогрессии)
         self.image = np.array([])
         # Переменная, хранящая изображение башни
@@ -147,7 +147,7 @@ class Tower1:
         self.dmg += 10
         self.speed -= 10
         self.t = self.speed
-        self.radius += 20
+        self.radius += 25
 
     def draw(self):
         """Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,
@@ -178,13 +178,13 @@ class Tower2:
         # Урон пушки
         self.angle = 0
         # Угол поворота
-        self.radius = 200
+        self.radius = 100
         # Дальнобойность
         self.level = 1
         # Уровень башни (максимум 3)
         self.price = 100
         # Стоимость башни в у.е.
-        self.upgrade_price = [20, 30, 40]
+        self.upgrade_price = [300, 800]
         # Стоимость улучшения башни (меняется в процессе (локальной) прогрессии)
         self.image = np.array([])
         # Переменная, хранящая изображение башни
@@ -216,7 +216,7 @@ class Tower2:
     def upgrade(self):
         """Если уровень не максимальный и достаточно денег, улучшает башню"""
         self.level += 1
-        self.dmg += 1
+        self.dmg += 0.5
         self.radius += 20
 
     def draw(self):
@@ -242,7 +242,7 @@ class Tower2:
 
 class Enemy1:
     """Класс, описывающий превый тип врага"""
-    def __init__(self, screen, x, y, time_creation):
+    def __init__(self, screen, x, y, time_creation, stage):
         self.time_creation = time_creation
         self.screen = screen
         self.x = x
@@ -253,11 +253,11 @@ class Enemy1:
         # Скорость юнита
         self.axis = 'x'
         #Ось движения юнита
-        self.dmg = 10
+        self.dmg = 1
         # Урон юнита по главной постройке
-        self.hp = 200
+        self.hp = 100 * (stage + 1)
         # Здоровье юнита
-        self.reward = 30
+        self.reward = 20
         # Вознаграждение за убийство юнита
         self.image = np.array([])
         # Изображение юнита
@@ -306,10 +306,10 @@ class Enemy1:
 
 class Enemy2(Enemy1):
     """Класс, описывающий 2 тип врага"""
-    def __init__(self, screen, x, y, time_creation):
-        super().__init__(screen, x, y, time_creation)
-        self.hp = 50
-        self.reward = 50
+    def __init__(self, screen, x, y, time_creation, stage):
+        super().__init__(screen, x, y, time_creation, stage)
+        self.hp = 50 * (stage + 1)
+        self.reward = 20
         self.tik = 2
         self.speed = 4
 
@@ -318,10 +318,10 @@ class Enemy2(Enemy1):
 
 class Enemy4(Enemy1):
     """Класс, описывающий 2 тип врага"""
-    def __init__(self, screen, x, y, time_creation):
-        super().__init__(screen, x, y, time_creation)
-        self.hp = 200
-        self.reward = 50
+    def __init__(self, screen, x, y, time_creation, stage):
+        super().__init__(screen, x, y, time_creation, stage)
+        self.hp = 100 * (stage + 1)
+        self.reward = 20
         self.tik = 4
         self.speed = 2
 
@@ -334,7 +334,7 @@ class Fortress:
         self.screen = screen
         self.x = 860
         self.y = 300
-        self.hp = 10000
+        self.hp = 1000
         self.is_alive = True
 
     def hit(self):
