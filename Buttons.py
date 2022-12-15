@@ -80,13 +80,13 @@ class SellButton(Button):
         self.screen.blit(self.text_font.render("Sell tower (x)", True, BLACK), (self.x, self.y + self.height/10))
 
 
-class BuildButton(Button):
+class BuildButton1(Button):
     def __init__(self, screen, x, y, text_font, width=220, height=50, colour=(255, 0, 0)):
         super().__init__(screen, x, y, text_font, width, height, colour)
-        self.type = "build_button"
+        self.type = "build_button_1"
 
     def draw(self):
-        self.screen.blit(self.text_font.render("Build tower (z)", True, BLACK), (self.x, self.y + self.height / 10))
+        self.screen.blit(self.text_font.render("Build tower 1 (z)", True, BLACK), (self.x, self.y + self.height / 10))
 
     def build_initiation(self, money, screen, x_square_light, y_square_light, button, play_menu_text_surface, stage, active_tower):
         """функция, запускающая процесс постройки"""
@@ -98,6 +98,28 @@ class BuildButton(Button):
             active_tower = Tower1(screen, stage, x_square_light, y_square_light)
             Common_list.towers.append(active_tower)
             money -= 100
+        return money, text, active_tower
+
+
+class BuildButton2(Button):
+    def __init__(self, screen, x, y, text_font, width=220, height=50, colour=(255, 0, 0)):
+        super().__init__(screen, x, y, text_font, width, height, colour)
+        self.type = "build_button_2"
+
+    def draw(self):
+        self.screen.blit(self.text_font.render("Build tower 2 (x)", True, BLACK), (self.x, self.y + self.height / 10))
+
+    def build_initiation(self, money, screen, x_square_light, y_square_light, button, play_menu_text_surface, stage,
+                         active_tower):
+        """функция, запускающая процесс постройки"""
+        if money < 150:
+            text = "Not enough money"
+        else:
+            Common_list.abv[stage - 1][y_square_light][x_square_light] = 1
+            text = "There is tower LVL " + str(1)
+            active_tower = Tower1(screen, stage, x_square_light, y_square_light)
+            Common_list.towers.append(active_tower)
+            money -= 150
         return money, text, active_tower
 
 

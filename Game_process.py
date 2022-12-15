@@ -67,7 +67,8 @@ def game_process(text_font, stage, clock, FPS):
                     else:
                         erase_useless_buttons(text_font)
                         if flag_build:
-                            Common_list.buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
+                            Common_list.buttons.append(BuildButton1(screen, 600, 650, play_menu_text_surface))
+                            Common_list.buttons.append(BuildButton2(screen, 890, 650, play_menu_text_surface))
                         elif flag_tower:
                             Common_list.buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                             Common_list.buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
@@ -86,12 +87,19 @@ def game_process(text_font, stage, clock, FPS):
                                     text = "You can build tower there"
                                     flag_build = True
                                     flag_tower = False
-                                if button.type == "build_button":
+                                if button.type == "build_button_1":
                                     flag_build = False
                                     flag_tower = True
                                     money, text, active_tower = button.build_initiation(money, screen, x_square_light,
                                                                           y_square_light, button,
                                                                           play_menu_text_surface, stage, active_tower)
+                                if button.type == "build_button_2":
+                                    flag_build = False
+                                    flag_tower = True
+                                    money, text, active_tower = button.build_initiation(money, screen, x_square_light,
+                                                                                        y_square_light, button,
+                                                                                        play_menu_text_surface, stage,
+                                                                                        active_tower)
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -128,7 +136,8 @@ def game_process(text_font, stage, clock, FPS):
                     text = "There is tower LVL " + str(active_tower.level)
                 erase_useless_buttons(text_font)
                 if flag_build:
-                    Common_list.buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
+                    Common_list.buttons.append(BuildButton1(screen, 600, 650, play_menu_text_surface))
+                    Common_list.buttons.append(BuildButton2(screen, 890, 650, play_menu_text_surface))
                 elif flag_tower:
                     Common_list.buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
                     Common_list.buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
@@ -138,7 +147,7 @@ def game_process(text_font, stage, clock, FPS):
                             if Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] > 1:
                                 twr = Common_list.towers[Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
                                 money, text = button.upgrade_initiation(twr, money)
-                        if button.type == "build_button":
+                        if button.type == "build_button_1":
                             flag_build = False
                             flag_tower = True
                             money, text, active_tower = button.build_initiation(money, screen, x_square_light, y_square_light,
@@ -155,6 +164,11 @@ def game_process(text_font, stage, clock, FPS):
                             text = "You can build tower there"
                             flag_build = True
                             flag_tower = False
+                        if button.type == "build_button_2":
+                            flag_build = False
+                            flag_tower = True
+                            money, text, active_tower = button.build_initiation(money, screen, x_square_light, y_square_light,
+                                                            button, play_menu_text_surface, stage, active_tower)
             
             elif event.type == pygame.QUIT:
                 finished = True
@@ -207,7 +221,8 @@ def game_process(text_font, stage, clock, FPS):
         
         erase_useless_buttons(text_font)
         if flag_build:
-            Common_list.buttons.append(BuildButton(screen, 600, 650, play_menu_text_surface))
+            Common_list.buttons.append(BuildButton1(screen, 600, 650, play_menu_text_surface))
+            Common_list.buttons.append(BuildButton2(screen, 890, 650, play_menu_text_surface))
         elif flag_tower:
             Common_list.buttons.append(UpgradeButton(screen, 600, 650, play_menu_text_surface))
             Common_list.buttons.append(SellButton(screen, 900, 650, play_menu_text_surface))
