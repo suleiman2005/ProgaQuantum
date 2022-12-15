@@ -165,29 +165,29 @@ def draw_tower(x, y, z):
     if z == 1:
         i = tower_surf_1.get_rect(center=(x, y))
         screen.blit(tower_surf_1, i)
-    if z == 2:
+    elif z == 2:
         i = tower_surf_2.get_rect(center=(x, y))
         screen.blit(tower_surf_2, i)
-    if z == 3:
+    elif z == 3:
         i = tower_surf_3.get_rect(center=(x, y))
         screen.blit(tower_surf_3, i)
 
 def draw_enemy(enemy, time):
     change = time - enemy.time_creation
-    if enemy.tik == 0:
-        enemy.tik = 4
     if change//40 == change/40:
         enemy.tik -= 1
+    if enemy.tik == 0:
+        enemy.tik = 4
     if enemy.tik == 4:
         i = enemy1_surf.get_rect(center=( (enemy.x), (enemy.y) ))
         screen.blit(enemy1_surf, i)
-    if enemy.tik == 3:
+    elif enemy.tik == 3:
         i = enemy2_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
         screen.blit(enemy2_surf, i)
-    if enemy.tik == 2:
+    elif enemy.tik == 2:
         i = enemy3_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
         screen.blit(enemy3_surf, i)
-    if enemy.tik == 1:
+    elif enemy.tik == 1:
         i = enemy4_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy4_surf, i)
     if enemy.hp < 50:
@@ -195,20 +195,20 @@ def draw_enemy(enemy, time):
         screen.blit(dmg_surf, i)
 def draw_enemy4(enemy, time):
     change = time - enemy.time_creation
-    if enemy.tik == 0:
-        enemy.tik = 4
     if change//40 == change/40:
         enemy.tik -= 1
+    if enemy.tik == 0:
+        enemy.tik = 4
     if enemy.tik == 4:
         i = enemy41_surf.get_rect(center=( (enemy.x), (enemy.y) ))
         screen.blit(enemy41_surf, i)
-    if enemy.tik == 3:
+    elif enemy.tik == 3:
         i = enemy42_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
         screen.blit(enemy42_surf, i)
-    if enemy.tik == 2:
+    elif enemy.tik == 2:
         i = enemy43_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
         screen.blit(enemy43_surf, i)
-    if enemy.tik == 1:
+    elif enemy.tik == 1:
         i = enemy44_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy44_surf, i)
     if enemy.hp < 50:
@@ -216,36 +216,36 @@ def draw_enemy4(enemy, time):
         screen.blit(dmg_surf, i)
 def draw_enemy1(enemy, time):
     change = time - enemy.time_creation
+    if change//2 == change/2:
+        enemy.tik -= 1
     if enemy.tik == 0:
         enemy.tik = 2
-    if change//30 == change/30:
-        enemy.tik -= 1
     #i = prb_surf.get_rect(center=((enemy.x), (enemy.y)))
     #screen.blit(prb_surf, i)
     if enemy.tik == 2:
         if enemy.axis == 'x' and enemy.speed < 0:
             i = beeleft_surf.get_rect(center=((enemy.x), (enemy.y)))
             screen.blit(beeleft_surf, i)
-        if enemy.axis == 'x' and enemy.speed > 0:
+        elif enemy.axis == 'x' and enemy.speed >= 0:
             i = bee_surf.get_rect(center=((enemy.x), (enemy.y)))
             screen.blit(bee_surf, i)
-        if enemy.axis == 'y' and enemy.speed < 0:
+        elif enemy.axis == 'y' and enemy.speed < 0:
             i = beeup_surf.get_rect(center=((enemy.x), (enemy.y)))
             screen.blit(beeup_surf, i)
-        if enemy.axis == 'y' and enemy.speed > 0:
+        elif enemy.axis == 'y' and enemy.speed > 0:
             i = beedown_surf.get_rect(center=((enemy.x), (enemy.y)))
             screen.blit(beedown_surf, i)
-    if enemy.tik == 1:
+    elif enemy.tik == 1:
         if enemy.axis == 'x' and enemy.speed < 0:
             i = beeleft1_surf.get_rect(center=((enemy.x), (enemy.y)))
             screen.blit(beeleft1_surf, i)
-        if enemy.axis == 'x' and enemy.speed > 0:
+        elif enemy.axis == 'x' and enemy.speed >= 0:
             i = bee1_surf.get_rect(center=((enemy.x), (enemy.y)))
             screen.blit(bee1_surf, i)
-        if enemy.axis == 'y' and enemy.speed < 0:
+        elif enemy.axis == 'y' and enemy.speed < 0:
             i = beeup1_surf.get_rect(center=((enemy.x), (enemy.y)))
             screen.blit(beeup1_surf, i)
-        if enemy.axis == 'y' and enemy.speed > 0:
+        elif enemy.axis == 'y' and enemy.speed > 0:
             i = beedown1_surf.get_rect(center=((enemy.x), (enemy.y)))
             screen.blit(beedown1_surf, i)
 def draw_enemy3(enemy, time):

@@ -87,6 +87,7 @@ def game_process(text_font, stage, clock, FPS):
                                     text = "You can build tower there"
                                     flag_build = True
                                     flag_tower = False
+                                    active_tower = None
                                 if button.type == "build_button_1":
                                     flag_build = False
                                     flag_tower = True
@@ -164,6 +165,7 @@ def game_process(text_font, stage, clock, FPS):
                             text = "You can build tower there"
                             flag_build = True
                             flag_tower = False
+                            active_tower = None
                         if button.type == "build_button_2":
                             flag_build = False
                             flag_tower = True
@@ -178,29 +180,41 @@ def game_process(text_font, stage, clock, FPS):
                 time_move = 0
                 type_move = "UP"
             time_move += 1
-            if time_move % 10 == 0:
+            if (time_move <= 30 and time_move % 10 == 0) or\
+               (30 < time_move <= 60 and time_move % 5 == 0) or\
+               (60 < time_move and time_move % 2 == 0):
                 y_square_light = max(y_square_light-1, Common_list.boards[stage-1][1][0])
         elif pygame.key.get_pressed()[pygame.K_DOWN] and not flag_move:
             if type_move != "DOWN":
                 time_move = 0
                 type_move = "DOWN"
             time_move += 1
-            if time_move % 10 == 0:
+            if (time_move <= 30 and time_move % 10 == 0) or\
+               (30 < time_move <= 60 and time_move % 5 == 0) or\
+               (60 < time_move and time_move % 2 == 0):
                 y_square_light = min(y_square_light+1, Common_list.boards[stage-1][1][1])
         elif pygame.key.get_pressed()[pygame.K_LEFT] and not flag_move:
             if type_move != "LEFT":
                 time_move = 0
                 type_move = "LEFT"
             time_move += 1
-            if time_move % 10 == 0:
+            if (time_move <= 30 and time_move % 10 == 0) or\
+               (30 < time_move <= 60 and time_move % 5 == 0) or\
+               (60 < time_move and time_move % 2 == 0):
                 x_square_light = max(x_square_light-1, Common_list.boards[stage-1][0][0])
         elif pygame.key.get_pressed()[pygame.K_RIGHT] and not flag_move:
             if type_move != "RIGHT":
                 time_move = 0
                 type_move = "RIGHT"
             time_move += 1
-            if time_move % 10 == 0:
+            if (time_move <= 30 and time_move % 10 == 0) or\
+               (30 < time_move <= 60 and time_move % 5 == 0) or\
+               (60 < time_move and time_move % 2 == 0):
                 x_square_light = min(x_square_light+1, Common_list.boards[stage-1][0][1])
+        else:
+            time_move = 0
+            type_move = ""
+		
         if Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or Common_list.abv[stage-1][y_square_light][x_square_light] == 3 or\
            {Common_list.abv[stage-1][y_square_light][x_square_light],\
             Common_list.abv[stage-1][min(14, y_square_light+1)][x_square_light],\
