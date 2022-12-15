@@ -3,7 +3,7 @@ from Textures import *
 import Common_list
 
 SIDE = 40
-start_positions = [[0, 577, 620], [220, 380, 0], [220, 380, 0]]
+start_positions = [[0, 599, 620], [140, 460, 1199], [220, 380, 0]]
 
 def generate_road():
     Common_list.is_free_for_tower = [[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -85,6 +85,7 @@ class Bullet:
 class Tower1:
     """Класс первой башни (с дискретными снарядами)"""
     def __init__(self, screen, stage, x_square, y_square):
+        self.type = 1
         self.x_square = x_square
         self.y_square = y_square
         self.x = self.x_square * SIDE + SIDE // 2
@@ -163,18 +164,17 @@ class Tower1:
         Common_list.towers.remove(self)
 
 class Tower2:
-    """Класс второй башни (с дискретными снарядами)"""
+    """Класс второй башни (с лазерами)"""
     def __init__(self, screen, stage, x_square, y_square):
+        self.type = 2
         self.x_square = x_square
         self.y_square = y_square
         self.x = self.x_square * SIDE + SIDE // 2
         self.y = self.y_square * SIDE + SIDE // 2
         Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
         self.screen = screen
-        self.dmg = 50
+        self.dmg = 1
         # Урон пушки
-        self.speed = 30
-        # Скорострельность
         self.angle = 0
         # Угол поворота
         self.radius = 200
@@ -189,26 +189,18 @@ class Tower2:
         # Переменная, хранящая изображение башни
         self.attacked_enemy = None
         # Переменная, хранящая атакованного врага
-        self.t = self.speed
 
-    def shoot(self):
+    def shoot(self, money):
         """ Функция выстрела по врагу
         enemies - список активных врагов на карте"""
         if self.attacked_enemy:
             if ((self.attacked_enemy.x - self.x) ** 2 + (self.attacked_enemy.y - self.y) ** 2) > self.radius ** 2 \
                     or self.attacked_enemy.hp <= 0:
                 self.attacked_enemy = None
-                self.shoot()
+                money = self.shoot(money)
             else:
                 self.angle = atan2(self.attacked_enemy.y - self.y, self.attacked_enemy.x - self.x)
-                vx = BULLET_SPEED * cos(self.angle)
-                vy = BULLET_SPEED * sin(self.angle)
-                if self.attacked_enemy.axis == 'x':
-                    vx += self.attacked_enemy.speed
-                else:
-                    vy += self.attacked_enemy.speed
-                bullet = Bullet(self.x, self.y, vx, vy, self.dmg)
-                Common_list.bullets.append(bullet)
+                money = self.attacked_enemy.hit(self.dmg, money)
         else:
             min_distance = self.radius
             for enemy in Common_list.enemies:
@@ -217,7 +209,8 @@ class Tower2:
                     min_distance = enemy_distance
                     self.attacked_enemy = enemy
             if self.attacked_enemy:
-                self.shoot()
+                money = self.shoot(money)
+        return money
 
     def upgrade(self):
         """Если уровень не максимальный и достаточно денег, улучшает башню"""

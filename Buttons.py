@@ -117,7 +117,7 @@ class BuildButton2(Button):
         else:
             Common_list.abv[stage - 1][y_square_light][x_square_light] = 1
             text = "There is tower LVL " + str(1)
-            active_tower = Tower1(screen, stage, x_square_light, y_square_light)
+            active_tower = Tower2(screen, stage, x_square_light, y_square_light)
             Common_list.towers.append(active_tower)
             money -= 150
         return money, text, active_tower

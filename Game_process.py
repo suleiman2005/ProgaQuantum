@@ -264,12 +264,15 @@ def game_process(text_font, stage, clock, FPS):
             bullet.draw_and_move()
 
         for tower in Common_list.towers:
+            if tower.type == 1:
+                if tower.t <= 0:
+                    tower.shoot()
+                    if tower.attacked_enemy:
+                        tower.t = tower.speed
+                tower.t -= 1
+            if tower.type == 2:
+                money = tower.shoot(money)
             tower.draw()
-            if tower.t <= 0:
-                tower.shoot()
-                if tower.attacked_enemy:
-                    tower.t = tower.speed
-            tower.t -= 1
         if active_tower:
             pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
         fortress.hit()
