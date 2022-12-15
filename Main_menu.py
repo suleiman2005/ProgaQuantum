@@ -10,30 +10,34 @@ WHITE = (255, 255, 255)
 main_back = MainBack()
 
 
-def main_menu(text_font, clock, FPS):
+def main_menu(text_font, clock, FPS, loose):
     game_level = 0
     main_menu_screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    Common_list.buttons = [StartButton(main_menu_screen, 500, 200, text_font), ExitButton(main_menu_screen, 500, 700, text_font),
-               SelectButton1(main_menu_screen, 550, 400, text_font),
-               SelectButton2(main_menu_screen, 550, 500, text_font),
-               SelectButton3(main_menu_screen, 550, 600, text_font)]
+    Common_list.buttons = [StartButton(main_menu_screen, 520, 200, text_font), ExitButton(main_menu_screen, 520, 700, text_font),
+               SelectButton1(main_menu_screen, 520, 400, text_font),
+               SelectButton2(main_menu_screen, 520, 500, text_font),
+               SelectButton3(main_menu_screen, 520, 600, text_font)]
 
     intro = True
     while intro:
         main_back.draw()
         clock.tick(FPS)
-        main_menu_screen.blit(text_font.render("TOWER DEFENCE", True, BLACK), (300, 100))
-        main_menu_screen.blit(text_font.render("Select Level", True, BLACK), (500, 300))
+        pygame.draw.rect(main_menu_screen, (164,116,73), (480, 100, 240, 50))
+        main_menu_screen.blit(text_font.render("TOWER DEFENCE", True, BLACK), (490, 100))
+        pygame.draw.rect(main_menu_screen, (164,116,73), (520, 300, 150, 50))
+        main_menu_screen.blit(text_font.render("Select Level", True, BLACK), (520, 300))
         for button in Common_list.buttons:
             if button.type == "start_button" and game_level == 0:
                 pass
             elif button.type == "level1_button" and game_level == 1:
-                button.draw(RED)
+                button.draw(WHITE)
             elif button.type == "level2_button" and game_level == 2:
-                button.draw(RED)
+                button.draw(WHITE)
             elif button.type == "level3_button" and game_level == 3:
-                button.draw(RED)
+                button.draw(WHITE)
+            elif button.type == "exit_button":
+                button.draw(BLACK, loose)
             else:
                 button.draw(BLACK)
         for event in pygame.event.get():
@@ -60,7 +64,7 @@ def main_menu(text_font, clock, FPS):
     return game_level
 
 
-def game_over(text_font, clock, FPS):
+def game_over(text_font, clock, FPS, loose):
     game_over_screen = pygame.display.set_mode((WIDTH, HEIGHT))
     game_over_font = pygame.font.Font(None, 75)
     Common_list.buttons = [ExitToMainMenuButton(game_over_screen, 500, 500, text_font), ExitButton(game_over_screen, 500, 600, text_font)]
@@ -73,7 +77,10 @@ def game_over(text_font, clock, FPS):
         game_over_label = game_over_font.render("YOU DIED", True, RED)
         game_over_screen.blit(game_over_label, (game_over_screen.get_width() / 2 - game_over_label.get_width() / 2, 200))
         for button in Common_list.buttons:
-            button.draw(WHITE)
+            if button.type == "exit_button":
+                button.draw(WHITE, loose)
+            else:
+                button.draw(WHITE)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 stop_cycle = True
@@ -87,3 +94,4 @@ def game_over(text_font, clock, FPS):
                                 game_over_parameter = False
         pygame.display.update()
     return game_over_parameter
+
