@@ -296,10 +296,9 @@ def game_process(text_font, stage, clock, FPS):
 
         fortress.draw()
 
-        for bullet in Common_list.bullets:
-            money = bullet.hit_enemies(money)
-        for bullet in Common_list.bullets:
-            bullet.draw_and_move()
+        for enemy in Common_list.enemies:
+            enemy.move(stage)
+            enemy.draw(time)
 
         for tower in Common_list.towers:
             if tower.type == 1:
@@ -311,10 +310,11 @@ def game_process(text_font, stage, clock, FPS):
             if tower.type == 2:
                 money = tower.shoot(money)
             tower.draw()
-            
-        for enemy in Common_list.enemies:
-            enemy.move(stage)
-            enemy.draw(time)
+        
+        for bullet in Common_list.bullets:
+            money = bullet.hit_enemies(money)
+        for bullet in Common_list.bullets:
+            bullet.draw_and_move()
         
         fortress.hit()
         if not fortress.alive_or_not():

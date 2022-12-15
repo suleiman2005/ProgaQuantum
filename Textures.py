@@ -27,9 +27,12 @@ ss1_surf = pygame.image.load("img/ss1.png")
 ss2_surf = pygame.image.load("img/ss2.png")
 ss3_surf = pygame.image.load("img/ss3.png")
 ss4_surf = pygame.image.load("img/ss4.png")
-tower_surf_1 = pygame.image.load("img/tt1.png")
-tower_surf_2 = pygame.image.load("img/tt2.png")
-tower_surf_3 = pygame.image.load("img/tt3.png")
+tower1_surf_1 = pygame.image.load("img/tt1.png")
+tower1_surf_2 = pygame.image.load("img/tt2.png")
+tower1_surf_3 = pygame.image.load("img/tt3.png")
+tower2_surf_1 = pygame.image.load("img/ttt1.png")
+tower2_surf_2 = pygame.image.load("img/ttt2.png")
+tower2_surf_3 = pygame.image.load("img/ttt3.png")
 stone_surf = pygame.image.load("img/stone.png")
 lake_surf = pygame.image.load("img/lake.png")
 enemy1_surf = pygame.image.load("img/11.png")
@@ -59,6 +62,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 LASER_1 = (186, 213, 247)
+LASER_3 = (158, 0, 0)
 
 def generate_textures():
     m = randint(3, 5)
@@ -166,16 +170,27 @@ def draw_clouds(stage):
 def draw_bullet(x, y):
 	pygame.draw.circle(screen, BLACK, (x, y), 1)
 
-def draw_tower(x, y, z):
-    if z == 1:
-        i = tower_surf_1.get_rect(center=(x, y))
-        screen.blit(tower_surf_1, i)
-    elif z == 2:
-        i = tower_surf_2.get_rect(center=(x, y))
-        screen.blit(tower_surf_2, i)
-    elif z == 3:
-        i = tower_surf_3.get_rect(center=(x, y))
-        screen.blit(tower_surf_3, i)
+def draw_tower1(x, y, level):
+    if level == 1:
+        i = tower1_surf_1.get_rect(center=(x, y))
+        screen.blit(tower1_surf_1, i)
+    elif level == 2:
+        i = tower1_surf_2.get_rect(center=(x, y))
+        screen.blit(tower1_surf_2, i)
+    elif level == 3:
+        i = tower1_surf_3.get_rect(center=(x, y))
+        screen.blit(tower1_surf_3, i)
+        
+def draw_tower2(x, y, level):
+    if level == 1:
+        i = tower2_surf_1.get_rect(center=(x, y))
+        screen.blit(tower2_surf_1, i)
+    elif level == 2:
+        i = tower2_surf_2.get_rect(center=(x, y))
+        screen.blit(tower2_surf_2, i)
+    elif level == 3:
+        i = tower2_surf_3.get_rect(center=(x, y))
+        screen.blit(tower2_surf_3, i)
 
 def draw_enemy(enemy, time):
     change = time - enemy.time_creation
