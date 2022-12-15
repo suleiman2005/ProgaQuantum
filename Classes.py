@@ -4,6 +4,7 @@ import Common_list
 
 SIDE = 40
 start_positions = [[0, 599, 620], [140, 460, 1199], [220, 380, 0]]
+maximum_of_enemies = [10, 100, 1000]
 
 def generate_road():
     Common_list.is_free_for_tower = [[[1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -318,7 +319,7 @@ class Enemy4(Enemy1):
         self.hp = 200
         self.reward = 50
         self.tik = 4
-        self.speed = 1
+        self.speed = 2
 
     def draw(self, time):
         draw_enemy4(self, time)
