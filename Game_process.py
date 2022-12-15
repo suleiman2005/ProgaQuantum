@@ -54,6 +54,8 @@ def game_process(text_font, stage, clock, FPS):
     flag_move = False
     generate_textures()
     generate_road()
+    pygame.mixer.music.load("music/level_music.mp3")
+    pygame.mixer.music.play(-1)
 
     while not finished:
         screen.fill(WHITE)
