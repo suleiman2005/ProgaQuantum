@@ -6,6 +6,29 @@ from Main_menu import *
 import Common_list
 
 
+def arrow_check(x_square_light, y_square_light, stage, active_tower):
+    if Common_list.is_free_for_tower[stage - 1][y_square_light][x_square_light] == 0 or \
+            Common_list.abv[stage - 1][y_square_light][x_square_light] == 3 or \
+            {Common_list.abv[stage - 1][y_square_light][x_square_light], \
+             Common_list.abv[stage - 1][min(14, y_square_light + 1)][x_square_light], \
+             Common_list.abv[stage - 1][min(14, y_square_light + 1)][min(29, x_square_light + 1)], \
+             Common_list.abv[stage - 1][y_square_light][min(29, x_square_light + 1)]}.intersection({7, 8}) != set():
+        flag_build = False
+        flag_tower = False
+        text = "You can't build tower there"
+    elif Common_list.is_free_for_tower[stage - 1][y_square_light][x_square_light] == 1:
+        flag_build = True
+        flag_tower = False
+        text = "You can build tower there"
+    else:
+        flag_build = False
+        flag_tower = True
+        active_tower = Common_list.towers[
+            Common_list.is_free_for_tower[stage - 1][y_square_light][x_square_light] - 2]
+        text = "There is tower LVL " + str(active_tower.level)
+    return flag_build, flag_tower, text, active_tower
+
+
 def game_process(text_font, stage, clock, FPS):
     finished = False
     loose = False
@@ -200,6 +223,7 @@ def game_process(text_font, stage, clock, FPS):
             time_move += 1
             if time_move % 10 == 0:
                 y_square_light = max(y_square_light - 1, Common_list.boards[stage - 1][1][0])
+            flag_build, flag_tower, text, active_tower = arrow_check(x_square_light, y_square_light, stage, active_tower)
         elif pygame.key.get_pressed()[pygame.K_DOWN] and not flag_move:
             if type_move != "DOWN":
                 time_move = 0
@@ -207,6 +231,7 @@ def game_process(text_font, stage, clock, FPS):
             time_move += 1
             if time_move % 10 == 0:
                 y_square_light = min(y_square_light + 1, Common_list.boards[stage - 1][1][1])
+            flag_build, flag_tower, text, active_tower = arrow_check(x_square_light, y_square_light, stage, active_tower)
         elif pygame.key.get_pressed()[pygame.K_LEFT] and not flag_move:
             if type_move != "LEFT":
                 time_move = 0
@@ -214,6 +239,7 @@ def game_process(text_font, stage, clock, FPS):
             time_move += 1
             if time_move % 10 == 0:
                 x_square_light = max(x_square_light - 1, Common_list.boards[stage - 1][0][0])
+            flag_build, flag_tower, text, active_tower = arrow_check(x_square_light, y_square_light, stage, active_tower)
         elif pygame.key.get_pressed()[pygame.K_RIGHT] and not flag_move:
             if type_move != "RIGHT":
                 time_move = 0
@@ -221,25 +247,7 @@ def game_process(text_font, stage, clock, FPS):
             time_move += 1
             if time_move % 10 == 0:
                 x_square_light = min(x_square_light + 1, Common_list.boards[stage - 1][0][1])
-        if Common_list.is_free_for_tower[stage - 1][y_square_light][x_square_light] == 0 or \
-                Common_list.abv[stage - 1][y_square_light][x_square_light] == 3 or \
-                {Common_list.abv[stage - 1][y_square_light][x_square_light], \
-                 Common_list.abv[stage - 1][min(14, y_square_light + 1)][x_square_light], \
-                 Common_list.abv[stage - 1][min(14, y_square_light + 1)][min(29, x_square_light + 1)], \
-                 Common_list.abv[stage - 1][y_square_light][min(29, x_square_light + 1)]}.intersection({7, 8}) != set():
-            flag_build = False
-            flag_tower = False
-            text = "You can't build tower there"
-        elif Common_list.is_free_for_tower[stage - 1][y_square_light][x_square_light] == 1:
-            flag_build = True
-            flag_tower = False
-            text = "You can build tower there"
-        else:
-            flag_build = False
-            flag_tower = True
-            active_tower = Common_list.towers[
-                Common_list.is_free_for_tower[stage - 1][y_square_light][x_square_light] - 2]
-            text = "There is tower LVL " + str(active_tower.level)
+            flag_build, flag_tower, text, active_tower = arrow_check(x_square_light, y_square_light, stage, active_tower)
 
         erase_useless_buttons(text_font)
         if flag_build:
