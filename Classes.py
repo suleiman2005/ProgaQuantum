@@ -348,11 +348,13 @@ class Fortress:
         self.hp = 10000
         self.is_alive = True
 
-    def hit(self):
+    def hit(self, sound_of_fortress_damage, time):
         """Функция, отвечающая за повреждения главного здания"""
         for enemy in Common_list.enemies:
             enemy_distance = np.sqrt((self.x - enemy.x) ** 2 + (self.y - enemy.y) ** 2)
             if enemy_distance == 20:
+                if time % 60 == 0:
+                    sound_of_fortress_damage.play()
                 enemy.attack(self)
                 if self.hp <= 0:
                     self.is_alive = False

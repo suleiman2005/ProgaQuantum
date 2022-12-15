@@ -56,6 +56,7 @@ def game_process(text_font, stage, clock, FPS):
     generate_road()
     pygame.mixer.music.load("music/level_music.mp3")
     pygame.mixer.music.play(-1)
+    sound_of_fortress_damage = pygame.mixer.Sound("music/sound_of_fortress_damage.wav")
 
     while not finished:
         screen.fill(WHITE)
@@ -320,11 +321,11 @@ def game_process(text_font, stage, clock, FPS):
         for bullet in Common_list.bullets:
             bullet.draw_and_move()
         
-        fortress.hit()
+        fortress.hit(sound_of_fortress_damage, time)
         if not fortress.alive_or_not():
             finished = True
             loose = True
-        if len(Common_list.enemies) == 0  and number_of_enemies >= maximum_of_enemies[stage -1 ]:
+        if len(Common_list.enemies) == 0 and number_of_enemies >= maximum_of_enemies[stage -1]:
             finished = True
             win = True
         time += Delta_t
