@@ -95,3 +95,35 @@ def game_over(text_font, clock, FPS, loose):
         pygame.display.update()
     return game_over_parameter
 
+
+def winning(text_font, clock, FPS):
+    winning_screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    winning_font = pygame.font.Font(None, 75)
+    Common_list.buttons = [ExitToMainMenuButton(winning_screen, 500, 500, text_font),
+                           ExitButton(winning_screen, 500, 600, text_font)]
+    winning_parameter = True
+    stop_cycle = False
+
+    while not stop_cycle and winning_parameter:
+        winning_screen.fill(WHITE)
+        clock.tick(FPS)
+        winning_label = winning_font.render("YOU WIN!!!", True, GREEN)
+        winning_screen.blit(winning_label, (winning_screen.get_width() / 2 - winning_label.get_width() / 2, 200))
+        for button in Common_list.buttons:
+            if button.type == "exit_button":
+                button.draw(BLACK, True)
+            else:
+                button.draw(BLACK)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                stop_cycle = True
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    for button in Common_list.buttons:
+                        if button.is_pressed(event):
+                            if button.type == "exit_button":
+                                stop_cycle = True
+                            if button.type == "start_button":
+                                winning_parameter = False
+        pygame.display.update()
+    return winning_parameter
