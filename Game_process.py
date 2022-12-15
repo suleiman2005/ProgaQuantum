@@ -278,5 +278,4 @@ def game_process(text_font, stage, clock, FPS):
         screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
         screen.blit(text_font.render("FPS: " + str(int(clock.get_fps())), True, (0, 0, 0)), (500, 10))
         pygame.display.update()
-        print(len(Common_list.bullets))
     return finished, loose
