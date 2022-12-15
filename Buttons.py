@@ -86,7 +86,7 @@ class BuildButton1(Button):
         self.type = "build_button_1"
 
     def draw(self):
-        self.screen.blit(self.text_font.render("Build tower 1 (z)", True, BLACK), (self.x, self.y + self.height / 10))
+        self.screen.blit(self.text_font.render("Build tower 1 (1)", True, BLACK), (self.x, self.y + self.height / 10))
 
     def build_initiation(self, money, screen, x_square_light, y_square_light, button, play_menu_text_surface, stage, active_tower):
         """функция, запускающая процесс постройки"""
@@ -109,7 +109,7 @@ class BuildButton2(Button):
         self.type = "build_button_2"
 
     def draw(self):
-        self.screen.blit(self.text_font.render("Build tower 2 (x)", True, BLACK), (self.x, self.y + self.height / 10))
+        self.screen.blit(self.text_font.render("Build tower 2 (2)", True, BLACK), (self.x, self.y + self.height / 10))
 
     def build_initiation(self, money, screen, x_square_light, y_square_light, button, play_menu_text_surface, stage,
                          active_tower):
