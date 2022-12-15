@@ -262,28 +262,34 @@ def game_process(text_font, stage, clock, FPS):
                                             (x_square_light*SIDE + SIDE, y_square_light*SIDE + SIDE),
                                             (x_square_light*SIDE, y_square_light*SIDE + SIDE)), 1)
         random_number = rnd.randint(1, 100)
-        if random_number == 1:
+        if random_number == 1 and number_of_enemies < maximum_of_enemies[stage - 1]:
             enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
             Common_list.enemies.append(enemy)
-        elif random_number == 100:
+            number_of_enemies += 1
+        elif random_number == 100 and number_of_enemies < maximum_of_enemies[stage - 1]:
             enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
             Common_list.enemies.append(enemy)
+            number_of_enemies += 1
 
         random_number = rnd.randint(1, 200)
-        if random_number == 1:
+        if random_number == 1 and number_of_enemies < maximum_of_enemies[stage - 1]:
             enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
             Common_list.enemies.append(enemy)
-        elif random_number == 200:
+            number_of_enemies += 1
+        elif random_number == 200 and number_of_enemies < maximum_of_enemies[stage - 1]:
             enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
             Common_list.enemies.append(enemy)
+            number_of_enemies += 1
 
         random_number = rnd.randint(1, 1000)
-        if random_number == 1:
+        if random_number == 1 and number_of_enemies < maximum_of_enemies[stage - 1]:
             enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
             Common_list.enemies.append(enemy)
-        elif random_number == 100:
+            number_of_enemies += 1
+        elif random_number == 100 and number_of_enemies < maximum_of_enemies[stage - 1]:
             enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
             Common_list.enemies.append(enemy)
+            number_of_enemies += 1
         for enemy in Common_list.enemies:
             enemy.move(stage)
             enemy.draw(time)
@@ -309,6 +315,9 @@ def game_process(text_font, stage, clock, FPS):
         if not fortress.alive_or_not():
             finished = True
             loose = True
+        if len(Common_list.enemies) == 0  and number_of_enemies >= maximum_of_enemies[stage -1 ]:
+            finished = True
+            win = True
         time += Delta_t
         screen.blit(play_menu_surface, play_menu_rect)
         screen.blit(play_menu_text_surface.render(text, True, BLACK), (100, 675))
