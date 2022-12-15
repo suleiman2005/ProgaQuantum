@@ -277,11 +277,15 @@ class Enemy1:
 
     def move(self, stage):
         """Функция, двигающаяя юнита"""
-        if self.axis == 'x' and Common_list.abv[stage-1][self.y // SIDE][(self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE] != 0:
+        if self.axis == 'x' and not (0 <= (self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE <= 29):
+            self.speed = -self.speed
+        elif self.axis == 'x' and Common_list.abv[stage-1][self.y // SIDE][(self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE] != 0:
             self.axis = 'y'
             self.x = (self.x//SIDE) * SIDE + SIDE // 2
             if Common_list.abv[stage-1][(self.y+np.sign(self.speed)*(SIDE//2+1)) // SIDE][self.x // SIDE] != 0:
                 self.speed = -self.speed
+        elif self.axis == 'y' and not (0 <= (self.y+np.sign(self.speed)*(SIDE//2+1)) // SIDE <= 14):
+            self.speed = -self.speed
         elif self.axis == 'y' and (Common_list.abv[stage-1][(self.y+np.sign(self.speed)*(SIDE//2+1)) // SIDE][self.x // SIDE] != 0 or abs(self.y - 300) <= abs(self.speed) / 2):
             self.axis = 'x'
             self.y = (self.y//SIDE) * SIDE + SIDE // 2

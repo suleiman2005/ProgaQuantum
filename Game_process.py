@@ -23,6 +23,9 @@ def game_process(text_font, stage, clock, FPS):
     flag_tower = False
     play_menu_text_surface = pygame.font.SysFont('Comic Sans MS', 30, True)
     text = "You can't build tower there"
+    time_move = 0
+    type_move = ""
+    flag_move = False
     generate_textures()
     generate_road()
 
@@ -30,7 +33,7 @@ def game_process(text_font, stage, clock, FPS):
         screen.fill(WHITE)
         textures(stage)
         clock.tick(FPS)
-    
+        flag_move = False
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for button in Common_list.buttons:
@@ -94,12 +97,16 @@ def game_process(text_font, stage, clock, FPS):
                 if event.key == pygame.K_ESCAPE:
                     finished = True
                 elif event.key == pygame.K_UP:
+                    flag_move = True
                     y_square_light = max(y_square_light-1, Common_list.boards[stage-1][1][0])
                 elif event.key == pygame.K_DOWN:
+                    flag_move = True
                     y_square_light = min(y_square_light+1, Common_list.boards[stage-1][1][1])
                 elif event.key == pygame.K_LEFT:
+                    flag_move = True
                     x_square_light = max(x_square_light-1, Common_list.boards[stage-1][0][0])
                 elif event.key == pygame.K_RIGHT:
+                    flag_move = True
                     x_square_light = min(x_square_light+1, Common_list.boards[stage-1][0][1])
                 active_tower = None
                 if Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or Common_list.abv[stage-1][y_square_light][x_square_light] == 3 or\
@@ -151,6 +158,52 @@ def game_process(text_font, stage, clock, FPS):
             
             elif event.type == pygame.QUIT:
                 finished = True
+            
+        if pygame.key.get_pressed()[pygame.K_UP] and not flag_move:
+            if type_move != "UP":
+                time_move = 0
+                type_move = "UP"
+            time_move += 1
+            if time_move % 10 == 0:
+                y_square_light = max(y_square_light-1, Common_list.boards[stage-1][1][0])
+        elif pygame.key.get_pressed()[pygame.K_DOWN] and not flag_move:
+            if type_move != "DOWN":
+                time_move = 0
+                type_move = "DOWN"
+            time_move += 1
+            if time_move % 10 == 0:
+                y_square_light = min(y_square_light+1, Common_list.boards[stage-1][1][1])
+        elif pygame.key.get_pressed()[pygame.K_LEFT] and not flag_move:
+            if type_move != "LEFT":
+                time_move = 0
+                type_move = "LEFT"
+            time_move += 1
+            if time_move % 10 == 0:
+                x_square_light = max(x_square_light-1, Common_list.boards[stage-1][0][0])
+        elif pygame.key.get_pressed()[pygame.K_RIGHT] and not flag_move:
+            if type_move != "RIGHT":
+                time_move = 0
+                type_move = "RIGHT"
+            time_move += 1
+            if time_move % 10 == 0:
+                x_square_light = min(x_square_light+1, Common_list.boards[stage-1][0][1])
+        if Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 0 or Common_list.abv[stage-1][y_square_light][x_square_light] == 3 or\
+           {Common_list.abv[stage-1][y_square_light][x_square_light],\
+            Common_list.abv[stage-1][min(14, y_square_light+1)][x_square_light],\
+            Common_list.abv[stage-1][min(14, y_square_light+1)][min(29, x_square_light+1)],\
+            Common_list.abv[stage-1][y_square_light][min(29, x_square_light+1)]}.intersection({7,8}) != set():
+            flag_build = False
+            flag_tower = False
+            text = "You can't build tower there"
+        elif Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] == 1:
+            flag_build = True
+            flag_tower = False
+            text = "You can build tower there"
+        else:
+            flag_build = False
+            flag_tower = True
+            active_tower = Common_list.towers[Common_list.is_free_for_tower[stage-1][y_square_light][x_square_light] - 2]
+            text = "There is tower LVL " + str(active_tower.level)
         
         erase_useless_buttons(text_font)
         if flag_build:
@@ -183,8 +236,9 @@ def game_process(text_font, stage, clock, FPS):
             enemy.draw(time)
 
         for bullet in Common_list.bullets:
-            bullet.draw_and_move()
             money = bullet.hit_enemies(money)
+        for bullet in Common_list.bullets:
+            bullet.draw_and_move()
 
         for tower in Common_list.towers:
             tower.draw()
@@ -209,4 +263,5 @@ def game_process(text_font, stage, clock, FPS):
         screen.blit(text_font.render("Money " + str(int(money)), True, (0, 0, 0)), (10, 10))
         screen.blit(text_font.render("FPS: " + str(int(clock.get_fps())), True, (0, 0, 0)), (500, 10))
         pygame.display.update()
+        print(len(Common_list.bullets))
     return finished, loose
