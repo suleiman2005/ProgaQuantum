@@ -2,7 +2,12 @@ import pygame
 from random import randint
 import numpy as np
 import Common_list
-
+e1u_surf = pygame.image.load("img/en1u.png")
+e1r_surf = pygame.image.load("img/en1r.png")
+e1l_surf = pygame.image.load("img/en1l.png")
+e2r_surf = pygame.image.load("img/en2r.png")
+e2l_surf = pygame.image.load("img/en2l.png")
+e2u_surf = pygame.image.load("img/en2u.png")
 grass_surf = pygame.image.load("img/t1gr.png")
 grass1_surf = pygame.image.load("img/t2gr.png")
 road_surf = pygame.image.load("img/t1ro.png")
@@ -20,6 +25,10 @@ enemy1_surf = pygame.image.load("img/11.png")
 enemy2_surf = pygame.image.load("img/12.png")
 enemy3_surf = pygame.image.load("img/13.png")
 enemy4_surf = pygame.image.load("img/14.png")
+enemy41_surf = pygame.image.load("img/21.png")
+enemy42_surf = pygame.image.load("img/22.png")
+enemy43_surf = pygame.image.load("img/23.png")
+enemy44_surf = pygame.image.load("img/24.png")
 fort_surf = pygame.image.load("img/mom-tower-t.png")
 dmg_surf = pygame.image.load("img/dmg.png")
 prb_surf = pygame.image.load("img/prb.png")
@@ -50,21 +59,21 @@ def generate_textures():
     s = randint(3, 6)
     t = randint(3, 5)
     
-    Common_list.abv = [[[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,1,1,r,1,1,1,1,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,9,0,0,0,0,0,0,0,9,1,1,k,1,1,1,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,1,0,l,9,1,1,1,1,k,1,1,1,1,1,1,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,1,0,9,1,1,m,1,1,1,1,1,k,1,1,l,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,9,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,1,1,l,1,r,1,1,0,1,1,9,1,1,1,1,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-            [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+    Common_list.abv = [[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,r,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,9,0,0,0,0,0,0,0,9,1,1,k,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,0,l,9,1,1,1,1,k,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,0,9,1,1,m,1,1,1,1,1,k,1,1,l,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,9,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,l,1,r,1,1,0,1,1,9,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
            ],
            [[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
             [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
@@ -174,10 +183,55 @@ def draw_enemy(enemy, time):
     if enemy.hp < 50:
         i = dmg_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
         screen.blit(dmg_surf, i)
+def draw_enemy4(enemy, time):
+    change = time - enemy.time_creation
+    if enemy.tik == 0:
+        enemy.tik = 4
+    if change//40 == change/40:
+        enemy.tik -= 1
+    if enemy.tik == 4:
+        i = enemy41_surf.get_rect(center=( (enemy.x), (enemy.y) ))
+        screen.blit(enemy41_surf, i)
+    if enemy.tik == 3:
+        i = enemy42_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        screen.blit(enemy42_surf, i)
+    if enemy.tik == 2:
+        i = enemy43_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        screen.blit(enemy43_surf, i)
+    if enemy.tik == 1:
+        i = enemy44_surf.get_rect(center=((enemy.x), (enemy.y)))
+        screen.blit(enemy44_surf, i)
+    if enemy.hp < 50:
+        i = dmg_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        screen.blit(dmg_surf, i)
 def draw_enemy1(enemy, time):
     change = time - enemy.time_creation
-    i = prb_surf.get_rect(center=((enemy.x), (enemy.y)))
-    screen.blit(prb_surf, i)
+    if enemy.tik == 0:
+        enemy.tik = 2
+    if change//40 == change/40:
+        enemy.tik -= 1
+    #i = prb_surf.get_rect(center=((enemy.x), (enemy.y)))
+    #screen.blit(prb_surf, i)
+    if enemy.tik == 2:
+        if enemy.axis == 'x' and enemy.speed < 0:
+            i = e1l_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(e1l_surf, i)
+        if enemy.axis == 'x' and enemy.speed > 0:
+            i = e1r_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(e1r_surf, i)
+        if enemy.axis == 'y':
+            i = e1u_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(e1u_surf, i)
+    if enemy.tik == 1:
+        if enemy.axis == 'x' and enemy.speed < 0:
+            i = e2l_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(e2l_surf, i)
+        if enemy.axis == 'x' and enemy.speed > 0:
+            i = e2r_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(e2r_surf, i)
+        if enemy.axis == 'y':
+            i = e2u_surf.get_rect(center=((enemy.x), (enemy.y)))
+            screen.blit(e2u_surf, i)
 def draw_enemy3(enemy, time):
     change = time - enemy.time_creation
     i = cloud_surf.get_rect(center=((enemy.x), (enemy.y)))

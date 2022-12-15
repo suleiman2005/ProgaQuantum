@@ -3,7 +3,7 @@ from Textures import *
 import Common_list
 
 SIDE = 40
-start_positions = [[180, 420, 620], [140, 460, 1060], [220, 380, 0]]
+start_positions = [[0, 577, 620], [220, 380, 0], [220, 380, 0]]
 
 def generate_road():
     Common_list.is_free_for_tower = [[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -251,7 +251,7 @@ class Enemy1:
         self.y = y
         self.type = 1
         self.tik = 4
-        self.speed = 2
+        self.speed = 1
         # Скорость юнита
         self.axis = 'x'
         #Ось движения юнита
@@ -309,11 +309,25 @@ class Enemy2(Enemy1):
     """Класс, описывающий 2 тип врага"""
     def __init__(self, screen, x, y, time_creation):
         super().__init__(screen, x, y, time_creation)
-        self.hp = 2800
+        self.hp = 50
         self.reward = 50
+        self.tik = 2
+        self.speed = 4
 
     def draw(self, time):
         draw_enemy1(self, time)
+
+class Enemy4(Enemy1):
+    """Класс, описывающий 2 тип врага"""
+    def __init__(self, screen, x, y, time_creation):
+        super().__init__(screen, x, y, time_creation)
+        self.hp = 200
+        self.reward = 50
+        self.tik = 4
+        self.speed = 1
+
+    def draw(self, time):
+        draw_enemy4(self, time)
 
 class Fortress:
     """Класс описывающий главное здание"""

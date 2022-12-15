@@ -239,6 +239,14 @@ def game_process(text_font, stage, clock, FPS):
             enemy = Enemy1(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
             Common_list.enemies.append(enemy)
 
+        random_number = rnd.randint(1, 200)
+        if random_number == 1:
+            enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
+            Common_list.enemies.append(enemy)
+        elif random_number == 200:
+            enemy = Enemy4(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time)
+            Common_list.enemies.append(enemy)
+
         random_number = rnd.randint(1, 1000)
         if random_number == 1:
             enemy = Enemy2(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time)
