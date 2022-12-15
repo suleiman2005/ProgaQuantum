@@ -200,7 +200,7 @@ class Tower2:
                 self.attacked_enemy = None
                 money = self.shoot(money)
             else:
-                self.angle = atan2(self.attacked_enemy.y - self.y + 18, self.attacked_enemy.x - self.x)
+                self.angle = atan2(self.attacked_enemy.y - self.y + 28, self.attacked_enemy.x - self.x)
                 money = self.attacked_enemy.hit(self.dmg, money)
         else:
             min_distance = self.radius
@@ -228,8 +228,8 @@ class Tower2:
                 LASER_COLOUR = tuple(max(0, min(255, col1 + col2)) for col1, col2 in zip(LASER_1, (randint(-30,30), randint(-30, 30), randint(-30, 30))))
             else:
                 LASER_COLOUR = tuple(max(0, min(255, col1 + col2)) for col1, col2 in zip(LASER_3, (randint(-30,30), randint(-30, 30), randint(-30, 30))))
-            distance = sqrt((self.x - self.attacked_enemy.x)**2 + (self.y - 18 - self.attacked_enemy.y)**2)
-            pygame.draw.line(self.screen, LASER_COLOUR, (self.x, self.y - 18), (self.x + distance * cos(self.angle), self.y - 18 + distance * sin(self.angle)), 3)
+            distance = sqrt((self.x - self.attacked_enemy.x)**2 + (self.y - 28 - self.attacked_enemy.y)**2)
+            pygame.draw.line(self.screen, LASER_COLOUR, (self.x, self.y - 28), (self.x + distance * cos(self.angle), self.y - 28 + distance * sin(self.angle)), 3)
             pygame.draw.circle(self.screen, LASER_COLOUR, (self.attacked_enemy.x, self.attacked_enemy.y), 5)
 
     def sell(self, stage):
@@ -327,6 +327,17 @@ class Enemy4(Enemy1):
 
     def draw(self, time):
         draw_enemy4(self, time)
+
+class Enemy3(Enemy1):
+    """Класс, описывающий 3 тип врага"""
+    def __init__(self, screen, x, y, time_creation):
+        super().__init__(screen, x, y, time_creation)
+        self.hp = 2000
+        self.reward = 50
+        self.speed = 1
+
+    def draw(self, time):
+        draw_enemy3(self, time)
 
 class Fortress:
     """Класс описывающий главное здание"""

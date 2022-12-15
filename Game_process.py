@@ -293,6 +293,8 @@ def game_process(text_font, stage, clock, FPS):
             Common_list.enemies.append(enemy)
             number_of_enemies += 1
 
+
+
         if active_tower:
             pygame.draw.circle(screen, GREEN, (active_tower.x, active_tower.y), active_tower.radius, 3)
 
