@@ -6,56 +6,59 @@ SIDE = 40
 start_positions = [[0, 599, 620], [140, 460, 1199], [220, 380, 0]]
 maximum_of_enemies = [100, 500, 1000]
 
+
 def generate_road():
-    Common_list.is_free_for_tower = [[[1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-                         ],
-                         [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-                         ],
-                         [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                          [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
-                          [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                          [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1],
-                          [1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                          [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                          [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
-                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-                         ]
-                        ]
+    Common_list.is_free_for_tower = [
+        [[1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+         ],
+        [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+         ],
+        [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+         [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+         [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+         [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+         [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+         ]
+        ]
+
 
 class Bullet:
     def __init__(self, x, y, vx, vy, dmg):
@@ -65,33 +68,33 @@ class Bullet:
         self.vy = vy
         self.dmg = dmg
         self.live = 1
-	
+
     def draw_and_move(self):
         draw_bullet(self.x, self.y)
         self.x += self.vx
         self.y += self.vy
         if self.x < 0 or self.x > WIDTH or self.y < 0 or self.y > HEIGHT:
             Common_list.bullets.remove(self)
-        
+
     def hit_enemies(self, money):
         for enemy in Common_list.enemies:
-            if (enemy.x-self.x)**2 + (enemy.y-self.y)**2 <= enemy.radius**2:
+            if (enemy.x - self.x) ** 2 + (enemy.y - self.y) ** 2 <= enemy.radius ** 2:
                 money = enemy.hit(self.dmg, money)
                 Common_list.bullets.remove(self)
                 break
         return money
-                
-	
+
 
 class Tower1:
     """Класс первой башни (с дискретными снарядами)"""
+
     def __init__(self, screen, stage, x_square, y_square):
         self.type = 1
         self.x_square = x_square
         self.y_square = y_square
         self.x = self.x_square * SIDE + SIDE // 2
         self.y = self.y_square * SIDE + SIDE // 2
-        Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
+        Common_list.is_free_for_tower[stage - 1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
         self.screen = screen
         self.dmg = 100
         # Урон пушки
@@ -153,26 +156,29 @@ class Tower1:
         """Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,
         поэтому рисует круг с дулом)"""
         draw_tower1(self.x, self.y, self.level)
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x-2, self.y-10),
+        pygame.draw.line(self.screen, (0, 0, 0), (self.x - 2, self.y - 10),
                          (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
 
     def sell(self, stage):
         """Функция продажи башни"""
         for tower_index in range(len(Common_list.towers)):
-            if tower_index > Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] - 2:
-                Common_list.is_free_for_tower[stage-1][Common_list.towers[tower_index].y_square][Common_list.towers[tower_index].x_square] -= 1
-        Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 1
+            if tower_index > Common_list.is_free_for_tower[stage - 1][self.y_square][self.x_square] - 2:
+                Common_list.is_free_for_tower[stage - 1][Common_list.towers[tower_index].y_square][
+                    Common_list.towers[tower_index].x_square] -= 1
+        Common_list.is_free_for_tower[stage - 1][self.y_square][self.x_square] = 1
         Common_list.towers.remove(self)
+
 
 class Tower2:
     """Класс второй башни (с лазерами)"""
+
     def __init__(self, screen, stage, x_square, y_square):
         self.type = 2
         self.x_square = x_square
         self.y_square = y_square
         self.x = self.x_square * SIDE + SIDE // 2
         self.y = self.y_square * SIDE + SIDE // 2
-        Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
+        Common_list.is_free_for_tower[stage - 1][self.y_square][self.x_square] = 2 + len(Common_list.towers)
         self.screen = screen
         self.dmg = 1
         # Урон пушки
@@ -225,23 +231,29 @@ class Tower2:
         draw_tower2(self.x, self.y, self.level)
         if self.attacked_enemy:
             if self.level < 3:
-                LASER_COLOUR = tuple(max(0, min(255, col1 + col2)) for col1, col2 in zip(LASER_1, (randint(-30,30), randint(-30, 30), randint(-30, 30))))
+                LASER_COLOUR = tuple(max(0, min(255, col1 + col2)) for col1, col2 in
+                                     zip(LASER_1, (randint(-30, 30), randint(-30, 30), randint(-30, 30))))
             else:
-                LASER_COLOUR = tuple(max(0, min(255, col1 + col2)) for col1, col2 in zip(LASER_3, (randint(-30,30), randint(-30, 30), randint(-30, 30))))
-            distance = sqrt((self.x - self.attacked_enemy.x)**2 + (self.y - 28 - self.attacked_enemy.y)**2)
-            pygame.draw.line(self.screen, LASER_COLOUR, (self.x, self.y - 28), (self.x + distance * cos(self.angle), self.y - 28 + distance * sin(self.angle)), 3)
+                LASER_COLOUR = tuple(max(0, min(255, col1 + col2)) for col1, col2 in
+                                     zip(LASER_3, (randint(-30, 30), randint(-30, 30), randint(-30, 30))))
+            distance = sqrt((self.x - self.attacked_enemy.x) ** 2 + (self.y - 28 - self.attacked_enemy.y) ** 2)
+            pygame.draw.line(self.screen, LASER_COLOUR, (self.x, self.y - 28),
+                             (self.x + distance * cos(self.angle), self.y - 28 + distance * sin(self.angle)), 3)
             pygame.draw.circle(self.screen, LASER_COLOUR, (self.attacked_enemy.x, self.attacked_enemy.y), 5)
 
     def sell(self, stage):
         """Функция продажи башни"""
         for tower_index in range(len(Common_list.towers)):
-            if tower_index > Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] - 2:
-                Common_list.is_free_for_tower[stage-1][Common_list.towers[tower_index].y_square][Common_list.towers[tower_index].x_square] -= 1
-        Common_list.is_free_for_tower[stage-1][self.y_square][self.x_square] = 1
+            if tower_index > Common_list.is_free_for_tower[stage - 1][self.y_square][self.x_square] - 2:
+                Common_list.is_free_for_tower[stage - 1][Common_list.towers[tower_index].y_square][
+                    Common_list.towers[tower_index].x_square] -= 1
+        Common_list.is_free_for_tower[stage - 1][self.y_square][self.x_square] = 1
         Common_list.towers.remove(self)
+
 
 class Enemy1:
     """Класс, описывающий превый тип врага"""
+
     def __init__(self, screen, x, y, time_creation, stage):
         self.time_creation = time_creation
         self.screen = screen
@@ -252,7 +264,7 @@ class Enemy1:
         self.speed = 1
         # Скорость юнита
         self.axis = 'x'
-        #Ось движения юнита
+        # Ось движения юнита
         self.dmg = 1
         # Урон юнита по главной постройке
         self.hp = 100 * (stage + 1)
@@ -264,7 +276,6 @@ class Enemy1:
         self.radius = 10
         # Временная (!!!!!) переменная, отвечающая за размер врага
 
-
     def hit(self, tower_damage, money):
         """Функция, отвечающая за боль и страдания юнита"""
         self.hp -= tower_damage
@@ -275,19 +286,25 @@ class Enemy1:
 
     def move(self, stage):
         """Функция, двигающаяя юнита"""
-        if self.axis == 'x' and not (0 <= (self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE <= 29):
+        if self.axis == 'x' and not (0 <= (self.x + np.sign(self.speed) * (SIDE // 2 + 1)) // SIDE <= 29):
             self.speed = -self.speed
-        elif self.axis == 'x' and Common_list.abv[stage-1][self.y // SIDE][(self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE] != 0:
+        elif self.axis == 'x' and Common_list.abv[stage - 1][self.y // SIDE][
+            (self.x + np.sign(self.speed) * (SIDE // 2 + 1)) // SIDE] != 0:
             self.axis = 'y'
-            self.x = (self.x//SIDE) * SIDE + SIDE // 2 
-            if not (0 <= (self.y+np.sign(self.speed)*(SIDE//2+1)) // SIDE <= 14) or Common_list.abv[stage-1][(self.y+np.sign(self.speed)*(SIDE//2+1)) // SIDE][self.x // SIDE] != 0:
+            self.x = (self.x // SIDE) * SIDE + SIDE // 2
+            if not (0 <= (self.y + np.sign(self.speed) * (SIDE // 2 + 1)) // SIDE <= 14) or \
+                    Common_list.abv[stage - 1][(self.y + np.sign(self.speed) * (SIDE // 2 + 1)) // SIDE][
+                        self.x // SIDE] != 0:
                 self.speed = -self.speed
-        elif self.axis == 'y' and not (0 <= (self.y+np.sign(self.speed)*(SIDE//2+1)) // SIDE <= 14):
+        elif self.axis == 'y' and not (0 <= (self.y + np.sign(self.speed) * (SIDE // 2 + 1)) // SIDE <= 14):
             self.speed = -self.speed
-        elif self.axis == 'y' and (Common_list.abv[stage-1][(self.y+np.sign(self.speed)*(SIDE//2+1)) // SIDE][self.x // SIDE] != 0 or abs(self.y - 300) <= abs(self.speed) / 2):
+        elif self.axis == 'y' and (Common_list.abv[stage - 1][(self.y + np.sign(self.speed) * (SIDE // 2 + 1)) // SIDE][
+                                       self.x // SIDE] != 0 or abs(self.y - 300) <= abs(self.speed) / 2):
             self.axis = 'x'
-            self.y = (self.y//SIDE) * SIDE + SIDE // 2
-            if not (0 <= (self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE <= 29) or Common_list.abv[stage-1][self.y // SIDE][(self.x+np.sign(self.speed)*(SIDE//2+1)) // SIDE] != 0:
+            self.y = (self.y // SIDE) * SIDE + SIDE // 2
+            if not (0 <= (self.x + np.sign(self.speed) * (SIDE // 2 + 1)) // SIDE <= 29) or \
+                    Common_list.abv[stage - 1][self.y // SIDE][
+                        (self.x + np.sign(self.speed) * (SIDE // 2 + 1)) // SIDE] != 0:
                 self.speed = -self.speed
         if self.axis == 'x':
             self.x += self.speed
@@ -306,6 +323,7 @@ class Enemy1:
 
 class Enemy2(Enemy1):
     """Класс, описывающий 2 тип врага"""
+
     def __init__(self, screen, x, y, time_creation, stage):
         super().__init__(screen, x, y, time_creation, stage)
         self.hp = 50 * (stage + 1)
@@ -316,8 +334,10 @@ class Enemy2(Enemy1):
     def draw(self, time):
         draw_enemy1(self, time)
 
+
 class Enemy4(Enemy1):
     """Класс, описывающий 2 тип врага"""
+
     def __init__(self, screen, x, y, time_creation, stage):
         super().__init__(screen, x, y, time_creation, stage)
         self.hp = 100 * (stage + 1)
@@ -328,8 +348,10 @@ class Enemy4(Enemy1):
     def draw(self, time):
         draw_enemy4(self, time)
 
+
 class Enemy3(Enemy1):
     """Класс, описывающий 3 тип врага"""
+
     def __init__(self, screen, x, y, time_creation, stage):
         super().__init__(screen, x, y, time_creation, stage)
         self.hp = 2000 * (stage + 1)
@@ -339,8 +361,10 @@ class Enemy3(Enemy1):
     def draw(self, time):
         draw_enemy3(self, time)
 
+
 class Fortress:
     """Класс описывающий главное здание"""
+
     def __init__(self, screen):
         self.screen = screen
         self.x = 860
@@ -365,14 +389,15 @@ class Fortress:
 
     def draw(self):
         draw_fort(self)
-        
+
+
 class MainBack:
     def __init__(self):
         self.angle = 0
-        self.main_back_surface = pygame.transform.scale(main_back_surface, (main_back_surface.get_width() // 0.5,\
-                                                     main_back_surface.get_height() // 0.5))
+        self.main_back_surface = pygame.transform.scale(main_back_surface, (main_back_surface.get_width() // 0.5, \
+                                                                            main_back_surface.get_height() // 0.5))
 
     def draw(self):
         screen.fill(WHITE)
-        screen.blit(self.main_back_surface, (-250 + 200*cos(self.angle), -150 + 100*sin(self.angle)))
-        self.angle += 0.007 + 0.002 * cos(self.angle/pi)
+        screen.blit(self.main_back_surface, (-250 + 200 * cos(self.angle), -150 + 100 * sin(self.angle)))
+        self.angle += 0.007 + 0.002 * cos(self.angle / pi)
