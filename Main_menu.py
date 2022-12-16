@@ -25,10 +25,15 @@ def main_menu(text_font, clock, FPS, loose):
     while intro:
         main_back.draw()
         clock.tick(FPS)
-        pygame.draw.rect(main_menu_screen, (164,116,73), (480, 100, 240, 50))
+        i = title_surf.get_rect(center=((598), (120)))
+        title_surf.set_colorkey((255, 255, 255))
+        screen.blit(title_surf, i)
         main_menu_screen.blit(text_font.render("TOWER DEFENCE", True, BLACK), (490, 100))
-        pygame.draw.rect(main_menu_screen, (164,116,73), (520, 300, 150, 50))
-        main_menu_screen.blit(text_font.render("Select Level", True, BLACK), (520, 300))
+        i = select_surf.get_rect(center=((595 ), (320 )))
+        select_surf.set_colorkey((255, 255, 255))
+        screen.blit(select_surf, i)
+        main_menu_screen.blit(text_font.render("Select Level", True, BLACK), (525, 300))
+        screen.blit((pygame.font.SysFont(None, 24)).render('2022. Калашников Олег,  Михайлов Константин,  Емельянов Артемий', True, BLACK), (640, 775))
         for button in Common_list.buttons:
             if button.type == "start_button" and game_level == 0:
                 pass

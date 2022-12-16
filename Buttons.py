@@ -133,8 +133,8 @@ class StartButton(Button):
         self.type = "start_button"
 
     def draw(self, COLOUR):
-        super().draw()
-        self.screen.blit(self.text_font.render("Start Game", True, COLOUR), (self.x, self.y))
+        draw_butt(self)
+        self.screen.blit(self.text_font.render("Start Game", True, COLOUR), (self.x+5, self.y))
 
 
 class ExitButton(Button):
@@ -144,7 +144,7 @@ class ExitButton(Button):
 
     def draw(self, COLOUR, loose):
         if not loose:
-            super().draw()
+            draw_butt(self)
         self.screen.blit(self.text_font.render("Exit", True, COLOUR), (self.x + 50, self.y))
 
 
@@ -155,7 +155,7 @@ class SelectButton1(Button):
         self.type = "level1_button"
 
     def draw(self, COLOUR):
-        super().draw()
+        draw_butt(self)
         self.screen.blit(self.text_font.render(self.name, True, COLOUR), (self.x + 40, self.y))
 
 

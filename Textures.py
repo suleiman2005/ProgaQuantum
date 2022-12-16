@@ -28,9 +28,9 @@ ss1_surf = pygame.image.load("img/ss1.png")
 ss2_surf = pygame.image.load("img/ss2.png")
 ss3_surf = pygame.image.load("img/ss3.png")
 ss4_surf = pygame.image.load("img/ss4.png")
-tower1_surf_1 = pygame.image.load("img/tt1.png")
-tower1_surf_2 = pygame.image.load("img/tt2.png")
-tower1_surf_3 = pygame.image.load("img/tt3.png")
+tower1_surf_1 = pygame.image.load("img/t11.png")
+tower1_surf_2 = pygame.image.load("img/t12.png")
+tower1_surf_3 = pygame.image.load("img/t13.png")
 tower2_surf_1 = pygame.image.load("img/ttt1.png")
 tower2_surf_2 = pygame.image.load("img/ttt2.png")
 tower2_surf_3 = pygame.image.load("img/ttt3.png")
@@ -50,6 +50,10 @@ prb_surf = pygame.image.load("img/prb.png")
 main_back_surface = pygame.image.load('img/main_back.png')
 #play_menu_surface = pygame.image.load('img/игровое меню.png')
 play_menu_surface = pygame.image.load('img/testmenu.png')
+butt_surf = pygame.image.load('img/butt.png')
+title_surf = pygame.image.load('img/title.png')
+select_surf = pygame.image.load('img/select.png')
+
 
 WIDTH = 1200
 HEIGHT = 800
@@ -176,13 +180,13 @@ def draw_bullet(x, y):
 
 def draw_tower1(x, y, level):
     if level == 1:
-        i = tower1_surf_1.get_rect(center=(x, y))
+        i = tower1_surf_1.get_rect(center=(x, y-5))
         screen.blit(tower1_surf_1, i)
     elif level == 2:
-        i = tower1_surf_2.get_rect(center=(x, y))
+        i = tower1_surf_2.get_rect(center=(x, y-5))
         screen.blit(tower1_surf_2, i)
     elif level == 3:
-        i = tower1_surf_3.get_rect(center=(x, y))
+        i = tower1_surf_3.get_rect(center=(x, y-5))
         screen.blit(tower1_surf_3, i)
         
 def draw_tower2(x, y, level):
@@ -283,3 +287,7 @@ def draw_fort(fort):
     screen.blit(fort_surf, i)
     pygame.draw.line(screen, (255, 0, 0), (810, 250), (810 + fort.hp//10, 250), 7)
 
+def draw_butt(button):
+    i = butt_surf.get_rect(center=((button.x+75), (button.y+20)))
+    butt_surf.set_colorkey((255, 255, 255))
+    screen.blit(butt_surf, i)

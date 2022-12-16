@@ -152,9 +152,9 @@ class Tower1:
     def draw(self):
         """Рисует башню (тут должна использоваться переменная self.image, но рисунков пока нет((((,
         поэтому рисует круг с дулом)"""
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y),
-                         (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
         draw_tower1(self.x, self.y, self.level)
+        pygame.draw.line(self.screen, (0, 0, 0), (self.x-2, self.y-10),
+                         (self.x + 20 * cos(self.angle), self.y + 20 * sin(self.angle)), 2)
 
     def sell(self, stage):
         """Функция продажи башни"""
