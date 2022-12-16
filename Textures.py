@@ -2,6 +2,7 @@ import pygame
 from random import randint
 import numpy as np
 import Common_list
+
 e1u_surf = pygame.image.load("img/en1u.png")
 e1r_surf = pygame.image.load("img/en1r.png")
 e1l_surf = pygame.image.load("img/en1l.png")
@@ -48,18 +49,18 @@ fort_surf = pygame.image.load("img/mom-tower-t.png")
 dmg_surf = pygame.image.load("img/dmg.png")
 prb_surf = pygame.image.load("img/prb.png")
 main_back_surface = pygame.image.load('img/main_back.png')
-#play_menu_surface = pygame.image.load('img/игровое меню.png')
+# play_menu_surface = pygame.image.load('img/игровое меню.png')
 play_menu_surface = pygame.image.load('img/testmenu.png')
 butt_surf = pygame.image.load('img/butt.png')
 title_surf = pygame.image.load('img/title.png')
 select_surf = pygame.image.load('img/select.png')
 
-
 WIDTH = 1200
 HEIGHT = 800
 BULLET_SPEED = 10
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-play_menu_surface = pygame.transform.scale(play_menu_surface, (play_menu_surface.get_width() // 1, play_menu_surface.get_height() // 1))
+play_menu_surface = pygame.transform.scale(play_menu_surface,
+                                           (play_menu_surface.get_width() // 1, play_menu_surface.get_height() // 1))
 play_menu_rect = play_menu_surface.get_rect(center=(WIDTH // 2, 700))
 play_menu_surface.set_colorkey((255, 255, 255))
 
@@ -68,6 +69,7 @@ BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 LASER_1 = (186, 213, 247)
 LASER_3 = (158, 0, 0)
+
 
 def generate_textures():
     m = randint(3, 5)
@@ -79,76 +81,77 @@ def generate_textures():
     r = randint(3, 6)
     s = randint(3, 6)
     t = randint(3, 5)
-    
-    Common_list.abv = [[[1,1,m,n,l,k,1,1,r,s,t,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,9,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,9,1,1,1,1,1,1,1,9,1,0,1,1,1,1,1,1,m,1,9,1,1,1,p,1],
-            [1,1,1,o,1,9,1,1,9,1,1,l,1,1,1,0,1,1,1,1,1,1,1,5,1,1,9,1,1,1],
-            [1,1,k,1,4,1,1,t,1,1,r,1,9,1,1,0,1,n,1,1,1,1,1,1,6,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,9,0,0,0,0,0,0,0,9,1,1,k,1,1,m,1,1,1,9,1,1,9],
-            [9,1,1,1,s,1,1,1,1,0,l,9,1,9,1,9,k,1,1,1,9,9,1,1,1,1,1,6,1,1],
-            [1,9,1,l,1,1,6,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,n,1,1,1,1],
-            [1,1,1,1,9,1,1,1,1,0,9,1,1,m,1,1,1,9,1,k,1,1,l,1,1,1,1,1,1,1],
-            [1,1,1,p,1,1,1,1,9,0,0,0,0,0,0,0,1,1,1,1,1,1,1,9,1,9,4,1,1,1],
-            [1,1,1,9,1,1,9,1,1,1,l,1,r,1,1,0,1,1,9,1,k,1,1,1,9,1,1,1,9,1],
-            [1,1,1,n,1,1,4,9,1,1,1,1,9,1,1,0,1,1,1,1,1,9,9,1,1,1,1,n,1,1],
-            [1,1,r,1,k,1,1,1,1,9,1,1,1,1,9,0,1,1,1,1,4,1,r,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,o,9,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,8,1,m,1,1,1],
-            [1,1,1,1,9,1,1,1,1,1,r,9,1,1,1,0,1,1,s,1,9,1,1,t,1,1,9,1,1,1]
-           ],
-           [[1,1,1,1,1,1,1,1,1,n,1,1,1,1,1,1,t,1,1,1,1,1,1,1,1,l,1,1,1,1],
-            [1,1,1,s,1,1,t,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,o,1],
-            [1,9,1,1,1,1,1,1,1,m,9,9,1,1,1,r,1,9,9,9,1,1,1,k,1,1,k,1,1,1],
-            [1,1,1,1,s,1,1,n,1,1,1,1,1,9,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [1,r,1,1,m,1,1,1,1,1,r,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,9,0,0,0,0,0,0,0,9,1,1,k,1,1,1,8,m,n,1,1,r,1],
-            [1,1,1,1,1,1,1,k,1,0,l,9,1,1,1,1,k,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,s,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,9,1,1,n,1,1,1],
-            [k,1,1,1,1,m,1,1,1,0,9,1,1,m,1,1,1,1,1,k,1,1,l,1,1,1,1,1,1,p],
-            [1,1,1,1,k,1,1,1,9,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,o,9,1,t,1,1],
-            [1,l,1,1,1,n,1,1,1,1,l,1,1,1,1,0,1,1,9,1,1,1,1,1,9,1,1,1,1,1],
-            [1,1,8,1,1,1,1,1,p,1,1,1,s,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [1,1,1,1,1,s,1,1,1,1,1,1,1,p,1,9,1,m,1,1,1,1,1,1,n,1,1,1,1,1],
-            [1,1,1,o,1,1,1,n,1,1,1,1,1,1,1,1,1,1,1,1,1,1,s,1,1,1,l,1,p,1],
-            [1,n,1,1,1,1,1,1,1,1,s,1,1,1,1,r,1,1,1,k,1,1,1,1,1,l,1,1,1,1]
-           ],
-           [[1,1,1,1,1,m,1,3,4,5,6,1,9,1,1,1,1,m,1,1,1,1,t,1,l,1,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,1,s,1,1,1,1,1,m,9,9,1,1,1,r,1,9,9,9,1,1,1,k,1,1,k,1,0,1],
-            [1,0,9,1,s,1,1,n,1,1,1,1,1,9,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,1,1,m,1,1,1,1,1,r,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,l],
-            [0,0,1,1,1,1,1,1,9,0,0,0,0,0,0,0,9,1,1,k,1,1,1,8,m,n,1,1,1,1],
-            [1,1,1,1,1,1,1,k,1,0,l,9,1,1,1,1,k,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,o,1,p,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,9,1,1,n,l,1,1],
-            [1,1,1,1,1,m,1,1,1,0,9,1,1,m,1,1,1,1,1,k,1,1,l,1,1,1,1,1,1,1],
-            [0,0,9,1,k,1,1,1,9,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,o,9,1,1,1,1],
-            [t,0,1,9,1,n,1,1,1,1,l,1,r,1,1,0,1,1,9,1,1,1,1,1,9,1,1,1,1,1],
-            [1,0,1,1,1,1,1,1,p,1,1,1,s,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,t,9,1,s,1,1,1,1,1,1,1,p,1,9,1,m,1,1,n,1,1,1,1,1,1,1,0,1],
-            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,1,t,s,1,1,1,n,1,1,1,1,1,n,1,r,1,1,1,l,1,1,n,1,1,1,1,1,1,1]
-           ]
-          ]
+
+    Common_list.abv = [[[1, 1, m, n, l, k, 1, 1, r, s, t, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 1, 9, 1, 1, 1, 1, 1, 1, 1, 9, 1, 0, 1, 1, 1, 1, 1, 1, m, 1, 9, 1, 1, 1, p, 1],
+                        [1, 1, 1, o, 1, 9, 1, 1, 9, 1, 1, l, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 9, 1, 1, 1],
+                        [1, 1, k, 1, 4, 1, 1, t, 1, 1, r, 1, 9, 1, 1, 0, 1, n, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 0, 0, 0, 9, 1, 1, k, 1, 1, m, 1, 1, 1, 9, 1, 1, 9],
+                        [9, 1, 1, 1, s, 1, 1, 1, 1, 0, l, 9, 1, 9, 1, 9, k, 1, 1, 1, 9, 9, 1, 1, 1, 1, 1, 6, 1, 1],
+                        [1, 9, 1, l, 1, 1, 6, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, n, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 9, 1, 1, 1, 1, 0, 9, 1, 1, m, 1, 1, 1, 9, 1, k, 1, 1, l, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, p, 1, 1, 1, 1, 9, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 9, 1, 9, 4, 1, 1, 1],
+                        [1, 1, 1, 9, 1, 1, 9, 1, 1, 1, l, 1, r, 1, 1, 0, 1, 1, 9, 1, k, 1, 1, 1, 9, 1, 1, 1, 9, 1],
+                        [1, 1, 1, n, 1, 1, 4, 9, 1, 1, 1, 1, 9, 1, 1, 0, 1, 1, 1, 1, 1, 9, 9, 1, 1, 1, 1, n, 1, 1],
+                        [1, 1, r, 1, k, 1, 1, 1, 1, 9, 1, 1, 1, 1, 9, 0, 1, 1, 1, 1, 4, 1, r, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 1, 1, o, 9, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 8, 1, m, 1, 1, 1],
+                        [1, 1, 1, 1, 9, 1, 1, 1, 1, 1, r, 9, 1, 1, 1, 0, 1, 1, s, 1, 9, 1, 1, t, 1, 1, 9, 1, 1, 1]
+                        ],
+                       [[1, 1, 1, 1, 1, 1, 1, 1, 1, n, 1, 1, 1, 1, 1, 1, t, 1, 1, 1, 1, 1, 1, 1, 1, l, 1, 1, 1, 1],
+                        [1, 1, 1, s, 1, 1, t, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, o, 1],
+                        [1, 9, 1, 1, 1, 1, 1, 1, 1, m, 9, 9, 1, 1, 1, r, 1, 9, 9, 9, 1, 1, 1, k, 1, 1, k, 1, 1, 1],
+                        [1, 1, 1, 1, s, 1, 1, n, 1, 1, 1, 1, 1, 9, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [1, r, 1, 1, m, 1, 1, 1, 1, 1, r, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 0, 0, 0, 9, 1, 1, k, 1, 1, 1, 8, m, n, 1, 1, r, 1],
+                        [1, 1, 1, 1, 1, 1, 1, k, 1, 0, l, 9, 1, 1, 1, 1, k, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, s, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9, 1, 1, n, 1, 1, 1],
+                        [k, 1, 1, 1, 1, m, 1, 1, 1, 0, 9, 1, 1, m, 1, 1, 1, 1, 1, k, 1, 1, l, 1, 1, 1, 1, 1, 1, p],
+                        [1, 1, 1, 1, k, 1, 1, 1, 9, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, o, 9, 1, t, 1, 1],
+                        [1, l, 1, 1, 1, n, 1, 1, 1, 1, l, 1, 1, 1, 1, 0, 1, 1, 9, 1, 1, 1, 1, 1, 9, 1, 1, 1, 1, 1],
+                        [1, 1, 8, 1, 1, 1, 1, 1, p, 1, 1, 1, s, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [1, 1, 1, 1, 1, s, 1, 1, 1, 1, 1, 1, 1, p, 1, 9, 1, m, 1, 1, 1, 1, 1, 1, n, 1, 1, 1, 1, 1],
+                        [1, 1, 1, o, 1, 1, 1, n, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, s, 1, 1, 1, l, 1, p, 1],
+                        [1, n, 1, 1, 1, 1, 1, 1, 1, 1, s, 1, 1, 1, 1, r, 1, 1, 1, k, 1, 1, 1, 1, 1, l, 1, 1, 1, 1]
+                        ],
+                       [[1, 1, 1, 1, 1, m, 1, 3, 4, 5, 6, 1, 9, 1, 1, 1, 1, m, 1, 1, 1, 1, t, 1, l, 1, 1, 1, 1, 1],
+                        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                        [1, 0, 1, s, 1, 1, 1, 1, 1, m, 9, 9, 1, 1, 1, r, 1, 9, 9, 9, 1, 1, 1, k, 1, 1, k, 1, 0, 1],
+                        [1, 0, 9, 1, s, 1, 1, n, 1, 1, 1, 1, 1, 9, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                        [1, 0, 1, 1, m, 1, 1, 1, 1, 1, r, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, l],
+                        [0, 0, 1, 1, 1, 1, 1, 1, 9, 0, 0, 0, 0, 0, 0, 0, 9, 1, 1, k, 1, 1, 1, 8, m, n, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 1, 1, 1, k, 1, 0, l, 9, 1, 1, 1, 1, k, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, o, 1, p, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9, 1, 1, n, l, 1, 1],
+                        [1, 1, 1, 1, 1, m, 1, 1, 1, 0, 9, 1, 1, m, 1, 1, 1, 1, 1, k, 1, 1, l, 1, 1, 1, 1, 1, 1, 1],
+                        [0, 0, 9, 1, k, 1, 1, 1, 9, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, o, 9, 1, 1, 1, 1],
+                        [t, 0, 1, 9, 1, n, 1, 1, 1, 1, l, 1, r, 1, 1, 0, 1, 1, 9, 1, 1, 1, 1, 1, 9, 1, 1, 1, 1, 1],
+                        [1, 0, 1, 1, 1, 1, 1, 1, p, 1, 1, 1, s, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                        [1, 0, t, 9, 1, s, 1, 1, 1, 1, 1, 1, 1, p, 1, 9, 1, m, 1, 1, n, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+                        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                        [1, 1, t, s, 1, 1, 1, n, 1, 1, 1, 1, 1, n, 1, r, 1, 1, 1, l, 1, 1, n, 1, 1, 1, 1, 1, 1, 1]
+                        ]
+                       ]
+
 
 def textures(stage):
     for a in range(15):
         for b in range(30):
-            if Common_list.abv[stage-1][a][b] == 1:
+            if Common_list.abv[stage - 1][a][b] == 1:
                 i = grass_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(grass_surf, i)
-            elif Common_list.abv[stage-1][a][b] == 9:
+            elif Common_list.abv[stage - 1][a][b] == 9:
                 i = grass1_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(grass1_surf, i)
-            elif Common_list.abv[stage-1][a][b] == 0:
+            elif Common_list.abv[stage - 1][a][b] == 0:
                 i = road_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(road_surf, i)
-            elif Common_list.abv[stage-1][a][b] == 3:
+            elif Common_list.abv[stage - 1][a][b] == 3:
                 i = ss1_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(ss1_surf, i)
-            elif Common_list.abv[stage-1][a][b] == 4:
+            elif Common_list.abv[stage - 1][a][b] == 4:
                 i = ss2_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(ss2_surf, i)
-            elif Common_list.abv[stage-1][a][b] == 5:
+            elif Common_list.abv[stage - 1][a][b] == 5:
                 i = ss3_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(ss3_surf, i)
             elif Common_list.abv[stage - 1][a][b] == 6:
@@ -167,89 +170,97 @@ def textures(stage):
                 i = waspalkaebalka_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(waspalkaebalka_surf, i)
 
+
 def draw_clouds(stage):
     for a in range(15):
         for b in range(30):
-            if Common_list.abv[stage-1][a][b] == 2:
+            if Common_list.abv[stage - 1][a][b] == 2:
                 i = cloud_surf.get_rect(center=(20 + (b * 40), (a * 40) + 20))
                 screen.blit(cloud_surf, i)
-				
+
 
 def draw_bullet(x, y):
-	pygame.draw.circle(screen, BLACK, (x, y), 1)
+    pygame.draw.circle(screen, BLACK, (x, y), 1)
+
 
 def draw_tower1(x, y, level):
     if level == 1:
-        i = tower1_surf_1.get_rect(center=(x, y-5))
+        i = tower1_surf_1.get_rect(center=(x, y - 5))
         screen.blit(tower1_surf_1, i)
     elif level == 2:
-        i = tower1_surf_2.get_rect(center=(x, y-5))
+        i = tower1_surf_2.get_rect(center=(x, y - 5))
         screen.blit(tower1_surf_2, i)
     elif level == 3:
-        i = tower1_surf_3.get_rect(center=(x, y-5))
+        i = tower1_surf_3.get_rect(center=(x, y - 5))
         screen.blit(tower1_surf_3, i)
-        
+
+
 def draw_tower2(x, y, level):
     if level == 1:
-        i = tower2_surf_1.get_rect(center=(x, y-10))
+        i = tower2_surf_1.get_rect(center=(x, y - 10))
         screen.blit(tower2_surf_1, i)
     elif level == 2:
-        i = tower2_surf_2.get_rect(center=(x, y-10))
+        i = tower2_surf_2.get_rect(center=(x, y - 10))
         screen.blit(tower2_surf_2, i)
     elif level == 3:
-        i = tower2_surf_3.get_rect(center=(x, y-10))
+        i = tower2_surf_3.get_rect(center=(x, y - 10))
         screen.blit(tower2_surf_3, i)
+
 
 def draw_enemy(enemy, time):
     change = time - enemy.time_creation
-    if change//40 == change/40:
+    if change // 40 == change / 40:
         enemy.tik -= 1
     if enemy.tik == 0:
         enemy.tik = 4
     if enemy.tik == 4:
-        i = enemy1_surf.get_rect(center=( (enemy.x), (enemy.y) ))
+        i = enemy1_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy1_surf, i)
     elif enemy.tik == 3:
-        i = enemy2_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        i = enemy2_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy2_surf, i)
     elif enemy.tik == 2:
-        i = enemy3_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        i = enemy3_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy3_surf, i)
     elif enemy.tik == 1:
         i = enemy4_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy4_surf, i)
     if enemy.hp < 60:
-        i = dmg_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        i = dmg_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(dmg_surf, i)
+
+
 def draw_enemy4(enemy, time):
     change = time - enemy.time_creation
-    if change//40 == change/40:
+    if change // 40 == change / 40:
         enemy.tik -= 1
     if enemy.tik == 0:
         enemy.tik = 4
     if enemy.tik == 4:
-        i = enemy41_surf.get_rect(center=( (enemy.x), (enemy.y) ))
+        i = enemy41_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy41_surf, i)
     elif enemy.tik == 3:
-        i = enemy42_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        i = enemy42_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy42_surf, i)
     elif enemy.tik == 2:
-        i = enemy43_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        i = enemy43_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy43_surf, i)
     elif enemy.tik == 1:
         i = enemy44_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(enemy44_surf, i)
     if enemy.hp < 60:
-        i = dmg_surf.get_rect(center=(  (enemy.x), (enemy.y)  ))
+        i = dmg_surf.get_rect(center=((enemy.x), (enemy.y)))
         screen.blit(dmg_surf, i)
+
+
 def draw_enemy1(enemy, time):
     change = time - enemy.time_creation
-    if change//2 == change/2:
+    if change // 2 == change / 2:
         enemy.tik -= 1
     if enemy.tik == 0:
         enemy.tik = 2
-    #i = prb_surf.get_rect(center=((enemy.x), (enemy.y)))
-    #screen.blit(prb_surf, i)
+    # i = prb_surf.get_rect(center=((enemy.x), (enemy.y)))
+    # screen.blit(prb_surf, i)
     if enemy.tik == 2:
         if enemy.axis == 'x' and enemy.speed < 0:
             i = beeleft_surf.get_rect(center=((enemy.x), (enemy.y)))
@@ -276,6 +287,8 @@ def draw_enemy1(enemy, time):
         elif enemy.axis == 'y' and enemy.speed > 0:
             i = beedown1_surf.get_rect(center=((enemy.x), (enemy.y)))
             screen.blit(beedown1_surf, i)
+
+
 def draw_enemy3(enemy, time):
     change = time - enemy.time_creation
     i = prb_surf.get_rect(center=((enemy.x), (enemy.y)))
@@ -285,9 +298,10 @@ def draw_enemy3(enemy, time):
 def draw_fort(fort):
     i = fort_surf.get_rect(center=((860), (290)))
     screen.blit(fort_surf, i)
-    pygame.draw.line(screen, (255, 0, 0), (810, 250), (810 + fort.hp//10, 250), 7)
+    pygame.draw.line(screen, (255, 0, 0), (810, 250), (810 + fort.hp // 10, 250), 7)
+
 
 def draw_butt(button):
-    i = butt_surf.get_rect(center=((button.x+75), (button.y+20)))
+    i = butt_surf.get_rect(center=((button.x + 75), (button.y + 20)))
     butt_surf.set_colorkey((255, 255, 255))
     screen.blit(butt_surf, i)

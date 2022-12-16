@@ -16,10 +16,11 @@ def main_menu(text_font, clock, FPS, loose):
     pygame.mixer.music.load("music/main_menu_music.mp3")
     pygame.mixer.music.play(-1)
 
-    Common_list.buttons = [StartButton(main_menu_screen, 520, 200, text_font), ExitButton(main_menu_screen, 520, 700, text_font),
-               SelectButton1(main_menu_screen, 520, 400, text_font),
-               SelectButton2(main_menu_screen, 520, 500, text_font),
-               SelectButton3(main_menu_screen, 520, 600, text_font)]
+    Common_list.buttons = [StartButton(main_menu_screen, 520, 200, text_font),
+                           ExitButton(main_menu_screen, 520, 700, text_font),
+                           SelectButton1(main_menu_screen, 520, 400, text_font),
+                           SelectButton2(main_menu_screen, 520, 500, text_font),
+                           SelectButton3(main_menu_screen, 520, 600, text_font)]
 
     intro = True
     while intro:
@@ -29,11 +30,13 @@ def main_menu(text_font, clock, FPS, loose):
         title_surf.set_colorkey((255, 255, 255))
         screen.blit(title_surf, i)
         main_menu_screen.blit(text_font.render("TOWER DEFENCE", True, BLACK), (490, 100))
-        i = select_surf.get_rect(center=((595 ), (320 )))
+        i = select_surf.get_rect(center=((595), (320)))
         select_surf.set_colorkey((255, 255, 255))
         screen.blit(select_surf, i)
         main_menu_screen.blit(text_font.render("Select Level", True, BLACK), (525, 300))
-        screen.blit((pygame.font.SysFont(None, 24)).render('2022. Калашников Олег,  Михайлов Константин,  Емельянов Артемий', True, BLACK), (640, 775))
+        screen.blit(
+            (pygame.font.SysFont(None, 24)).render('2022. Калашников Олег,  Михайлов Константин,  Емельянов Артемий',
+                                                   True, BLACK), (640, 775))
         for button in Common_list.buttons:
             if button.type == "start_button" and game_level == 0:
                 pass
@@ -77,7 +80,8 @@ def game_over(text_font, clock, FPS, loose):
     pygame.mixer.music.pause()
     sound = pygame.mixer.Sound("music/game_over_sound.mp3")
     sound.play()
-    Common_list.buttons = [ExitToMainMenuButton(game_over_screen, 500, 500, text_font), ExitButton(game_over_screen, 500, 600, text_font)]
+    Common_list.buttons = [ExitToMainMenuButton(game_over_screen, 500, 500, text_font),
+                           ExitButton(game_over_screen, 500, 600, text_font)]
     game_over_parameter = True
     stop_cycle = False
 
@@ -85,7 +89,8 @@ def game_over(text_font, clock, FPS, loose):
         game_over_screen.fill(BLACK)
         clock.tick(FPS)
         game_over_label = game_over_font.render("YOU DIED", True, RED)
-        game_over_screen.blit(game_over_label, (game_over_screen.get_width() / 2 - game_over_label.get_width() / 2, 200))
+        game_over_screen.blit(game_over_label,
+                              (game_over_screen.get_width() / 2 - game_over_label.get_width() / 2, 200))
         for button in Common_list.buttons:
             if button.type == "exit_button":
                 button.draw(WHITE, loose)
