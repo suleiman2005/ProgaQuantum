@@ -35,6 +35,7 @@ def game_process(text_font, stage, clock, FPS):
     finished = False
     loose = False
     win = False
+    problem_flag = True
     fortress = Fortress(screen)
     Common_list.buttons = [QuitButton(screen, 1100, 0, text_font)]
     Common_list.enemies = []
@@ -59,6 +60,8 @@ def game_process(text_font, stage, clock, FPS):
     pygame.mixer.music.load("music/level_music.mp3")
     pygame.mixer.music.play(-1)
     sound_of_fortress_damage = pygame.mixer.Sound("music/sound_of_fortress_damage.wav")
+    problem_text_font_1 = pygame.font.SysFont('Comic Sans MS', 100, True)
+    problem_text_font_2 = pygame.font.SysFont('Comic Sans MS', 100, True)
 
     while not finished:
         screen.fill(WHITE)
@@ -320,8 +323,13 @@ def game_process(text_font, stage, clock, FPS):
             loose = True
 
         if len(Common_list.enemies) == 0 and number_of_enemies >= maximum_of_enemies[stage - 1]:
-            finished = True
-            win = True
+            if problem_flag:
+                problem_flag = False
+                Common_list.enemies = [Enemy3(screen, start_positions[stage - 1][2], start_positions[stage - 1][0], time, stage),\
+                                       Enemy3(screen, start_positions[stage - 1][2], start_positions[stage - 1][1], time, stage)]
+            else:
+                finished = True
+                win = True
         time += Delta_t
         screen.blit(play_menu_surface, play_menu_rect)
         screen.blit(play_menu_text_surface.render(text, True, BLACK), (100, 675))
@@ -329,5 +337,9 @@ def game_process(text_font, stage, clock, FPS):
             button.draw()
         screen.blit(text_font.render("Money: " + str(int(money)) + ", Enemies: " + str(number_of_enemies), True, (0, 0, 0)), (10, 10))
         #screen.blit(text_font.render("FPS: " + str(int(clock.get_fps())), True, (0, 0, 0)), (500, 10))
+        if not problem_flag:
+            screen.blit(problem_text_font_1.render("У вас появилась", True, (255, 0, 0)), (250, 150))
+            screen.blit(problem_text_font_2.render("проблема!", True, (255, 0, 0)), (400, 350))
         pygame.display.update()
+    problem_text = pygame.font.SysFont('Comic Sans MS', 100, True)
     return finished, loose, win

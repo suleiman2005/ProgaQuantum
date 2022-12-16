@@ -330,10 +330,10 @@ class Enemy4(Enemy1):
 
 class Enemy3(Enemy1):
     """Класс, описывающий 3 тип врага"""
-    def __init__(self, screen, x, y, time_creation):
-        super().__init__(screen, x, y, time_creation)
-        self.hp = 2000
-        self.reward = 50
+    def __init__(self, screen, x, y, time_creation, stage):
+        super().__init__(screen, x, y, time_creation, stage)
+        self.hp = 2000 * (stage + 1)
+        self.reward = 0
         self.speed = 1
 
     def draw(self, time):
